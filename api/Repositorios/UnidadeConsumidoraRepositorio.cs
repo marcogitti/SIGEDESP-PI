@@ -6,7 +6,7 @@ using api.Repositorios.Interfaces;
 namespace api.Repositorios
 {
     public class UnidadeConsumidoraRepositorio : IUnidadeConsumidoraRepositorio
-
+    { 
         private readonly SigedespDBContex _dbContext;
         public UnidadeConsumidoraRepositorio(SigedespDBContex sigedespDBContex)
         {

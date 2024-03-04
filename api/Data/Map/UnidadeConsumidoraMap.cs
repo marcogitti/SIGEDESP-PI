@@ -9,7 +9,7 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<UnidadeConsumidoraModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.codigoUC).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.codigoUC).IsRequired();
 
         }
     }
