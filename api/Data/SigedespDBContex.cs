@@ -14,11 +14,14 @@ namespace api.Data
         public DbSet<TipoInstituicaoModel> TipoInstituicao { get; set; }
         public DbSet<UnidadeMedidaModel> UnidadeMedida { get; set; }
 
+        public DbSet<UnidadeConsumidoraModel> UnidadeConsumidora { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TipoDespesaMap());
             modelBuilder.ApplyConfiguration(new TipoInstituicaoMap());
             modelBuilder.ApplyConfiguration(new UnidadeMedidaMap());
+            modelBuilder.ApplyConfiguration(new UnidadeConsumidoraMap());
             base.OnModelCreating(modelBuilder);
         }
     }
