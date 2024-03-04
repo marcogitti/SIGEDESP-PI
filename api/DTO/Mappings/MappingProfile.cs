@@ -16,6 +16,9 @@ namespace api.DTO.Mappings
 
             CreateMap<UnidadeMedidaDTO, UnidadeMedidaModel>();
             CreateMap<UnidadeMedidaModel, UnidadeMedidaDTO>().ReverseMap();
+
+            CreateMap<UnidadeConsumidoraDTO, UnidadeConsumidoraModel>();
+            CreateMap<UnidadeConsumidoraModel, UnidadeConsumidoraDTO>().ReverseMap();
         }
     }
 }
