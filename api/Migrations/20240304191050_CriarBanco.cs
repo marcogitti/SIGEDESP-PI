@@ -39,6 +39,19 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "unidadeconsumidora",
+                columns: table => new
+                {
+                    unidadeconsumidoraid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    unidadeconsumidora = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_unidadeconsumidora", x => x.unidadeconsumidoraid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "unidademedida",
                 columns: table => new
                 {
@@ -61,6 +74,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "tipoinstituicao");
+
+            migrationBuilder.DropTable(
+                name: "unidadeconsumidora");
 
             migrationBuilder.DropTable(
                 name: "unidademedida");

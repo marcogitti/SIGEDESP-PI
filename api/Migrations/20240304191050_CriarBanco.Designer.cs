@@ -11,7 +11,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240304142915_CriarBanco")]
+    [Migration("20240304191050_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -68,6 +68,24 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tipoinstituicao");
+                });
+
+            modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("unidadeconsumidoraid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("codigoUC")
+                        .HasColumnType("integer")
+                        .HasColumnName("unidadeconsumidora");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("unidadeconsumidora");
                 });
 
             modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
