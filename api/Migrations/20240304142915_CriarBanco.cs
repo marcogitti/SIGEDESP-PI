@@ -31,11 +31,25 @@ namespace api.Migrations
                 {
                     tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    tipoinstituicao = table.Column<string>(type: "text", nullable: false)
+                    tipoinstituicao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tipoinstituicao", x => x.tipoinstituicaoid);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "unidademedida",
+                columns: table => new
+                {
+                    unidademedidaid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    descrição = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    abreviatura = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_unidademedida", x => x.unidademedidaid);
                 });
         }
 
@@ -47,6 +61,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "tipoinstituicao");
+
+            migrationBuilder.DropTable(
+                name: "unidademedida");
         }
     }
 }

@@ -58,12 +58,39 @@ namespace api.Migrations
 
                     b.Property<string>("TipoInstituicao")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("tipoinstituicao");
 
                     b.HasKey("Id");
 
                     b.ToTable("tipoinstituicao");
+                });
+
+            modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("unidademedidaid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Abreviatura")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("abreviatura");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("descrição");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("unidademedida");
                 });
 #pragma warning restore 612, 618
         }
