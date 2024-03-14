@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alunos\\Desktop\\SIGEDESP-PI\\api\\api.csproj": {}
+    "C:\\Users\\Aluno\\Desktop\\SIGEDESP-PI\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alunos\\Desktop\\SIGEDESP-PI\\api\\api.csproj": {
+    "C:\\Users\\Aluno\\Desktop\\SIGEDESP-PI\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alunos\\Desktop\\SIGEDESP-PI\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\Aluno\\Desktop\\SIGEDESP-PI\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Alunos\\Desktop\\SIGEDESP-PI\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\Alunos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alunos\\Desktop\\SIGEDESP-PI\\api\\obj\\",
+        "projectPath": "C:\\Users\\Aluno\\Desktop\\SIGEDESP-PI\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aluno\\Desktop\\SIGEDESP-PI\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Alunos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Aluno\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -100,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
