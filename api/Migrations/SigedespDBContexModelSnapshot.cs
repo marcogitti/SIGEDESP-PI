@@ -76,7 +76,7 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("codigoUC")
+                    b.Property<int>("CodigoUC")
                         .HasColumnType("integer")
                         .HasColumnName("unidadeconsumidora");
 

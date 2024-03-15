@@ -13,5 +13,5 @@ public class UnidadeConsumidoraModel
     public int Id { get; set; }
 
     [Column("unidadeconsumidora")]
-    public int codigoUC { get; set; }
+    public int CodigoUC { get; set; }
 }

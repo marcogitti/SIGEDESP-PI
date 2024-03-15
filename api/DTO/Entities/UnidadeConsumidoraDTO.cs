@@ -8,12 +8,7 @@ namespace api.DTO.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O código de Unidade Consumidora é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public int codigoUC { get; set; }
-
-        [JsonIgnore]
-        public UnidadeConsumidoraDTO? UnidadeConDTO { get; set; }
+        public int CodigoUC { get; set; }
 
     }
 }

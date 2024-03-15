@@ -12,10 +12,9 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Descricao { get; set; }
 
-        [JsonIgnore]
-        public UnidadeMedidaDTO? UnidadeMedDTO { get; set; }
-
         [Required(ErrorMessage = "A abreviatura da Unidade de Medida é requerida!")]
+        [MinLength(1)]
+        [MaxLength(100)]
         public string Abreviatura { get; set; }
 
     }

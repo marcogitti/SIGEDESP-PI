@@ -11,7 +11,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240304191050_CriarBanco")]
+    [Migration("20240314134149_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -79,7 +79,7 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("codigoUC")
+                    b.Property<int>("CodigoUC")
                         .HasColumnType("integer")
                         .HasColumnName("unidadeconsumidora");
 
