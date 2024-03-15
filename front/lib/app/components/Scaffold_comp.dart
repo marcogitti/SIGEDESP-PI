@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:front/app/util/format_util.dart';
 
 class ScaffoldComp extends StatelessWidget {
   const ScaffoldComp({
@@ -20,34 +22,30 @@ class ScaffoldComp extends StatelessWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.notifications, color: Colors.white),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                ),
-                const Icon(Icons.account_circle, color: Colors.white),
-                const SizedBox(width: 2),
-                const Text(
-                  'Nome do Usuário',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ],
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications, color: Colors.white),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
             ),
           ),
-        ],
+          const Icon(Icons.account_circle, color: Colors.white),
+          const Flexible(
+            child: Text(
+              'Nome do Usuário',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ].spaceBetowin(wh: 6),
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -61,6 +59,9 @@ class ScaffoldComp extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     children: <Widget>[
                       DrawerHeader(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF222D32),
+                        ),
                         child: Center(
                           child: Row(
                             children: [
@@ -68,42 +69,61 @@ class ScaffoldComp extends StatelessWidget {
                                   onPressed: () {},
                                   icon: const Icon(Icons.account_circle,
                                       color: Colors.white)),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               const Text(
-                                'Drawer Header',
+                                'Nome do Usuario',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ],
                           ),
                         ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF222D32),
-                        ),
                       ),
-                      ListTile(
-                        title: const Text(
-                          'Item 1',
-                          style: TextStyle(color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Wrap(
+                          runSpacing: 16,
+                          spacing: 16,
+                          children: [
+                            ListTile(
+                              title: const Text(
+                                'Home Page',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Tipo Instituição',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to
+                                    .navigate('/institutionScreen');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Despesas',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to
+                                    .navigate('/cadastroDeDespesas');
+                              },
+                            ),
+                          ],
                         ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: const Text(
-                          'Item 2',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
                       ),
                     ],
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    padding:
+                        const EdgeInsets.only(left: 26, right: 16, top: 50),
                     child: body,
                   ),
                 ),
