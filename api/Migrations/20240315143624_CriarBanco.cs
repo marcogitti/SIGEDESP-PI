@@ -39,6 +39,20 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tipousuario",
+                columns: table => new
+                {
+                    tipousuarioid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    permitelogin = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tipousuario", x => x.tipousuarioid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "unidadeconsumidora",
                 columns: table => new
                 {
@@ -74,6 +88,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "tipoinstituicao");
+
+            migrationBuilder.DropTable(
+                name: "tipousuario");
 
             migrationBuilder.DropTable(
                 name: "unidadeconsumidora");
