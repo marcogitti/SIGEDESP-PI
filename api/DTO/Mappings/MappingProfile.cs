@@ -22,6 +22,9 @@ namespace api.DTO.Mappings
 
             CreateMap<TipoUsuarioDTO, TipoUsuarioModel>();
             CreateMap<TipoUsuarioModel, TipoUsuarioDTO>().ReverseMap();
+
+            CreateMap<SecretariaDTO, SecretariaModel>();
+            CreateMap<SecretariaModel, SecretariaDTO>().ReverseMap();
         }
     }
 }
