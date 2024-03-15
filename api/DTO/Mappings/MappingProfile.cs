@@ -13,6 +13,9 @@ namespace api.DTO.Mappings
 
             CreateMap<TipoInstituicaoDTO, TipoInstituicaoModel>();
             CreateMap<TipoInstituicaoModel, TipoInstituicaoDTO>().ReverseMap();
+
+            CreateMap<UnidadeMedidaDTO, UnidadeMedidaModel>();
+            CreateMap<UnidadeMedidaModel, UnidadeMedidaDTO>().ReverseMap();
         }
     }
 }
