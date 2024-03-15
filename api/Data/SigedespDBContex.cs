@@ -13,8 +13,8 @@ namespace api.Data
         public DbSet<TipoDespesaModel> TipoDespesa { get; set; }
         public DbSet<TipoInstituicaoModel> TipoInstituicao { get; set; }
         public DbSet<UnidadeMedidaModel> UnidadeMedida { get; set; }
-
         public DbSet<UnidadeConsumidoraModel> UnidadeConsumidora { get; set; }
+        public DbSet<TipoUsuarioModel> TipoUsuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,7 @@ namespace api.Data
             modelBuilder.ApplyConfiguration(new TipoInstituicaoMap());
             modelBuilder.ApplyConfiguration(new UnidadeMedidaMap());
             modelBuilder.ApplyConfiguration(new UnidadeConsumidoraMap());
+            modelBuilder.ApplyConfiguration(new TipoUsuarioMap());
             base.OnModelCreating(modelBuilder);
         }
     }

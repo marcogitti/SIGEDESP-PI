@@ -67,6 +67,32 @@ namespace api.Migrations
                     b.ToTable("tipoinstituicao");
                 });
 
+            modelBuilder.Entity("api.Models.TipoUsuarioModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("tipousuarioid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("descricao");
+
+                    b.Property<string>("PermiteLogin")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("permitelogin");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tipousuario");
+                });
+
             modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
                 {
                     b.Property<int>("Id")

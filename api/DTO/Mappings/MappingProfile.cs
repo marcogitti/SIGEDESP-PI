@@ -19,6 +19,9 @@ namespace api.DTO.Mappings
 
             CreateMap<UnidadeConsumidoraDTO, UnidadeConsumidoraModel>();
             CreateMap<UnidadeConsumidoraModel, UnidadeConsumidoraDTO>().ReverseMap();
+
+            CreateMap<TipoUsuarioDTO, TipoUsuarioModel>();
+            CreateMap<TipoUsuarioModel, TipoUsuarioDTO>().ReverseMap();
         }
     }
 }
