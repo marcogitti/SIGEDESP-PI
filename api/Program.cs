@@ -53,6 +53,10 @@ namespace Sigedesp
             builder.Services.AddTransient<ITipoInstituicaoService, TipoInstituicaoService>();
             builder.Services.AddTransient<IUnidadeMedidaRepositorio, UnidadeMedidaRepositorio>();
             builder.Services.AddTransient<IUnidadeMedidaService, UnidadeMedidaService>();
+            builder.Services.AddTransient<IUnidadeConsumidoraRepositorio, UnidadeConsumidoraRepositorio>();
+            builder.Services.AddTransient<IUnidadeConsumidoraService, UnidadeConsumidoraService>();
+            builder.Services.AddTransient<ITipoUsuarioRepositorio, TipoUsuarioRepositorio>();
+            builder.Services.AddTransient<ITipoUsuarioService, TipoUsuarioService>();
 
             var app = builder.Build();
 
