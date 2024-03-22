@@ -25,6 +25,9 @@ namespace api.DTO.Mappings
 
             CreateMap<SecretariaDTO, SecretariaModel>();
             CreateMap<SecretariaModel, SecretariaDTO>().ReverseMap();
+
+            CreateMap<FornecedorDTO, FornecedorModel>();
+            CreateMap<FornecedorModel, FornecedorDTO>().ReverseMap();
         }
     }
 }
