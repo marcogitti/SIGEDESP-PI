@@ -17,6 +17,7 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Situacao { get; set; }
 
+
     }
 }
 
