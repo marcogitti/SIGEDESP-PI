@@ -12,6 +12,34 @@ namespace api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "fornecedor",
+                columns: table => new
+                {
+                    fornecedorid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nomefantasia = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_fornecedor", x => x.fornecedorid);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "secretaria",
+                columns: table => new
+                {
+                    secretariaid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_secretaria", x => x.secretariaid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tipodespesa",
                 columns: table => new
                 {
@@ -83,6 +111,12 @@ namespace api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "fornecedor");
+
+            migrationBuilder.DropTable(
+                name: "secretaria");
+
             migrationBuilder.DropTable(
                 name: "tipodespesa");
 
