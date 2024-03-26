@@ -17,7 +17,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<instituicaoDTO>>> BuscarTodosInstituicao()
+        public async Task<ActionResult<List<InstituicaoDTO>>> BuscarTodosInstituicao()
         {
             var instituicao = await _instituicaoService.BuscarTodosInstituicao();
             return Ok(instituicao);
@@ -43,14 +43,14 @@ namespace api.Controllers
         public async Task<ActionResult<InstituicaoModel>> Atualizar([FromBody] InstituicaoDTO instituicaoDTO)
         {
             if (instituicaoDTO is null) return BadRequest("dado inválido");
-            await _InstituicaoService.Atualizar(instituicaoDTO);
+            await _instituicaoService.Atualizar(instituicaoDTO);
             return Ok(instituicaoDTO);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<InstituicaoModel>> Apagar(int id)
         {
-            var instituicaoDTO = await _InstituicaoService.BuscarPorId(id);
+            var instituicaoDTO = await _instituicaoService.BuscarPorId(id);
             if (instituicaoDTO == null) return BadRequest("Instituicao não encontrado");
             await _instituicaoService.Apagar(id);
             return Ok(instituicaoDTO);
