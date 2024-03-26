@@ -223,3 +223,14 @@ C:\Users\Alunos\Desktop\SIGEDESP-PI\api\obj\Debug\net7.0\refint\api.dll
 C:\Users\Alunos\Desktop\SIGEDESP-PI\api\obj\Debug\net7.0\api.pdb
 C:\Users\Alunos\Desktop\SIGEDESP-PI\api\obj\Debug\net7.0\api.genruntimeconfig.cache
 C:\Users\Alunos\Desktop\SIGEDESP-PI\api\obj\Debug\net7.0\ref\api.dll
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.csproj.AssemblyReference.cache
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.AssemblyInfoInputs.cache
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.AssemblyInfo.cs
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.csproj.CoreCompileInputs.cache
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.sourcelink.json
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.dll
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\refint\api.dll
+C:\Users\55179\OneDrive\Área de Trabalho\SIGEDESP-PI\api\obj\Debug\net7.0\api.pdb
