@@ -28,6 +28,9 @@ namespace api.DTO.Mappings
 
             CreateMap<FornecedorDTO, FornecedorModel>();
             CreateMap<FornecedorModel, FornecedorDTO>().ReverseMap();
+
+            CreateMap<InstituicaoDTO, InstituicaoModel>();
+            CreateMap<InstituicaoModel, InstituicaoDTO>().ReverseMap();
         }
     }
 }
