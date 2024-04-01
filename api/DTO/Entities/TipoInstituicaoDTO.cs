@@ -12,10 +12,5 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string TipoInstituicao { get; set; }
 
-        [JsonIgnore]
-        public TipoInstituicaoDTO? TipoInstiDTO { get; set; }
-
-        // [Required(ErrorMessage = "O Solicita Unidade Consumidora é requerido!")]
-
     }
 }
