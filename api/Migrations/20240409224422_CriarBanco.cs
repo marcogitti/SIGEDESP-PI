@@ -26,6 +26,19 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "instituicao",
+                columns: table => new
+                {
+                    instituicaoid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_instituicao", x => x.instituicaoid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "secretaria",
                 columns: table => new
                 {
@@ -113,6 +126,9 @@ namespace api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "fornecedor");
+
+            migrationBuilder.DropTable(
+                name: "instituicao");
 
             migrationBuilder.DropTable(
                 name: "secretaria");
