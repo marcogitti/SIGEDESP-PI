@@ -11,7 +11,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240331141920_CriarBanco")]
+    [Migration("20240409224422_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
