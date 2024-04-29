@@ -3,6 +3,7 @@ import 'package:front/app/components/Scaffold_comp.dart';
 import 'package:front/app/modules/Instituicao/tipo_instituicao_model.dart';
 import 'package:front/app/service/service.dart';
 import 'package:http/http.dart' as http;
+import 'package:result_dart/result_dart.dart';
 
 class SecretariaPage extends StatefulWidget {
   SecretariaPage({Key? key}) : super(key: key);
@@ -158,7 +159,7 @@ class _InstitutionScreenState extends State<SecretariaPage> {
                 padding: const EdgeInsets.only(top: 60),
                 child: Expanded(
                   child: FutureBuilder(
-                    future: service.getAll().getOrNull(),
+                    future: service.getAll(_controller).getOrNull(),
                     builder: (context, AsyncSnapshot snapshot) {
                       List<TipoInstituicaoModel> tp = snapshot.data;
                       return DataTable(
