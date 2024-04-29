@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/components/Scaffold_comp.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
-import 'package:front/app/service/service.dart';
-import 'package:http/http.dart' as http;
+import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:result_dart/result_dart.dart';
 
 class TipoDeDespesas extends StatefulWidget {
@@ -14,24 +13,11 @@ class TipoDeDespesas extends StatefulWidget {
 
 class _TipoDeDespesasState extends State<TipoDeDespesas> {
   final TextEditingController _controller = TextEditingController();
-  late IService service;
+  late TipoDeDespesasServiceImpl service;
 
   @override
   void initState() {
-    service = IService<TipoDespesasModel>(
-        path: 'TipoDespesa', classModel: TipoDespesasModel.new);
     super.initState();
-  }
-
-  Future<void> _saveToApi(String name) async {
-    var url = Uri.parse('https://localhost:7274/api/TipoDespesa');
-    var response = await http.post(url, body: {'tipoDespesa': name});
-
-    if (response.statusCode == 200) {
-      print('Dados salvos com sucesso.');
-    } else {
-      print('Erro ao salvar dados.');
-    }
   }
 
   @override
@@ -77,7 +63,12 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                             TextButton(
                               child: const Text('Salvar'),
                               onPressed: () {
-                                _saveToApi(_controller.text);
+                                Future(() => service
+                                        .postData(_controller.text)
+                                        .then((success) {})
+                                        .catchError((error) {
+                                      print(error);
+                                    }));
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -125,7 +116,7 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
               padding: const EdgeInsets.only(top: 60),
               child: Expanded(
                 child: FutureBuilder(
-                  future: service.getAll().getOrNull(),
+                  future: service.getAll(_controller).getOrNull(),
                   builder: (context, AsyncSnapshot snapshot) {
                     List<TipoDespesasModel> tp = snapshot.data;
                     return DataTable(
