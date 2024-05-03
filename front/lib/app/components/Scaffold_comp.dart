@@ -109,8 +109,7 @@ class ScaffoldComp extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
-                                return Modular.to
-                                    .navigate('/cadastroDeDespesas');
+                                return Modular.to.navigate('/tipoDeDespesas');
                               },
                             ),
                           ],

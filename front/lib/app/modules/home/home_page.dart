@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                   color: const Color.fromARGB(255, 224, 224, 224),
                   child: TextButton(
                     onPressed: () {
-                      Modular.to.navigate('/cadastroDeDespesas');
+                      Modular.to.navigate('/tipoDeDespesas');
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(top: 40),

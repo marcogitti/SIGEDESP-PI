@@ -31,6 +31,9 @@ namespace api.DTO.Mappings
 
             CreateMap<InstituicaoDTO, InstituicaoModel>();
             CreateMap<InstituicaoModel, InstituicaoDTO>().ReverseMap();
+
+            CreateMap<OrcamentoDTO, OrcamentoModel>();
+            CreateMap<OrcamentoModel, OrcamentoDTO>().ReverseMap();
         }
     }
 }

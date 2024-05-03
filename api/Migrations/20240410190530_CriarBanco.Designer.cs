@@ -11,7 +11,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240409224422_CriarBanco")]
+    [Migration("20240410190530_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -68,6 +68,30 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("instituicao");
+                });
+
+            modelBuilder.Entity("api.Models.OrcamentoModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("orcamentoid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnoOrcamento")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer")
+                        .HasColumnName("anoorcamento");
+
+                    b.Property<double>("ValorOrcamento")
+                        .HasMaxLength(50)
+                        .HasColumnType("double precision")
+                        .HasColumnName("valororcamento");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("orcamento");
                 });
 
             modelBuilder.Entity("api.Models.SecretariaModel", b =>
