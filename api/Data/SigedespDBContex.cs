@@ -18,6 +18,7 @@ namespace api.Data
         public DbSet<SecretariaModel> Secretaria { get; set; }
         public DbSet<FornecedorModel> Fornecedor { get; set; }
         public DbSet<InstituicaoModel> Instituicao { get; set; }
+        public DbSet<OrcamentoModel> Orcamento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,7 @@ namespace api.Data
             modelBuilder.ApplyConfiguration(new SecretariaMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
             modelBuilder.ApplyConfiguration(new InstituicaoMap());
+            modelBuilder.ApplyConfiguration(new OrcamentoMap());
             base.OnModelCreating(modelBuilder);
         }
     }

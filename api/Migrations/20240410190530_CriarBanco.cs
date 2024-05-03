@@ -39,6 +39,20 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "orcamento",
+                columns: table => new
+                {
+                    orcamentoid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    anoorcamento = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
+                    valororcamento = table.Column<double>(type: "double precision", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_orcamento", x => x.orcamentoid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "secretaria",
                 columns: table => new
                 {
@@ -129,6 +143,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "instituicao");
+
+            migrationBuilder.DropTable(
+                name: "orcamento");
 
             migrationBuilder.DropTable(
                 name: "secretaria");
