@@ -7,11 +7,11 @@ import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/home/home_page.dart';
 import 'package:front/app/modules/login/tipo_usuario_service.dart';
 import 'package:front/app/modules/login/usuario_service.dart';
+import 'package:front/app/modules/secretaria/secretaria_service.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_page.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_page.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_service.dart';
-import 'package:front/app/secretaria/secretaria_service.dart';
 import '../modules/despesas/tipo_despesas_page.dart';
 import '../modules/login/usuario_page.dart';
 

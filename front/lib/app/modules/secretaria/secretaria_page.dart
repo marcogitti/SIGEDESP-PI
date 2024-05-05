@@ -4,22 +4,21 @@ import 'package:front/app/modules/Instituicao/tipo_instituicao_model.dart';
 import 'package:front/app/service/service.dart';
 import 'package:http/http.dart' as http;
 import 'package:result_dart/result_dart.dart';
-// import 'package:result_dart/result_dart.dart';
 
-class TipoInstituicao extends StatefulWidget {
-  TipoInstituicao({Key? key}) : super(key: key);
+class SecretariaPage extends StatefulWidget {
+  SecretariaPage({Key? key}) : super(key: key);
 
   @override
-  State<TipoInstituicao> createState() => _TipoInstituicaoState();
+  State<SecretariaPage> createState() => _InstitutionScreenState();
 }
 
-class _TipoInstituicaoState extends State<TipoInstituicao> {
+class _InstitutionScreenState extends State<SecretariaPage> {
   final TextEditingController _controller = TextEditingController();
   late IService service;
 
   Future<void> _saveToApi(String name) async {
-    var url = Uri.parse('localhost:7274/api/TipoDespessa');
-    var response = await http.post(url, body: {'tipoDespesa': name});
+    var url = Uri.parse('localhost:7274/api/Secretaria');
+    var response = await http.post(url, body: {'Secretaria': name});
 
     if (response.statusCode == 200) {
       print('Dados salvos com sucesso.');
@@ -39,7 +38,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 50),
                 child: Text(
-                  "Tipo Instituição",
+                  "Secretaria",
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -55,11 +54,11 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: const Text('Cadastro de Tipo Instituição'),
+                            title: const Text('Cadastro de Secretaria'),
                             content: TextField(
                               controller: _controller,
                               decoration: const InputDecoration(
-                                hintText: 'Nome da Instituição',
+                                hintText: 'Nome da Secretaria',
                               ),
                             ),
                             actions: <Widget>[
@@ -81,7 +80,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                         },
                       );
                     },
-                    child: const Text('Cadastrar Tipo Instituição'),
+                    child: const Text('Cadastrar Secretaria'),
                   ),
                   const SizedBox(height: 30),
                   Row(
@@ -105,7 +104,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                       const Expanded(
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText: 'Buscar Tipo Instituição',
+                            hintText: 'Buscar Secretaria',
                             prefixIcon: Icon(Icons.search),
                             border: OutlineInputBorder(),
                           ),
