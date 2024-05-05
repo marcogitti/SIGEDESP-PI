@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/Scaffold_comp.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
@@ -12,12 +13,19 @@ class TipoDeDespesas extends StatefulWidget {
 }
 
 class _TipoDeDespesasState extends State<TipoDeDespesas> {
-  final TextEditingController _controller = TextEditingController();
-  late TipoDeDespesasServiceImpl service;
+  late TextEditingController _controller;
+  final service = Modular.get<TipoDeDespesasServiceImpl>();
 
   @override
   void initState() {
+    _controller = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -25,7 +33,7 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
     return ScaffoldComp(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
               padding: EdgeInsets.only(bottom: 50),
@@ -41,41 +49,8 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Cadastro de Despesas'),
-                          content: TextField(
-                            controller: _controller,
-                            decoration: const InputDecoration(
-                              hintText: 'Nome da Despesa',
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('Cancelar'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('Salvar'),
-                              onPressed: () {
-                                Future(() => service
-                                        .postData(_controller.text)
-                                        .then((success) {})
-                                        .catchError((error) {
-                                      print(error);
-                                    }));
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                  onPressed: () async {
+                    await modalCadastrar();
                   },
                   child: const Text('Cadastrar Nova Despesa'),
                 ),
@@ -114,21 +89,38 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
 
             Padding(
               padding: const EdgeInsets.only(top: 60),
-              child: Expanded(
-                child: FutureBuilder(
-                  future: service.getAll(_controller).getOrNull(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    List<TipoDespesasModel> tp = snapshot.data;
-                    return DataTable(
-                      border: TableBorder.all(),
-                      columns: const [DataColumn(label: Text('Descricao'))],
-                      rows: tp
-                          .map((e) =>
-                              DataRow(cells: [DataCell(Text(e.tipoDespesa))]))
-                          .toList(),
+              child: FutureBuilder(
+                future: service.getAll().getOrNull(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return Text("sem internet");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SizedBox(
+                        width: 26,
+                        height: 26,
+                        child: CircularProgressIndicator(),
+                      ),
                     );
-                  },
-                ),
+                  }
+
+                  if (snapshot.hasError) {
+                    return Text("Erro");
+                  }
+
+                  final tp = (snapshot.data ?? []).cast<TipoDespesasModel?>();
+                  return DataTable(
+                    border: TableBorder.all(),
+                    columns: const [DataColumn(label: Text('Descricao'))],
+                    rows: tp
+                        .map((e) => DataRow(
+                            cells: [DataCell(Text(e?.tipoDespesa ?? ''))]))
+                        .toList()
+                        .cast<DataRow>(),
+                  );
+                },
               ),
             )
             // Wrap(
@@ -154,5 +146,49 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
         ),
       ),
     );
+  }
+
+  Future<void> modalCadastrar() async {
+    TextEditingController descricaoTxt = TextEditingController();
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Cadastro de Despesas'),
+          content: TextField(
+            controller: descricaoTxt,
+            decoration: const InputDecoration(
+              hintText: 'Nome da Despesa',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Salvar'),
+              onPressed: () async {
+                //tela load
+                final resp = await service.postData(TipoDespesasModel(
+                  tipoDespesa: descricaoTxt.text,
+                  solicitaUC: 'SP',
+                ).toJson());
+                resp.fold((success) {
+                  Navigator.of(context).pop();
+                  setState(() {});
+                }, (failure) {
+                  //snack bar
+                  print('erro');
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+    descricaoTxt.dispose();
   }
 }
