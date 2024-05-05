@@ -160,7 +160,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                 padding: const EdgeInsets.only(top: 60),
                 child: Expanded(
                   child: FutureBuilder(
-                    future: service.getAll(_controller).getOrNull(),
+                    future: service.getAll().getOrNull(),
                     builder: (context, AsyncSnapshot snapshot) {
                       List<TipoInstituicaoModel> tp = snapshot.data;
                       return DataTable(

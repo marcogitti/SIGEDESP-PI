@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Route("api/tipodespesa")]
+    [Route("api/tipo/despesa")]
     [ApiController]
     public class TipoDespesaController : ControllerBase
     {
