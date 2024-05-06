@@ -133,6 +133,32 @@ namespace api.Migrations
                 {
                     table.PrimaryKey("PK_unidademedida", x => x.unidademedidaid);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "usuario",
+                columns: table => new
+                {
+                    usuarioid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cpfcnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    rgle = table.Column<int>(type: "integer", nullable: false),
+                    logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
+                    cidade = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    estado = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cep = table.Column<int>(type: "integer", nullable: false),
+                    bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    senha = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    matricula = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_usuario", x => x.usuarioid);
+                });
         }
 
         /// <inheritdoc />
@@ -164,6 +190,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "unidademedida");
+
+            migrationBuilder.DropTable(
+                name: "usuario");
         }
     }
 }
