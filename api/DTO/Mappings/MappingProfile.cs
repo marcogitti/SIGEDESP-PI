@@ -34,6 +34,9 @@ namespace api.DTO.Mappings
 
             CreateMap<OrcamentoDTO, OrcamentoModel>();
             CreateMap<OrcamentoModel, OrcamentoDTO>().ReverseMap();
+
+            CreateMap<UsuarioDTO, UsuarioModel>();
+            CreateMap<UsuarioModel, UsuarioDTO>().ReverseMap();
         }
     }
 }
