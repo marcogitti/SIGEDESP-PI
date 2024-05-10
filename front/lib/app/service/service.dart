@@ -3,52 +3,99 @@ import 'dart:convert';
 import 'package:dson_adapter/dson_adapter.dart';
 import 'package:result_dart/result_dart.dart';
 
-class IService<T> {
+class IService<T extends Object> {
   final String path;
-  final Function classModel;
+  final Function mainConstructor;
 
-  IService({required this.path, required this.classModel});
+  IService({required this.path, required this.mainConstructor});
 
-  AsyncResult<List<T>, String> getById(int id) async {
-    final response =
-        await http.get(Uri.http('https://localhost:7274/api/$path'));
+  Future<Result<T, String>> getById(int id, classModel) async {
+    try {
+      final response = await http.get(Uri.http('localhost:7274', '/api/$path'));
 
-    if (response.statusCode == 200) {
-      return (DSON().fromJson(response.body, classModel)).toSuccess();
-    } else {
-      return 'Falha ao carregar dados da API'.toFailure();
+      if (response.statusCode == 200) {
+        return (const DSON().fromJson(response.body, mainConstructor))
+            .toSuccess();
+      } else {
+        return 'Falha ao carregar dados da API'.toFailure();
+      }
+    } catch (e) {
+      return 'Erro ao processar requisição: $e'.toFailure();
     }
   }
 
-  getAll() {}
-
-  // Future Result<List<T>, String> getAll() async {
-  //   final response =
-  //       await http.get(Uri.http('https://localhost:7274/api/$path'));
-
-    // if (true) {
-    //   final List<Map> resp = [
-    //     {"id": 0, "tipoDespesa": "string", "solicitaUC": "string"},
-    //     {"id": 1, "tipoDespesa": "carro", "solicitaUC": "string"},
-    //   ];
-    //   return resp
-    //       .map((e) => DSON().fromJson(e, classModel))
-    //       .toList()
-    //       .cast<T>()
-    //       .toSuccess();
-    // } else {
-    //   return 'Falha ao carregar dados da API'.toFailure();
-    // }
+  Future<Result<List<T>, String>> getAll() async {
+    try {
+      final response =
+          await http.get(Uri.https('localhost:7274', '/api/$path'));
+      await Future.delayed(Duration(seconds: 4));
+      if (response.statusCode == 200) {
+        final decodedData = jsonDecode(response.body) as List;
+        final dataList = decodedData
+            .map((e) => const DSON().fromJson(e, mainConstructor))
+            .toList()
+            .cast<T>();
+        return dataList.toSuccess();
+      } else {
+        return 'Falha ao carregar dados da API'.toFailure();
+      }
+    } catch (e) {
+      return 'Erro ao processar requisição: $e'.toFailure();
+    }
   }
 
-  Future<T?> postDados(Map body) async {
-    final response = await http
-        .post(Uri.http('https://localhost:7274/api/$path'), body: body);
+  Future<Result<T, String>> postData(T data) async {
+    try {
+      final response = await http.post(
+        Uri.https('localhost:7274', '/api/$path'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: data,
+      );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Falha ao carregar dados da API');
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return data.toSuccess();
+      } else {
+        return 'Falha ao enviar dados para a API'.toFailure();
+      }
+    } catch (e) {
+      return 'Erro ao processar requisição: $e'.toFailure();
+    }
+  }
+
+  Future<Result<T, String>> editData(int id, T data) async {
+    try {
+      final response = await http.put(
+        Uri.http('localhost:7274', '/api/$path/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        return data.toSuccess();
+      } else {
+        return 'Falha ao editar dados na API'.toFailure();
+      }
+    } catch (e) {
+      return 'Erro ao processar requisição: $e'.toFailure();
+    }
+  }
+
+  Future<Result<String, String>> deleteData(int id) async {
+    try {
+      final response =
+          await http.delete(Uri.http('localhost:7274', '/api/$path/$id'));
+
+      if (response.statusCode == 200) {
+        return 'apagado com sucesso'.toSuccess();
+      } else {
+        return 'Falha ao excluir dados na API'.toFailure();
+      }
+    } catch (e) {
+      return 'Erro ao processar requisição: $e'.toFailure();
     }
   }
 }

@@ -61,6 +61,12 @@ namespace Sigedesp
             builder.Services.AddTransient<ISecretariaService, SecretariaService>();
             builder.Services.AddTransient<IFornecedorRepositorio, FornecedorRepositorio>();
             builder.Services.AddTransient<IFornecedorService, FornecedorService>();
+            builder.Services.AddTransient<IInstituicaoRepositorio, InstituicaoRepositorio>();
+            builder.Services.AddTransient<IInstituicaoService, InstituicaoService>();
+            builder.Services.AddTransient<IOrcamentoRepositorio, OrcamentoRepositorio>();
+            builder.Services.AddTransient<IOrcamentoService, OrcamentoService>();
+            builder.Services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 
             var app = builder.Build();
 

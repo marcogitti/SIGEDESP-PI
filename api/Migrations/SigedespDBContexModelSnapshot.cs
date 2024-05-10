@@ -16,7 +16,7 @@ namespace api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.16")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -45,6 +45,50 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("fornecedor");
+                });
+
+            modelBuilder.Entity("api.Models.InstituicaoModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("instituicaoid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Situacao")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("situacao");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("instituicao");
+                });
+
+            modelBuilder.Entity("api.Models.OrcamentoModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("orcamentoid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnoOrcamento")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer")
+                        .HasColumnName("anoorcamento");
+
+                    b.Property<double>("ValorOrcamento")
+                        .HasMaxLength(50)
+                        .HasColumnType("double precision")
+                        .HasColumnName("valororcamento");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("orcamento");
                 });
 
             modelBuilder.Entity("api.Models.SecretariaModel", b =>
@@ -187,6 +231,98 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("unidademedida");
+                });
+
+            modelBuilder.Entity("api.Models.UsuarioModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("usuarioid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("bairro");
+
+                    b.Property<int>("CEP")
+                        .HasColumnType("integer")
+                        .HasColumnName("cep");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("cidade");
+
+                    b.Property<string>("CpfCnpj")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("cpfcnpj");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("estado");
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("logradouro");
+
+                    b.Property<string>("Matricula")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("matricula");
+
+                    b.Property<string>("NomeRazaoSocial")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("nomerazaosocial");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("integer")
+                        .HasColumnName("numero");
+
+                    b.Property<int>("RgLe")
+                        .HasColumnType("integer")
+                        .HasColumnName("rgle");
+
+                    b.Property<string>("Rua")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("rua");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("senha");
+
+                    b.Property<string>("Situacao")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("situacao");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("usuario");
                 });
 #pragma warning restore 612, 618
         }
