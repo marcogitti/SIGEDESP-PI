@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class TipoDespesaDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "O nome do Tipo Despesa é requerido!")]
         [MinLength(1)]

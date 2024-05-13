@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class UnidadeMedidaDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "A descrição da Unidade de Medida é requerida!")]
         [MinLength(1)]
