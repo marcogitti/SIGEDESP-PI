@@ -16,7 +16,6 @@ public class UnidadeConsumidoraModel
     [Column("unidadeconsumidora")]
     public int CodigoUC { get; set; }
 
-    [JsonIgnore]
     public FornecedorModel? Fornecedor { get; set; }
 
     [Column("fornecedorid")]
