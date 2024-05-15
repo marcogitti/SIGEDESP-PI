@@ -18,11 +18,17 @@ namespace api.Migrations
                     fornecedorid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nomefantasia = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    FornecedorModelId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_fornecedor", x => x.fornecedorid);
+                    table.ForeignKey(
+                        name: "FK_fornecedor_fornecedor_FornecedorModelId",
+                        column: x => x.FornecedorModelId,
+                        principalTable: "fornecedor",
+                        principalColumn: "fornecedorid");
                 });
 
             migrationBuilder.CreateTable(
@@ -108,19 +114,6 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "unidadeconsumidora",
-                columns: table => new
-                {
-                    unidadeconsumidoraid = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    unidadeconsumidora = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_unidadeconsumidora", x => x.unidadeconsumidoraid);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "unidademedida",
                 columns: table => new
                 {
@@ -159,14 +152,41 @@ namespace api.Migrations
                 {
                     table.PrimaryKey("PK_usuario", x => x.usuarioid);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "unidadeconsumidora",
+                columns: table => new
+                {
+                    unidadeconsumidoraid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    unidadeconsumidora = table.Column<int>(type: "integer", nullable: false),
+                    fornecedorid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_unidadeconsumidora", x => x.unidadeconsumidoraid);
+                    table.ForeignKey(
+                        name: "FK_unidadeconsumidora_fornecedor_fornecedorid",
+                        column: x => x.fornecedorid,
+                        principalTable: "fornecedor",
+                        principalColumn: "fornecedorid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_fornecedor_FornecedorModelId",
+                table: "fornecedor",
+                column: "FornecedorModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_unidadeconsumidora_fornecedorid",
+                table: "unidadeconsumidora",
+                column: "fornecedorid");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "fornecedor");
-
             migrationBuilder.DropTable(
                 name: "instituicao");
 
@@ -193,6 +213,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "usuario");
+
+            migrationBuilder.DropTable(
+                name: "fornecedor");
         }
     }
 }

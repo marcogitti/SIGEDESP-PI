@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class InstituicaoDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "A Situação é requerida!")]
         [MinLength(1)]
