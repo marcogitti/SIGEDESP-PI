@@ -22,4 +22,10 @@ public class InstituicaoModel
     [Column("tipoinstituicaoid")]
     [ForeignKey("tipoinstituicaoid")]
     public int IdTipoInstituicao { get; set; }
+
+    public SecretariaModel? Secretaria { get; set; }
+
+    [Column("secretariaid")]
+    [ForeignKey("secretariaid")]
+    public int IdSecretaria { get; set; }
 }
