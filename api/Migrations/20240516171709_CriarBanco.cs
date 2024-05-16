@@ -66,20 +66,6 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tipodespesa",
-                columns: table => new
-                {
-                    tipodespesaid = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    tipodespesa = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    solicitauc = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tipodespesa", x => x.tipodespesaid);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tipoinstituicao",
                 columns: table => new
                 {
@@ -119,11 +105,17 @@ namespace api.Migrations
                     unidademedidaid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     descrição = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    abreviatura = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    abreviatura = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    UnidadeMedidaModelId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_unidademedida", x => x.unidademedidaid);
+                    table.ForeignKey(
+                        name: "FK_unidademedida_unidademedida_UnidadeMedidaModelId",
+                        column: x => x.UnidadeMedidaModelId,
+                        principalTable: "unidademedida",
+                        principalColumn: "unidademedidaid");
                 });
 
             migrationBuilder.CreateTable(
@@ -199,6 +191,27 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "tipodespesa",
+                columns: table => new
+                {
+                    tipodespesaid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    tipodespesa = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    solicitauc = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    unidademedidaid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tipodespesa", x => x.tipodespesaid);
+                    table.ForeignKey(
+                        name: "FK_tipodespesa_unidademedida_unidademedidaid",
+                        column: x => x.unidademedidaid,
+                        principalTable: "unidademedida",
+                        principalColumn: "unidademedidaid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_fornecedor_FornecedorModelId",
                 table: "fornecedor",
@@ -220,6 +233,11 @@ namespace api.Migrations
                 column: "SecretariaModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tipodespesa_unidademedidaid",
+                table: "tipodespesa",
+                column: "unidademedidaid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tipoinstituicao_TipoInstituicaoModelId",
                 table: "tipoinstituicao",
                 column: "TipoInstituicaoModelId");
@@ -228,6 +246,11 @@ namespace api.Migrations
                 name: "IX_unidadeconsumidora_fornecedorid",
                 table: "unidadeconsumidora",
                 column: "fornecedorid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_unidademedida_UnidadeMedidaModelId",
+                table: "unidademedida",
+                column: "UnidadeMedidaModelId");
         }
 
         /// <inheritdoc />
@@ -249,9 +272,6 @@ namespace api.Migrations
                 name: "unidadeconsumidora");
 
             migrationBuilder.DropTable(
-                name: "unidademedida");
-
-            migrationBuilder.DropTable(
                 name: "usuario");
 
             migrationBuilder.DropTable(
@@ -259,6 +279,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "tipoinstituicao");
+
+            migrationBuilder.DropTable(
+                name: "unidademedida");
 
             migrationBuilder.DropTable(
                 name: "fornecedor");

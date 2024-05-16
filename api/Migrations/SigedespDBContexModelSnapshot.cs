@@ -149,6 +149,10 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("IdUnidadeMedida")
+                        .HasColumnType("integer")
+                        .HasColumnName("unidademedidaid");
+
                     b.Property<string>("SolicitaUC")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -162,6 +166,8 @@ namespace api.Migrations
                         .HasColumnName("tipodespesa");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUnidadeMedida");
 
                     b.ToTable("tipodespesa");
                 });
@@ -262,7 +268,12 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("descrição");
 
+                    b.Property<int?>("UnidadeMedidaModelId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UnidadeMedidaModelId");
 
                     b.ToTable("unidademedida");
                 });
@@ -392,6 +403,17 @@ namespace api.Migrations
                         .HasForeignKey("SecretariaModelId");
                 });
 
+            modelBuilder.Entity("api.Models.TipoDespesaModel", b =>
+                {
+                    b.HasOne("api.Models.UnidadeMedidaModel", "UnidadeMedida")
+                        .WithMany()
+                        .HasForeignKey("IdUnidadeMedida")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UnidadeMedida");
+                });
+
             modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
                 {
                     b.HasOne("api.Models.TipoInstituicaoModel", null)
@@ -410,6 +432,13 @@ namespace api.Migrations
                     b.Navigation("Fornecedor");
                 });
 
+            modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
+                {
+                    b.HasOne("api.Models.UnidadeMedidaModel", null)
+                        .WithMany("UnidadeMedida")
+                        .HasForeignKey("UnidadeMedidaModelId");
+                });
+
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
                     b.Navigation("Fornecedor");
@@ -423,6 +452,11 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
                 {
                     b.Navigation("TipoInstituicaoLista");
+                });
+
+            modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
+                {
+                    b.Navigation("UnidadeMedida");
                 });
 #pragma warning restore 612, 618
         }
