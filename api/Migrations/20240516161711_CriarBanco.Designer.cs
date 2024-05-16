@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240514113256_CriarBanco")]
+    [Migration("20240516161711_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -65,6 +65,10 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("IdTipoInstituicao")
+                        .HasColumnType("integer")
+                        .HasColumnName("tipoinstituicaoid");
+
                     b.Property<string>("Situacao")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -72,6 +76,8 @@ namespace api.Migrations
                         .HasColumnName("situacao");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdTipoInstituicao");
 
                     b.ToTable("instituicao");
                 });
@@ -167,7 +173,12 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("tipoinstituicao");
 
+                    b.Property<int?>("TipoInstituicaoModelId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TipoInstituicaoModelId");
 
                     b.ToTable("tipoinstituicao");
                 });
@@ -347,6 +358,24 @@ namespace api.Migrations
                         .HasForeignKey("FornecedorModelId");
                 });
 
+            modelBuilder.Entity("api.Models.InstituicaoModel", b =>
+                {
+                    b.HasOne("api.Models.TipoInstituicaoModel", "tipoInstituicao")
+                        .WithMany()
+                        .HasForeignKey("IdTipoInstituicao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tipoInstituicao");
+                });
+
+            modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
+                {
+                    b.HasOne("api.Models.TipoInstituicaoModel", null)
+                        .WithMany("tipoInstituicao")
+                        .HasForeignKey("TipoInstituicaoModelId");
+                });
+
             modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
                 {
                     b.HasOne("api.Models.FornecedorModel", "Fornecedor")
@@ -361,6 +390,11 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
                     b.Navigation("Fornecedor");
+                });
+
+            modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
+                {
+                    b.Navigation("tipoInstituicao");
                 });
 #pragma warning restore 612, 618
         }

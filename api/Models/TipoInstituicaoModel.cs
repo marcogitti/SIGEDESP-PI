@@ -17,5 +17,5 @@ public class TipoInstituicaoModel
     public string TipoInstituicao { get; set; }
 
     [JsonIgnore]
-    public ICollection<TipoInstituicaoModel>? tipoInstituicao { get; set; }
+    public ICollection<TipoInstituicaoModel>? TipoInstituicaoLista { get; set; }
 }

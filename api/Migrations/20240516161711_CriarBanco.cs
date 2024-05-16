@@ -32,19 +32,6 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "instituicao",
-                columns: table => new
-                {
-                    instituicaoid = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_instituicao", x => x.instituicaoid);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "orcamento",
                 columns: table => new
                 {
@@ -92,11 +79,17 @@ namespace api.Migrations
                 {
                     tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    tipoinstituicao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    tipoinstituicao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    TipoInstituicaoModelId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tipoinstituicao", x => x.tipoinstituicaoid);
+                    table.ForeignKey(
+                        name: "FK_tipoinstituicao_tipoinstituicao_TipoInstituicaoModelId",
+                        column: x => x.TipoInstituicaoModelId,
+                        principalTable: "tipoinstituicao",
+                        principalColumn: "tipoinstituicaoid");
                 });
 
             migrationBuilder.CreateTable(
@@ -173,10 +166,40 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "instituicao",
+                columns: table => new
+                {
+                    instituicaoid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_instituicao", x => x.instituicaoid);
+                    table.ForeignKey(
+                        name: "FK_instituicao_tipoinstituicao_tipoinstituicaoid",
+                        column: x => x.tipoinstituicaoid,
+                        principalTable: "tipoinstituicao",
+                        principalColumn: "tipoinstituicaoid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_fornecedor_FornecedorModelId",
                 table: "fornecedor",
                 column: "FornecedorModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_instituicao_tipoinstituicaoid",
+                table: "instituicao",
+                column: "tipoinstituicaoid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tipoinstituicao_TipoInstituicaoModelId",
+                table: "tipoinstituicao",
+                column: "TipoInstituicaoModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_unidadeconsumidora_fornecedorid",
@@ -200,9 +223,6 @@ namespace api.Migrations
                 name: "tipodespesa");
 
             migrationBuilder.DropTable(
-                name: "tipoinstituicao");
-
-            migrationBuilder.DropTable(
                 name: "tipousuario");
 
             migrationBuilder.DropTable(
@@ -213,6 +233,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "usuario");
+
+            migrationBuilder.DropTable(
+                name: "tipoinstituicao");
 
             migrationBuilder.DropTable(
                 name: "fornecedor");
