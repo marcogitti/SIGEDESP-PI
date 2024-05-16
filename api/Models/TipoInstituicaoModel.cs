@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models;
 
@@ -14,4 +15,7 @@ public class TipoInstituicaoModel
 
     [Column("tipoinstituicao")]
     public string TipoInstituicao { get; set; }
+
+    [JsonIgnore]
+    public ICollection<TipoInstituicaoModel>? tipoInstituicao { get; set; }
 }

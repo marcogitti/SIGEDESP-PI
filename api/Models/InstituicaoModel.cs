@@ -16,4 +16,9 @@ public class InstituicaoModel
 
     [Column("situacao")]
     public string Situacao { get; set; }
+    public TipoInstituicaoModel? tipoInstituicao { get; set; }
+
+    [Column("tipoinstituicaoid")]
+    [ForeignKey("tipoinstituicaoid")]
+    public int IdTipoInstituicao { get; set; }
 }
