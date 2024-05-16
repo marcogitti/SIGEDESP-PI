@@ -52,11 +52,17 @@ namespace api.Migrations
                     secretariaid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    SecretariaModelId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_secretaria", x => x.secretariaid);
+                    table.ForeignKey(
+                        name: "FK_secretaria_secretaria_SecretariaModelId",
+                        column: x => x.SecretariaModelId,
+                        principalTable: "secretaria",
+                        principalColumn: "secretariaid");
                 });
 
             migrationBuilder.CreateTable(
@@ -173,11 +179,18 @@ namespace api.Migrations
                     instituicaoid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false)
+                    tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false),
+                    secretariaid = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_instituicao", x => x.instituicaoid);
+                    table.ForeignKey(
+                        name: "FK_instituicao_secretaria_secretariaid",
+                        column: x => x.secretariaid,
+                        principalTable: "secretaria",
+                        principalColumn: "secretariaid",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_instituicao_tipoinstituicao_tipoinstituicaoid",
                         column: x => x.tipoinstituicaoid,
@@ -192,9 +205,19 @@ namespace api.Migrations
                 column: "FornecedorModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_instituicao_secretariaid",
+                table: "instituicao",
+                column: "secretariaid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_instituicao_tipoinstituicaoid",
                 table: "instituicao",
                 column: "tipoinstituicaoid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_secretaria_SecretariaModelId",
+                table: "secretaria",
+                column: "SecretariaModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tipoinstituicao_TipoInstituicaoModelId",
@@ -217,9 +240,6 @@ namespace api.Migrations
                 name: "orcamento");
 
             migrationBuilder.DropTable(
-                name: "secretaria");
-
-            migrationBuilder.DropTable(
                 name: "tipodespesa");
 
             migrationBuilder.DropTable(
@@ -233,6 +253,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "usuario");
+
+            migrationBuilder.DropTable(
+                name: "secretaria");
 
             migrationBuilder.DropTable(
                 name: "tipoinstituicao");

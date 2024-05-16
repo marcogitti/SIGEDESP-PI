@@ -62,6 +62,10 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("IdSecretaria")
+                        .HasColumnType("integer")
+                        .HasColumnName("secretariaid");
+
                     b.Property<int>("IdTipoInstituicao")
                         .HasColumnType("integer")
                         .HasColumnName("tipoinstituicaoid");
@@ -73,6 +77,8 @@ namespace api.Migrations
                         .HasColumnName("situacao");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdSecretaria");
 
                     b.HasIndex("IdTipoInstituicao");
 
@@ -118,6 +124,9 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("descricao");
 
+                    b.Property<int?>("SecretariaModelId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Situacao")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -125,6 +134,8 @@ namespace api.Migrations
                         .HasColumnName("situacao");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SecretariaModelId");
 
                     b.ToTable("secretaria");
                 });
@@ -357,19 +368,34 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.InstituicaoModel", b =>
                 {
+                    b.HasOne("api.Models.SecretariaModel", "Secretaria")
+                        .WithMany()
+                        .HasForeignKey("IdSecretaria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("api.Models.TipoInstituicaoModel", "tipoInstituicao")
                         .WithMany()
                         .HasForeignKey("IdTipoInstituicao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Secretaria");
+
                     b.Navigation("tipoInstituicao");
+                });
+
+            modelBuilder.Entity("api.Models.SecretariaModel", b =>
+                {
+                    b.HasOne("api.Models.SecretariaModel", null)
+                        .WithMany("Secretaria")
+                        .HasForeignKey("SecretariaModelId");
                 });
 
             modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
                 {
                     b.HasOne("api.Models.TipoInstituicaoModel", null)
-                        .WithMany("tipoInstituicao")
+                        .WithMany("TipoInstituicaoLista")
                         .HasForeignKey("TipoInstituicaoModelId");
                 });
 
@@ -389,9 +415,14 @@ namespace api.Migrations
                     b.Navigation("Fornecedor");
                 });
 
+            modelBuilder.Entity("api.Models.SecretariaModel", b =>
+                {
+                    b.Navigation("Secretaria");
+                });
+
             modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
                 {
-                    b.Navigation("tipoInstituicao");
+                    b.Navigation("TipoInstituicaoLista");
                 });
 #pragma warning restore 612, 618
         }
