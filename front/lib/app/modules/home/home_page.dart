@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                   color: const Color.fromARGB(255, 224, 224, 224),
                   child: TextButton(
                     onPressed: () {
-                      Modular.to.navigate('/institutionScreen');
+                      Modular.to.navigate('//instituicaoPage');
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(top: 40),
@@ -79,24 +79,52 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("Cadastro de "),
+                          Text("Cadastro de Tipo"),
                           Text("Despesas"),
                         ],
                       ),
                     ),
                   ),
                 ),
-                const MyCardComp(
+                MyCardComp(
                   height: 150,
                   width: 200,
-                  color: Color.fromARGB(255, 224, 224, 224),
-                  child: Text("data"),
+                  color: const Color.fromARGB(255, 224, 224, 224),
+                  child: TextButton(
+                    onPressed: () {
+                      Modular.to.navigate('/unidadeDeMedida');
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 40),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Cadastro de Unidade"),
+                          Text("De Medida"),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                const MyCardComp(
+                MyCardComp(
                   height: 150,
                   width: 200,
-                  color: Color.fromARGB(255, 224, 224, 224),
-                  child: Text("data"),
+                  color: const Color.fromARGB(255, 224, 224, 224),
+                  child: TextButton(
+                    onPressed: () {
+                      Modular.to.navigate('/unidadeConsumidora');
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 40),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Cadastro de Unidade"),
+                          Text("Consumidora"),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

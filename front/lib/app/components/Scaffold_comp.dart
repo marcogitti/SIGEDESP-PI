@@ -100,16 +100,43 @@ class ScaffoldComp extends StatelessWidget {
                               ),
                               onTap: () {
                                 return Modular.to
-                                    .navigate('/institutionScreen');
+                                    .navigate('/instituicaoPage');
                               },
                             ),
                             ListTile(
                               title: const Text(
-                                'Cadastro de Despesas',
+                                'Cadastro de Tipo Despesas',
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
                                 return Modular.to.navigate('/tipoDeDespesas');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Tipo Instituição',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/tipoInstituicaoPage');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Unidade DeMedida',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/unidadeDeMedida');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Unidade Consumidora',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/unidadeConsumidora');
                               },
                             ),
                           ],

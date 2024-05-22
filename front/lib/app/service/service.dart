@@ -2,17 +2,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:dson_adapter/dson_adapter.dart';
 import 'package:result_dart/result_dart.dart';
-
+ 
 class IService<T extends Object> {
   final String path;
   final Function mainConstructor;
-
+ 
   IService({required this.path, required this.mainConstructor});
-
+ 
   Future<Result<T, String>> getById(int id, classModel) async {
     try {
       final response = await http.get(Uri.http('localhost:7274', '/api/$path'));
-
+ 
       if (response.statusCode == 200) {
         return (const DSON().fromJson(response.body, mainConstructor))
             .toSuccess();
@@ -23,7 +23,7 @@ class IService<T extends Object> {
       return 'Erro ao processar requisição: $e'.toFailure();
     }
   }
-
+ 
   Future<Result<List<T>, String>> getAll() async {
     try {
       final response =
@@ -43,7 +43,7 @@ class IService<T extends Object> {
       return 'Erro ao processar requisição: $e'.toFailure();
     }
   }
-
+ 
   Future<Result<T, String>> postData(T data) async {
     try {
       final response = await http.post(
@@ -53,7 +53,7 @@ class IService<T extends Object> {
         },
         body: data,
       );
-
+ 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return data.toSuccess();
       } else {
@@ -63,7 +63,7 @@ class IService<T extends Object> {
       return 'Erro ao processar requisição: $e'.toFailure();
     }
   }
-
+ 
   Future<Result<T, String>> editData(int id, T data) async {
     try {
       final response = await http.put(
@@ -73,7 +73,7 @@ class IService<T extends Object> {
         },
         body: jsonEncode(data),
       );
-
+ 
       if (response.statusCode == 200) {
         return data.toSuccess();
       } else {
@@ -83,12 +83,12 @@ class IService<T extends Object> {
       return 'Erro ao processar requisição: $e'.toFailure();
     }
   }
-
+ 
   Future<Result<String, String>> deleteData(int id) async {
     try {
       final response =
           await http.delete(Uri.http('localhost:7274', '/api/$path/$id'));
-
+ 
       if (response.statusCode == 200) {
         return 'apagado com sucesso'.toSuccess();
       } else {
@@ -99,3 +99,4 @@ class IService<T extends Object> {
     }
   }
 }
+ 

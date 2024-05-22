@@ -35,10 +35,11 @@ class AppModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_) => const HomePage());
-    r.child('/institutionScreen', child: (_) => InstitutionScreen());
-    r.child('/tipoDeDespesas', child: (_) => TipoDeDespesas());
-    r.child('/tipoUnidadeDeMedida', child: (_) => UnidadeDeMedidaPage());
-    r.child('/tipoUnidadeConsumidora', child: (_) => UnidadeConsumidoraPage());
+    r.child('/instituicaoPage', child: (_) => const InstituicaoPage());
+    r.child('/tipoInstituicaoPage', child: (_) => const InstituicaoPage());
+    r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesas());
+    r.child('/unidadeDeMedida', child: (_) => const UnidadeDeMedidaPage());
+    r.child('/unidadeConsumidora', child: (_) => UnidadeConsumidoraPage());
     r.child('/usuarioPage', child: (_) => const UsuarioPage());
     super.routes(r);
   }
