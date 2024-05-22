@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models;
 
@@ -17,4 +18,7 @@ public class UnidadeMedidaModel
 
     [Column("abreviatura")]
     public string Abreviatura { get; set; }
+
+    [JsonIgnore]
+    public ICollection<UnidadeMedidaModel>? UnidadeMedida { get; set; }
 }

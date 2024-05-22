@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using api.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace api.DTO.Entities
@@ -14,6 +15,12 @@ namespace api.DTO.Entities
 
         [Required(ErrorMessage = "O Solicita Unidade Consumidora é requerido!")]
         public string SolicitaUC { get; set; }
+
+        [JsonIgnore]
+        public UnidadeMedidaModel? UnidadeMedida { get; set; }
+
+        [Required(ErrorMessage = "O ID de Unidade de Medida é requerido!")]
+        public int IdUnidadeMedida { get; set; }
 
     }
 }

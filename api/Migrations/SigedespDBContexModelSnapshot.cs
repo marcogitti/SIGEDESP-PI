@@ -62,6 +62,14 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("IdSecretaria")
+                        .HasColumnType("integer")
+                        .HasColumnName("secretariaid");
+
+                    b.Property<int>("IdTipoInstituicao")
+                        .HasColumnType("integer")
+                        .HasColumnName("tipoinstituicaoid");
+
                     b.Property<string>("Situacao")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -69,6 +77,10 @@ namespace api.Migrations
                         .HasColumnName("situacao");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdSecretaria");
+
+                    b.HasIndex("IdTipoInstituicao");
 
                     b.ToTable("instituicao");
                 });
@@ -112,6 +124,9 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("descricao");
 
+                    b.Property<int?>("SecretariaModelId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Situacao")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -119,6 +134,8 @@ namespace api.Migrations
                         .HasColumnName("situacao");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SecretariaModelId");
 
                     b.ToTable("secretaria");
                 });
@@ -131,6 +148,10 @@ namespace api.Migrations
                         .HasColumnName("tipodespesaid");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdUnidadeMedida")
+                        .HasColumnType("integer")
+                        .HasColumnName("unidademedidaid");
 
                     b.Property<string>("SolicitaUC")
                         .IsRequired()
@@ -145,6 +166,8 @@ namespace api.Migrations
                         .HasColumnName("tipodespesa");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUnidadeMedida");
 
                     b.ToTable("tipodespesa");
                 });
@@ -164,7 +187,12 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("tipoinstituicao");
 
+                    b.Property<int?>("TipoInstituicaoModelId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TipoInstituicaoModelId");
 
                     b.ToTable("tipoinstituicao");
                 });
@@ -240,7 +268,12 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("descrição");
 
+                    b.Property<int?>("UnidadeMedidaModelId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UnidadeMedidaModelId");
 
                     b.ToTable("unidademedida");
                 });
@@ -344,6 +377,50 @@ namespace api.Migrations
                         .HasForeignKey("FornecedorModelId");
                 });
 
+            modelBuilder.Entity("api.Models.InstituicaoModel", b =>
+                {
+                    b.HasOne("api.Models.SecretariaModel", "Secretaria")
+                        .WithMany()
+                        .HasForeignKey("IdSecretaria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.TipoInstituicaoModel", "tipoInstituicao")
+                        .WithMany()
+                        .HasForeignKey("IdTipoInstituicao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Secretaria");
+
+                    b.Navigation("tipoInstituicao");
+                });
+
+            modelBuilder.Entity("api.Models.SecretariaModel", b =>
+                {
+                    b.HasOne("api.Models.SecretariaModel", null)
+                        .WithMany("Secretaria")
+                        .HasForeignKey("SecretariaModelId");
+                });
+
+            modelBuilder.Entity("api.Models.TipoDespesaModel", b =>
+                {
+                    b.HasOne("api.Models.UnidadeMedidaModel", "UnidadeMedida")
+                        .WithMany()
+                        .HasForeignKey("IdUnidadeMedida")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UnidadeMedida");
+                });
+
+            modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
+                {
+                    b.HasOne("api.Models.TipoInstituicaoModel", null)
+                        .WithMany("TipoInstituicaoLista")
+                        .HasForeignKey("TipoInstituicaoModelId");
+                });
+
             modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
                 {
                     b.HasOne("api.Models.FornecedorModel", "Fornecedor")
@@ -355,9 +432,31 @@ namespace api.Migrations
                     b.Navigation("Fornecedor");
                 });
 
+            modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
+                {
+                    b.HasOne("api.Models.UnidadeMedidaModel", null)
+                        .WithMany("UnidadeMedida")
+                        .HasForeignKey("UnidadeMedidaModelId");
+                });
+
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
                     b.Navigation("Fornecedor");
+                });
+
+            modelBuilder.Entity("api.Models.SecretariaModel", b =>
+                {
+                    b.Navigation("Secretaria");
+                });
+
+            modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
+                {
+                    b.Navigation("TipoInstituicaoLista");
+                });
+
+            modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
+                {
+                    b.Navigation("UnidadeMedida");
                 });
 #pragma warning restore 612, 618
         }
