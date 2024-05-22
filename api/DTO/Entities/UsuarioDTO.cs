@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class UsuarioDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "O CPF ou o CNPJ do Usuario é requerida!")]
         [MinLength(1)]

@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class TipoUsuarioDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "O Descrição do Tipo Usuario é requerida!")]
         [MinLength(1)]

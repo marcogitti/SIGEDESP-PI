@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class SecretariaDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "A Situação da Secretaria é requerida!")]
         [MinLength(1)]

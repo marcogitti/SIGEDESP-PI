@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models;
 
@@ -19,4 +20,7 @@ public class SecretariaModel
 
     [Column("descricao")]
     public string Descricao { get; set; }
+
+    [JsonIgnore]
+    public ICollection<SecretariaModel>? Secretaria { get; set; }
 }

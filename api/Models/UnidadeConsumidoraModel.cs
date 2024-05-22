@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models;
 
@@ -14,4 +15,10 @@ public class UnidadeConsumidoraModel
 
     [Column("unidadeconsumidora")]
     public int CodigoUC { get; set; }
+
+    public FornecedorModel? Fornecedor { get; set; }
+
+    [Column("fornecedorid")]
+    [ForeignKey("fornecedorid")]
+    public int IdFornecedor { get; set; }
 }

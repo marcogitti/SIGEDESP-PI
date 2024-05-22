@@ -5,7 +5,7 @@ namespace api.DTO.Entities
 {
     public class OrcamentoDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "O Ano do Orçamento é requerido!")]
         public int AnoOrcamento { get; set; }

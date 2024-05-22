@@ -19,4 +19,10 @@ public class TipoDespesaModel
 
     [Column("solicitauc")]
     public string SolicitaUC { get; set; }
+
+    public UnidadeMedidaModel? UnidadeMedida { get; set; }
+
+    [Column("unidademedidaid")]
+    [ForeignKey("unidademedidaid")]
+    public int IdUnidadeMedida { get; set; }
 }
