@@ -3,5 +3,5 @@ import 'package:front/app/service/service.dart';
 
 class InstituicaoServiceImpl extends IService {
   InstituicaoServiceImpl()
-      : super(path: 'instituica', mainConstructor: InstituicaoModel.new);
+      : super(path: 'instituicao', mainConstructor: InstituicaoModel.new);
 }

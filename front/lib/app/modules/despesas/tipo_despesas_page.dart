@@ -152,15 +152,6 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                                           );
                                         },
                                       );
-                                      if (newText != null) {
-                                        final resp = await service.editData(
-                                          e.id,
-                                          TipoDespesasModel(
-                                            tipoDespesa: newText,
-                                          ).toJson(),
-                                        );
-                                        setState(() {});
-                                      }
                                     },
                                   ),
                                   IconButton(
@@ -178,15 +169,13 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () {
-                                                  Modular.to.pop(
-                                                      false); 
+                                                  Modular.to.pop(false);
                                                 },
                                                 child: const Text('Cancelar'),
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  Modular.to.pop(
-                                                      true); 
+                                                  Modular.to.pop(true);
                                                 },
                                                 child: const Text('Confirmar'),
                                               ),

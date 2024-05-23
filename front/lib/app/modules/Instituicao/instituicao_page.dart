@@ -13,22 +13,18 @@ class InstituicaoPage extends StatefulWidget {
 }
 
 class _InstituicaoPageState extends State<InstituicaoPage> {
-  late TextEditingController _instituicao;
   late TextEditingController _controller;
-  String _currentTipoDespesa = '';
   final service = Modular.get<InstituicaoServiceImpl>();
 
   @override
   void initState() {
     _controller = TextEditingController();
-    _instituicao = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _instituicao.dispose();
     super.dispose();
   }
 
@@ -119,87 +115,62 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                       return DataTable(
                         border: TableBorder.all(),
                         columns: const [DataColumn(label: Text('Descrição'))],
-                        rows: tp.map((e) {
-                          return DataRow(cells: [
-                            DataCell(
-                              Row(
-                                children: [
-                                  Expanded(child: Text(e?.tipoDespesa ?? '')),
-                                  IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () async {
-                                      final newText = await showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text('Editar Instituição'),
-                                            content: TextField(
-                                              controller: TextEditingController(
-                                                  text: _currentTipoDespesa),
-                                              onChanged: (value) {
-                                                _currentTipoDespesa = value;
-                                              },
-                                            ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(_currentTipoDespesa);
-                                                },
-                                                child: const Text('Salvar'),
-                                              ),
-                                            ],
-                                          );
+                        rows: tp
+                            .map((e) {
+                              return DataRow(cells: [
+                                DataCell(
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                              e?.situacao.toString() ?? '')),
+                                      IconButton(
+                                        icon: const Icon(Icons.edit),
+                                        onPressed: () async {
+                                          await modalCadastrar(e);
                                         },
-                                      );
-                                      if (newText != null) {
-                                        final resp = await service.editData(
-                                          e.id,
-                                          InstituicaoModel(
-                                            situacao: newText,
-                                          ).toJson(),
-                                        );
-                                        setState(() {});
-                                      }
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () async {
-                                      final confirmDelete =
-                                          await showDialog<bool>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Confirmar exclusão'),
-                                            content: const Text(
-                                                'Tem certeza que deseja excluir este item?'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Modular.to.pop(false);
-                                                },
-                                                child: const Text('Cancelar'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Modular.to.pop(true);
-                                                },
-                                                child: const Text('Confirmar'),
-                                              ),
-                                            ],
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.delete),
+                                        onPressed: () async {
+                                          final confirmDelete =
+                                              await showDialog<bool>(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                    'Confirmar exclusão'),
+                                                content: const Text(
+                                                    'Tem certeza que deseja excluir este item?'),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Modular.to.pop(false);
+                                                    },
+                                                    child:
+                                                        const Text('Cancelar'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Modular.to.pop(true);
+                                                    },
+                                                    child:
+                                                        const Text('Confirmar'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
                                           );
+                                          if (confirmDelete == true) {}
                                         },
-                                      );
-                                      if (confirmDelete == true) {}
-                                    },
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          ]);
-                        }).toList(),
+                                ),
+                              ]);
+                            })
+                            .toList()
+                            .cast<DataRow>(),
                       );
                     },
                   ),
@@ -208,14 +179,18 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
             )));
   }
 
-  Future<void> modalCadastrar() async {
+  Future<void> modalCadastrar([InstituicaoModel? instituicao]) async {
+    bool isEdit = instituicao?.id != null;
+    TextEditingController instituicaoEditCtrl =
+        TextEditingController(text: instituicao?.situacao ?? '');
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Cadastro de Instituição'),
+          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Instituição'),
           content: TextField(
-            controller: _instituicao,
+            controller: instituicaoEditCtrl,
             decoration: const InputDecoration(
               hintText: 'Situação da Instituição',
             ),
@@ -231,22 +206,38 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
               child: const Text('Salvar'),
               onPressed: () async {
                 //tela load
-                final resp = await service.postData(InstituicaoModel(
-                  situacao: _instituicao.text,
-                ).toJson());
-                resp.fold((success) {
-                  Navigator.of(context).pop();
-                  setState(() {});
-                }, (failure) {
-                  //snack bar
-                  print('erro');
-                });
+                if (isEdit) {
+                  final resp = await service.editData(
+                    instituicao!
+                        .copyWith(
+                          situacao: instituicaoEditCtrl.text,
+                        )
+                        .toJson(),
+                  );
+                  resp.fold((success) {
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  }, (failure) => null);
+                } else {
+                  final resp = await service.postData(
+                    InstituicaoModel(
+                      situacao: instituicaoEditCtrl.text,
+                    ).toJson(),
+                  );
+                  resp.fold((success) {
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  }, (failure) {
+                    //snack bar
+                    print('erro$failure');
+                  });
+                }
               },
             ),
           ],
         );
       },
     );
-    _instituicao.dispose();
+    instituicaoEditCtrl.dispose();
   }
 }

@@ -95,12 +95,20 @@ class ScaffoldComp extends StatelessWidget {
                             ),
                             ListTile(
                               title: const Text(
-                                'Tipo Instituição',
+                                'Instituição',
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
-                                return Modular.to
-                                    .navigate('/instituicaoPage');
+                                return Modular.to.navigate('/instituicaoPage');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Secretaria',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/secretariaPage');
                               },
                             ),
                             ListTile(
@@ -118,7 +126,8 @@ class ScaffoldComp extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
-                                return Modular.to.navigate('/tipoInstituicaoPage');
+                                return Modular.to
+                                    .navigate('/tipoInstituicaoPage');
                               },
                             ),
                             ListTile(
@@ -136,7 +145,8 @@ class ScaffoldComp extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
-                                return Modular.to.navigate('/unidadeConsumidora');
+                                return Modular.to
+                                    .navigate('/unidadeConsumidora');
                               },
                             ),
                           ],

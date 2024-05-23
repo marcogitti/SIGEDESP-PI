@@ -158,16 +158,6 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                                       );
                                     },
                                   );
-                                  if (newText != null) {
-                                    final resp = await service.editData(
-                                      e.id,
-                                      UnidadeDeMedidaModel(
-                                        descricao: newText,
-                                        abreviatura: newText,
-                                      ).toJson(),
-                                    );
-                                    setState(() {});
-                                  }
                                 },
                               ),
                               IconButton(

@@ -133,7 +133,8 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: const Text('Editar Tipo Instituição'),
+                                            title: const Text(
+                                                'Editar Tipo Instituição'),
                                             content: TextField(
                                               controller: TextEditingController(
                                                   text: _currentTipoDespesa),
@@ -153,15 +154,6 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                                           );
                                         },
                                       );
-                                      if (newText != null) {
-                                        final resp = await service.editData(
-                                          e.id,
-                                          TipoInstituicaoModel(
-                                            tipoInstituicao: newText,
-                                          ).toJson(),
-                                        );
-                                        setState(() {});
-                                      }
                                     },
                                   ),
                                   IconButton(

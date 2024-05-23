@@ -7,6 +7,7 @@ import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/home/home_page.dart';
 import 'package:front/app/modules/login/tipo_usuario_service.dart';
 import 'package:front/app/modules/login/usuario_service.dart';
+import 'package:front/app/modules/secretaria/secretaria_page.dart';
 import 'package:front/app/modules/secretaria/secretaria_service.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_page.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
@@ -41,6 +42,7 @@ class AppModule extends Module {
     r.child('/unidadeDeMedida', child: (_) => const UnidadeDeMedidaPage());
     r.child('/unidadeConsumidora', child: (_) => UnidadeConsumidoraPage());
     r.child('/usuarioPage', child: (_) => const UsuarioPage());
+    r.child('/secretariaPage', child: (_) => const SecretariaPage());
     super.routes(r);
   }
 }
