@@ -131,13 +131,17 @@ class _InstitutionScreenState extends State<SecretariaPage> {
                               DataCell(Row(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.edit),
+                                    icon: const Icon(Icons.edit,
+                                      color: Color(0xFF0044FF),
+                                    ),
                                     onPressed: () async {
                                       await modalCadastrar(e);
                                     },
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.delete),
+                                    icon: const Icon(Icons.delete,
+                                      color: Color(0xFFF44336),
+                                    ),
                                     onPressed: () async {
                                       await showDialog<bool>(
                                         context: context,
