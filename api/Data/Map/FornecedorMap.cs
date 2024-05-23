@@ -11,7 +11,7 @@ namespace api.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.NomeFantasia).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Situacao).IsRequired().HasMaxLength(50);
-
+            
         }
     }
 }
