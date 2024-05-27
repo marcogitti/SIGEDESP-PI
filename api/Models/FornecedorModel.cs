@@ -21,6 +21,7 @@ public class FornecedorModel
     [Column("situacao")]
     public string Situacao { get; set; }
 
+    /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
-    public ICollection<FornecedorModel>? Fornecedor { get; set; }
+    public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
 }

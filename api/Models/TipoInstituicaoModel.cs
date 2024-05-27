@@ -13,9 +13,10 @@ public class TipoInstituicaoModel
     [Column("tipoinstituicaoid")]
     public int Id { get; set; }
 
-    [Column("tipoinstituicao")]
-    public string TipoInstituicao { get; set; }
+    [Column("descricao")]
+    public string Descricao { get; set; }
 
+    /*Código para criar coleção de Instituição*/
     [JsonIgnore]
-    public ICollection<TipoInstituicaoModel>? TipoInstituicaoLista { get; set; }
+    public ICollection<InstituicaoModel>? InstituicaoLista { get; set; }
 }
