@@ -28,7 +28,7 @@ class IService<T extends Object> {
     try {
       final response =
           await http.get(Uri.https('localhost:7274', '/api/$path'));
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body) as List;
         final dataList = decodedData
