@@ -22,5 +22,5 @@ public class SecretariaModel
     public string Descricao { get; set; }
 
     [JsonIgnore]
-    public ICollection<SecretariaModel>? Secretaria { get; set; }
+    public ICollection<InstituicaoModel>? InstituicaoLista { get; set; }
 }

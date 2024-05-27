@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models;
 
@@ -19,4 +20,8 @@ public class TipoUsuarioModel
 
     [Column("permitelogin")]
     public string PermiteLogin { get; set; }
+
+    /*Código para criar coleção de Usuario*/
+    [JsonIgnore]
+    public ICollection<UsuarioModel>? Usuario { get; set; }
 }

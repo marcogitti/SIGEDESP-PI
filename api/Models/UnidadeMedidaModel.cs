@@ -19,6 +19,7 @@ public class UnidadeMedidaModel
     [Column("abreviatura")]
     public string Abreviatura { get; set; }
 
+    /*Código para criar coleção de TipoDespesa*/
     [JsonIgnore]
-    public ICollection<UnidadeMedidaModel>? UnidadeMedida { get; set; }
+    public ICollection<TipoDespesaModel>? TipoDespesa { get; set; }
 }

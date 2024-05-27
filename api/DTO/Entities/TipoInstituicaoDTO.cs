@@ -7,10 +7,10 @@ namespace api.DTO.Entities
     {
         public int? Id { get; set; }
 
-        [Required(ErrorMessage = "O nome do Tipo Instituição é requerido!")]
+        [Required(ErrorMessage = "A Descrição é requerida!")]
         [MinLength(1)]
         [MaxLength(100)]
-        public string TipoInstituicao { get; set; }
+        public string Descricao { get; set; }
 
     }
 }
