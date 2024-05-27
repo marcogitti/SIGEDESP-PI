@@ -1,0 +1,5 @@
+enum SituacaoEnum {
+  inativo,
+  ativo;
+}
+ 

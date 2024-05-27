@@ -12,11 +12,19 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O código de Unidade Consumidora é requerido!")]
         public int CodigoUC { get; set; }
 
+        /*Código para colocar atributos das classes que dão chave estrangeira no cadastro*/
         [JsonIgnore]
         public FornecedorModel? Fornecedor { get; set; }
 
         [Required(ErrorMessage = "O ID de Fornecedor é requerido!")]
         public int IdFornecedor { get; set; }
+
+
+        [JsonIgnore]
+        public InstituicaoModel? Instituicao { get; set; }
+
+        [Required(ErrorMessage = "O ID de Instituição é requerido!")]
+        public int IdInstituicao { get; set; }
 
     }
 }

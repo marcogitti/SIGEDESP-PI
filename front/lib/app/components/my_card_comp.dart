@@ -1,31 +1,29 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/material.dart';
 
 class MyCardComp extends StatelessWidget {
+  final Widget textButton;
+  final double height;
+  final double width;
+  final Color color;
+
   const MyCardComp({
     Key? key,
-    required this.child,
-    this.height,
-    this.width,
-    this.color,
+    required this.textButton,
+    this.height = 150,
+    this.width = 200,
+    this.color = const Color.fromARGB(255, 224, 224, 224),
   }) : super(key: key);
-  final Widget child;
-  final double? height;
-  final double? width;
-  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
       height: height,
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: color,
       ),
-      child: child,
+      child: Center(child: textButton),
     );
   }
 }

@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/Scaffold_comp.dart';
 import 'package:front/app/modules/Instituicao/tipo_instituicao_model.dart';
-import 'package:front/app/service/service.dart';
-import 'package:http/http.dart' as http;
+import 'package:front/app/modules/Instituicao/tipo_instituicao_service.dart';
 import 'package:result_dart/result_dart.dart';
-// import 'package:result_dart/result_dart.dart';
 
 class TipoInstituicao extends StatefulWidget {
-  TipoInstituicao({Key? key}) : super(key: key);
+  const TipoInstituicao({Key? key}) : super(key: key);
 
   @override
   State<TipoInstituicao> createState() => _TipoInstituicaoState();
 }
 
 class _TipoInstituicaoState extends State<TipoInstituicao> {
-  final TextEditingController _controller = TextEditingController();
-  late IService service;
+  late TextEditingController _controller;
+  final service = Modular.get<TipoInstituicaoServiceImpl>();
 
-  Future<void> _saveToApi(String name) async {
-    var url = Uri.parse('localhost:7274/api/TipoDespessa');
-    var response = await http.post(url, body: {'tipoDespesa': name});
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
 
-    if (response.statusCode == 200) {
-      print('Dados salvos com sucesso.');
-    } else {
-      print('Erro ao salvar dados.');
-    }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,171 +33,224 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
     return ScaffoldComp(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 50),
-                child: Text(
-                  "Tipo Instituição",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+        child: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 50),
+              child: Text(
+                "Cadastro de Tipo Instituição",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Cadastro de Tipo Instituição'),
-                            content: TextField(
-                              controller: _controller,
-                              decoration: const InputDecoration(
-                                hintText: 'Nome da Instituição',
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await modalCadastrar();
+                  },
+                  child: const Text('Cadastrar Tipo Instituição'),
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    const Text("Mostrar: "),
+                    DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(10),
+                      elevation: 10,
+                      items: <String>['Opção 1', 'Opção 2', 'Opção 3']
+                          .map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {},
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Buscar Tipo Instituição',
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 60),
+              child: FutureBuilder(
+                future: service.getAll().getOrNull(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return const Text("Sem internet");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SizedBox(
+                        width: 26,
+                        height: 26,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const Text("Erro");
+                  }
+
+                  final tp =
+                      (snapshot.data ?? []).cast<TipoInstituicaoModel?>();
+
+                  return DataTable(
+                    border: TableBorder.all(),
+                    columns: const [
+                      DataColumn(label: Text('Descrição')),
+                      DataColumn(label: Text('Ações')),
+                    ],
+                    rows: tp
+                        .map((e) {
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Text(e?.descricao.toString() ?? ''),
                               ),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Cancelar'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Salvar'),
-                                onPressed: () {
-                                  _saveToApi(_controller.text);
-                                  Navigator.of(context).pop();
-                                },
-                              ),
+                              DataCell(Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Color(0xFF0044FF),
+                                    ),
+                                    onPressed: () async {
+                                      await modalCadastrar(e);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFF44336),
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog<bool>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Confirmar exclusão'),
+                                            content: const Text(
+                                                'Tem certeza que deseja excluir este item?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cancelar'),
+                                                onPressed: () {
+                                                  Modular.to.pop(false);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: const Text('Confirmar'),
+                                                onPressed: () async {
+                                                  Modular.to.pop();
+                                                  await service
+                                                      .deleteData(e!.id);
+
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              )),
                             ],
                           );
-                        },
-                      );
-                    },
-                    child: const Text('Cadastrar Tipo Instituição'),
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      const Text("Mostrar: "),
-                      DropdownButton<String>(
-                        borderRadius: BorderRadius.circular(10),
-                        elevation: 10,
-                        items: <String>['Opção 1', 'Opção 2', 'Opção 3']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {},
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Buscar Tipo Instituição',
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                        })
+                        .toList()
+                        .cast<DataRow>(),
+                  );
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Expanded(
-                  child: Wrap(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 238, 238, 238),
-                              border:
-                                  Border.all(color: Colors.black, width: 1)),
-                          height: 60,
-                          width: 1000,
-                          child: const Center(
-                              child: Text(
-                            "Descrição",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 238, 238, 238),
-                              border:
-                                  Border.all(color: Colors.black, width: 1)),
-                          height: 60,
-                          width: 500,
-                          child: const Center(
-                              child: Text(
-                            "",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: Expanded(
-                  child: FutureBuilder(
-                    future: service.getAll().getOrNull(),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      List<TipoInstituicaoModel> tp = snapshot.data;
-                      return DataTable(
-                        border: TableBorder.all(),
-                        columns: const [DataColumn(label: Text('Descricao'))],
-                        rows: tp
-                            .map((e) => DataRow(
-                                cells: [DataCell(Text(e.tipoInstituicao))]))
-                            .toList(),
-                      );
-                    },
-                  ),
-                ),
-              )
-              // Wrap(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         decoration: BoxDecoration(
-              //             color: const Color.fromARGB(255, 255, 255, 255),
-              //             border: Border.all(color: Colors.black, width: 1)),
-              //         height: 60,
-              //         width: 1500,
-              //         child: const Center(
-              //             child: Text(
-              //           "Nenhum registro encontrado",
-              //           style: TextStyle(
-              //               fontSize: 16, fontWeight: FontWeight.bold),
-              //         )),
-              //       ),
-              //     ),
-              //   ],
-              // )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
+  }
+
+  Future<void> modalCadastrar([TipoInstituicaoModel? tipoInstituicao]) async {
+    bool isEdit = tipoInstituicao?.id != null;
+    TextEditingController tipoInstituicaoEditCtrl =
+        TextEditingController(text: tipoInstituicao?.descricao ?? '');
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Tipo Instituição'),
+          content: Wrap(
+            children: [
+              TextField(
+                controller: tipoInstituicaoEditCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'Descrição',
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Salvar'),
+              onPressed: () async {
+                if (isEdit) {
+                  final resp = await service.editData(
+                    tipoInstituicao!
+                        .copyWith(descricao: tipoInstituicaoEditCtrl.text)
+                        .toJson(),
+                  );
+                  resp.fold((success) {
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  }, (failure) {
+                    print('erro$failure');
+                  });
+                } else {
+                  final resp = await service.postData(
+                    TipoInstituicaoModel(
+                      descricao: tipoInstituicaoEditCtrl.text,
+                    ).toJson(),
+                  );
+                  resp.fold((success) {
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  }, (failure) {
+                    print('erro$failure');
+                  });
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+    tipoInstituicaoEditCtrl.dispose();
   }
 }

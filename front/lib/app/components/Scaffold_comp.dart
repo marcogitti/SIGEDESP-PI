@@ -95,21 +95,58 @@ class ScaffoldComp extends StatelessWidget {
                             ),
                             ListTile(
                               title: const Text(
-                                'Tipo Instituição',
+                                'Instituição',
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
-                                return Modular.to
-                                    .navigate('/institutionScreen');
+                                return Modular.to.navigate('/instituicaoPage');
                               },
                             ),
                             ListTile(
                               title: const Text(
-                                'Cadastro de Despesas',
+                                'Secretaria',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/secretariaPage');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Tipo Despesas',
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: () {
                                 return Modular.to.navigate('/tipoDeDespesas');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Tipo Instituição',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to
+                                    .navigate('/tipoInstituicaoPage');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Unidade DeMedida',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to.navigate('/unidadeDeMedida');
+                              },
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Cadastro de Unidade Consumidora',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                return Modular.to
+                                    .navigate('/unidadeConsumidora');
                               },
                             ),
                           ],

@@ -28,7 +28,7 @@ class IService<T extends Object> {
     try {
       final response =
           await http.get(Uri.https('localhost:7274', '/api/$path'));
-      await Future.delayed(Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 1));
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body) as List;
         final dataList = decodedData
@@ -64,14 +64,14 @@ class IService<T extends Object> {
     }
   }
 
-  Future<Result<T, String>> editData(int id, T data) async {
+  Future<Result<T, String>> editData(T data) async {
     try {
       final response = await http.put(
-        Uri.http('localhost:7274', '/api/$path/$id'),
+        Uri.https('localhost:7274', '/api/$path'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(data),
+        body: data,
       );
 
       if (response.statusCode == 200) {
@@ -87,7 +87,7 @@ class IService<T extends Object> {
   Future<Result<String, String>> deleteData(int id) async {
     try {
       final response =
-          await http.delete(Uri.http('localhost:7274', '/api/$path/$id'));
+          await http.delete(Uri.https('localhost:7274', '/api/$path/$id'));
 
       if (response.statusCode == 200) {
         return 'apagado com sucesso'.toSuccess();

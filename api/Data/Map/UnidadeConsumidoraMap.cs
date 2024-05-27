@@ -11,6 +11,7 @@ namespace api.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CodigoUC).IsRequired();
             builder.HasOne(x => x.Fornecedor).WithMany().HasForeignKey(x => x.IdFornecedor);
+            builder.HasOne(x => x.Instituicao).WithMany().HasForeignKey(x => x.IdInstituicao);
         }
     }
 }
