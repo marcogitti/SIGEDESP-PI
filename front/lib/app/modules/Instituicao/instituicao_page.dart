@@ -45,8 +45,19 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+               Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Buscar Instituição',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: _controller,
+                ),
+                const SizedBox(height: 30),
+                Row(
                   children: [
                     ElevatedButton(
                       onPressed: () async {
@@ -54,38 +65,25 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                       },
                       child: const Text('Cadastrar Nova Instituição'),
                     ),
-                    const SizedBox(height: 30),
-                    Row(
-                      children: [
-                        const Text("Mostrar: "),
-                        DropdownButton<String>(
-                          borderRadius: BorderRadius.circular(10),
-                          elevation: 10,
-                          items: <String>['Opção 1', 'Opção 2', 'Opção 3']
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {},
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Buscar Instituição',
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(width: 15),
+                    const Text("Mostrar: "),
+                    DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(10),
+                      elevation: 10,
+                      items: <String>['Opção 1', 'Opção 2', 'Opção 3']
+                          .map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {},
                     ),
+                    const SizedBox(width: 20),
                   ],
                 ),
+              ],
+            ),
                 Padding(
                   padding: const EdgeInsets.only(top: 60),
                   child: FutureBuilder(

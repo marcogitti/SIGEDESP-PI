@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/modules/Instituicao/instituicao_page.dart';
 import 'package:front/app/modules/Instituicao/instituicao_service.dart';
+import 'package:front/app/modules/Instituicao/tipo_instituicao_page.dart';
 import 'package:front/app/modules/Instituicao/tipo_instituicao_service.dart';
 import 'package:front/app/modules/despesas/despesas_service.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
@@ -37,7 +38,7 @@ class AppModule extends Module {
   void routes(RouteManager r) {
     r.child('/', child: (_) => const HomePage());
     r.child('/instituicaoPage', child: (_) => const InstituicaoPage());
-    r.child('/tipoInstituicaoPage', child: (_) => const InstituicaoPage());
+    r.child('/tipoInstituicaoPage', child: (_) => const TipoInstituicao());
     r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesas());
     r.child('/unidadeDeMedida', child: (_) => const UnidadeDeMedidaPage());
     r.child('/unidadeConsumidora', child: (_) => UnidadeConsumidoraPage());

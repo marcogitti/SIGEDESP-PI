@@ -42,7 +42,7 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                 const Padding(
                   padding: EdgeInsets.only(bottom: 50),
                   child: Text(
-                    "Cadastro de Despesas",
+                    "Cadastro de Tipo Despesa",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -52,15 +52,24 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        await modalCadastrar();
-                      },
-                      child: const Text('Cadastrar Nova Despesa'),
+                    TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Buscar Tipo Despesa',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: _controller,
                     ),
                     const SizedBox(height: 30),
                     Row(
                       children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            await modalCadastrar();
+                          },
+                          child: const Text('Cadastrar Tipo Despesa'),
+                        ),
+                        const SizedBox(width: 15),
                         const Text("Mostrar: "),
                         DropdownButton<String>(
                           borderRadius: BorderRadius.circular(10),
@@ -74,18 +83,7 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                           }).toList(),
                           onChanged: (String? newValue) {},
                         ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Buscar Despesa',
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
+                        const SizedBox(width: 20),
                       ],
                     ),
                   ],
