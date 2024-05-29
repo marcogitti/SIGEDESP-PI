@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:front/app/components/my_card_comp.dart';
 import 'package:front/app/components/scaffold_comp.dart';
-import 'package:front/app/components/card_comp.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomePage extends StatefulWidget {
@@ -34,115 +34,84 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldComp(
-      body: Wrap(
-        runSpacing: 16,
-        spacing: 16,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 350,
-            ),
-            child: Wrap(
-              runSpacing: 16,
-              spacing: 16,
-              children: [
-                MyCardComp(
-                  height: 150,
-                  width: 200,
-                  color: const Color.fromARGB(255, 224, 224, 224),
-                  child: TextButton(
-                    onPressed: () {
-                      Modular.to.navigate('/institutionScreen');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Cadastro de Tipo"),
-                          Text("Instituição"),
-                        ],
-                      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 40.0),
+          child: Wrap(
+            runSpacing: 16,
+            spacing: 16,
+            children: [
+              MyCardComp(
+                textButton: TextButton(
+                  onPressed: () {
+                    Modular.to.navigate('//instituicaoPage');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Cadastro de Tipo"),
+                        Text("Instituição"),
+                      ],
                     ),
                   ),
                 ),
-                MyCardComp(
-                  height: 150,
-                  width: 200,
-                  color: const Color.fromARGB(255, 224, 224, 224),
-                  child: TextButton(
-                    onPressed: () {
-                      Modular.to.navigate('/tipoDeDespesas');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Cadastro de "),
-                          Text("Despesas"),
-                        ],
-                      ),
+              ),
+              MyCardComp(
+                textButton: TextButton(
+                  onPressed: () {
+                    Modular.to.navigate('/tipoDeDespesas');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Cadastro de Tipo"),
+                        Text("Despesas"),
+                      ],
                     ),
                   ),
                 ),
-                const MyCardComp(
-                  height: 150,
-                  width: 200,
-                  color: Color.fromARGB(255, 224, 224, 224),
-                  child: Text("data"),
-                ),
-                const MyCardComp(
-                  height: 150,
-                  width: 200,
-                  color: Color.fromARGB(255, 224, 224, 224),
-                  child: Text("data"),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 150, right: 180),
-            child: Wrap(
-              runSpacing: 16,
-              spacing: 16,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: MyCardComp(
-                          height: 250,
-                          width: 300,
-                          color: const Color.fromARGB(255, 244, 244, 244),
-                          child: SizedBox(
-                            height: 200,
-                            child: charts.LineChart(lineData),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: MyCardComp(
-                          height: 250,
-                          width: 50,
-                          color: const Color.fromARGB(255, 244, 244, 244),
-                          child: SizedBox(
-                            height: 200,
-                            child: charts.PieChart(pieData),
-                          ),
-                        ),
-                      ),
-                    ],
+              ),
+              MyCardComp(
+                textButton: TextButton(
+                  onPressed: () {
+                    Modular.to.navigate('/unidadeDeMedida');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Cadastro de Unidade"),
+                        Text("De Medida"),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              MyCardComp(
+                textButton: TextButton(
+                  onPressed: () {
+                    Modular.to.navigate('/unidadeConsumidora');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Cadastro de Unidade"),
+                        Text("Consumidora"),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

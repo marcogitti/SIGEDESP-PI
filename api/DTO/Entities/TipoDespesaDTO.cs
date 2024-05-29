@@ -11,11 +11,12 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O nome do Tipo Despesa é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
-        public string TipoDespesa { get; set; }
+        public string Descricao { get; set; }
 
         [Required(ErrorMessage = "O Solicita Unidade Consumidora é requerido!")]
         public string SolicitaUC { get; set; }
 
+        /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
         [JsonIgnore]
         public UnidadeMedidaModel? UnidadeMedida { get; set; }
 

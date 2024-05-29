@@ -23,6 +23,7 @@ namespace api.Data.Map
             builder.Property(x => x.Senha).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Situacao).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Matricula).IsRequired().HasMaxLength(50);
+            builder.HasOne(x => x.TipoUsuario).WithMany().HasForeignKey(x => x.IdTipoUsuario);
         }
     }
 }

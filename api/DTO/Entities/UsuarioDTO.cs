@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using api.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace api.DTO.Entities
@@ -67,5 +68,12 @@ namespace api.DTO.Entities
         [MinLength(1)]
         [MaxLength(100)]
         public string Matricula { get; set; }
+
+        /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
+        [JsonIgnore]
+        public TipoUsuarioModel? TipoUsuario { get; set; }
+
+        [Required(ErrorMessage = "O ID de Tipo Usuário é requerido!")]
+        public int IdTipoUsuario { get; set; }
     }
 }

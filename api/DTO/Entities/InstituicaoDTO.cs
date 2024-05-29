@@ -13,6 +13,7 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Situacao { get; set; }
 
+        /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
         [JsonIgnore]
         public TipoInstituicaoModel? TipoInstituicaoLista { get; set; }
 

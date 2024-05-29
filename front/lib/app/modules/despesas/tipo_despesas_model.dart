@@ -14,7 +14,7 @@ class TipoDespesasModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      // 'id': id,
+      'id': id,
       'tipoDespesa': tipoDespesa,
       'solicitaUC': solicitaUC,
     };

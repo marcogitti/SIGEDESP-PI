@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models;
 
@@ -19,4 +20,19 @@ public class OrcamentoModel
 
     [Column("valororcamento")]
     public double ValorOrcamento { get; set; }
+
+    /*Código para receber chaves estrangeiras de tipoDespesa e insituição*/
+    [JsonIgnore]
+    public TipoDespesaModel? TipoDespesa { get; set; }
+
+    [Column("tipodespesaid")]
+    [ForeignKey("tipodespesaid")]
+    public int IdTipoDespesa { get; set; }
+
+    [JsonIgnore]
+    public InstituicaoModel? Instituicao { get; set; }
+
+    [Column("instituicaoid")]
+    [ForeignKey("instituicaoid")]
+    public int IdInstituicao { get; set; }
 }

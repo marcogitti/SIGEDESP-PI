@@ -11,7 +11,8 @@ namespace api.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.AnoOrcamento).IsRequired().HasMaxLength(50);
             builder.Property(x => x.ValorOrcamento).IsRequired().HasMaxLength(50);
-
+            builder.HasOne(x => x.Instituicao).WithMany().HasForeignKey(x => x.IdInstituicao);
+            builder.HasOne(x => x.TipoDespesa).WithMany().HasForeignKey(x => x.IdTipoDespesa);
         }
     }
 }

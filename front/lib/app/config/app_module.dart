@@ -1,12 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/modules/Instituicao/instituicao_page.dart';
 import 'package:front/app/modules/Instituicao/instituicao_service.dart';
+import 'package:front/app/modules/Instituicao/tipo_instituicao_page.dart';
 import 'package:front/app/modules/Instituicao/tipo_instituicao_service.dart';
 import 'package:front/app/modules/despesas/despesas_service.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/home/home_page.dart';
 import 'package:front/app/modules/login/tipo_usuario_service.dart';
 import 'package:front/app/modules/login/usuario_service.dart';
+import 'package:front/app/modules/secretaria/secretaria_page.dart';
 import 'package:front/app/modules/secretaria/secretaria_service.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_page.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
@@ -35,11 +37,13 @@ class AppModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_) => const HomePage());
-    r.child('/institutionScreen', child: (_) => InstitutionScreen());
-    r.child('/tipoDeDespesas', child: (_) => TipoDeDespesas());
-    r.child('/tipoUnidadeDeMedida', child: (_) => UnidadeDeMedidaPage());
-    r.child('/tipoUnidadeConsumidora', child: (_) => UnidadeConsumidoraPage());
+    r.child('/instituicaoPage', child: (_) => const InstituicaoPage());
+    r.child('/tipoInstituicaoPage', child: (_) => const TipoInstituicao());
+    r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesas());
+    r.child('/unidadeDeMedida', child: (_) => const UnidadeDeMedidaPage());
+    r.child('/unidadeConsumidora', child: (_) => UnidadeConsumidoraPage());
     r.child('/usuarioPage', child: (_) => const UsuarioPage());
+    r.child('/secretariaPage', child: (_) => const SecretariaPage());
     super.routes(r);
   }
 }

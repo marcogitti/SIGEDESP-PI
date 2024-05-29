@@ -6,157 +6,205 @@ import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:result_dart/result_dart.dart';
 
 class TipoDeDespesas extends StatefulWidget {
-  TipoDeDespesas({Key? key}) : super(key: key);
+  const TipoDeDespesas({Key? key}) : super(key: key);
 
   @override
   State<TipoDeDespesas> createState() => _TipoDeDespesasState();
 }
 
 class _TipoDeDespesasState extends State<TipoDeDespesas> {
+  late TextEditingController _tipoDespesaTxt;
   late TextEditingController _controller;
+  String _currentTipoDespesa = '';
   final service = Modular.get<TipoDeDespesasServiceImpl>();
 
   @override
   void initState() {
     _controller = TextEditingController();
+    _tipoDespesaTxt = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _tipoDespesaTxt.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldComp(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 50),
-              child: Text(
-                "Cadastro de Despesas",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await modalCadastrar();
-                  },
-                  child: const Text('Cadastrar Nova Despesa'),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 50),
+                  child: Text(
+                    "Cadastro de Tipo Despesa",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 30),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text("Mostrar: "),
-                    DropdownButton<String>(
-                      borderRadius: BorderRadius.circular(10),
-                      elevation: 10,
-                      items: <String>['Opção 1', 'Opção 2', 'Opção 3']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {},
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Buscar Despesa',
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(),
-                        ),
+                    TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Buscar Tipo Despesa',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(),
                       ),
+                      controller: _controller,
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            await modalCadastrar();
+                          },
+                          child: const Text('Cadastrar Tipo Despesa'),
+                        ),
+                        const SizedBox(width: 15),
+                        const Text("Mostrar: "),
+                        DropdownButton<String>(
+                          borderRadius: BorderRadius.circular(10),
+                          elevation: 10,
+                          items: <String>['Opção 1', 'Opção 2', 'Opção 3']
+                              .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {},
+                        ),
+                        const SizedBox(width: 20),
+                      ],
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 60),
+                  child: FutureBuilder(
+                    future: service.getAll().getOrNull(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.none) {
+                        return const Text("sem internet");
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: SizedBox(
+                            width: 26,
+                            height: 26,
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+
+                      if (snapshot.hasError) {
+                        return const Text("Erro");
+                      }
+
+                      final tp =
+                          (snapshot.data ?? []).cast<TipoDespesasModel?>();
+
+                      return DataTable(
+                        border: TableBorder.all(),
+                        columns: const [DataColumn(label: Text('Descrição'))],
+                        rows: tp.map((e) {
+                          return DataRow(cells: [
+                            DataCell(
+                              Row(
+                                children: [
+                                  Expanded(child: Text(e?.tipoDespesa ?? '')),
+                                  IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () async {
+                                      final newText = await showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Editar Despesa'),
+                                            content: TextField(
+                                              controller: TextEditingController(
+                                                  text: _currentTipoDespesa),
+                                              onChanged: (value) {
+                                                _currentTipoDespesa = value;
+                                              },
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(_currentTipoDespesa);
+                                                },
+                                                child: const Text('Salvar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () async {
+                                      final confirmDelete =
+                                          await showDialog<bool>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Confirmar exclusão'),
+                                            content: const Text(
+                                                'Tem certeza que deseja excluir este item?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Modular.to.pop(false);
+                                                },
+                                                child: const Text('Cancelar'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Modular.to.pop(true);
+                                                },
+                                                child: const Text('Confirmar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      if (confirmDelete == true) {}
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]);
+                        }).toList(),
+                      );
+                    },
+                  ),
+                )
               ],
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 60),
-              child: FutureBuilder(
-                future: service.getAll().getOrNull(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.none) {
-                    return Text("sem internet");
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: SizedBox(
-                        width: 26,
-                        height: 26,
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    return Text("Erro");
-                  }
-
-                  final tp = (snapshot.data ?? []).cast<TipoDespesasModel?>();
-                  return DataTable(
-                    border: TableBorder.all(),
-                    columns: const [DataColumn(label: Text('Descricao'))],
-                    rows: tp
-                        .map((e) => DataRow(
-                            cells: [DataCell(Text(e?.tipoDespesa ?? ''))]))
-                        .toList()
-                        .cast<DataRow>(),
-                  );
-                },
-              ),
-            )
-            // Wrap(
-            //   children: [
-            //     Expanded(
-            //       child: Container(
-            //         decoration: BoxDecoration(
-            //             color: const Color.fromARGB(255, 255, 255, 255),
-            //             border: Border.all(color: Colors.black, width: 1)),
-            //         height: 60,
-            //         width: 1500,
-            //         child: const Center(
-            //             child: Text(
-            //           "Nenhum registro encontrado",
-            //           style:
-            //               TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            //         )),
-            //       ),
-            //     ),
-            //   ],
-            // )
-          ],
-        ),
-      ),
-    );
+            )));
   }
 
   Future<void> modalCadastrar() async {
-    TextEditingController descricaoTxt = TextEditingController();
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Cadastro de Despesas'),
           content: TextField(
-            controller: descricaoTxt,
+            controller: _tipoDespesaTxt,
             decoration: const InputDecoration(
               hintText: 'Nome da Despesa',
             ),
@@ -173,7 +221,7 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
               onPressed: () async {
                 //tela load
                 final resp = await service.postData(TipoDespesasModel(
-                  tipoDespesa: descricaoTxt.text,
+                  tipoDespesa: _tipoDespesaTxt.text,
                   solicitaUC: 'SP',
                 ).toJson());
                 resp.fold((success) {
@@ -189,6 +237,6 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
         );
       },
     );
-    descricaoTxt.dispose();
+    _tipoDespesaTxt.dispose();
   }
 }
