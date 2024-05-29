@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:front/app/providers/provider_theme.dart'; // Importe seu provedor de tema aqui
 import 'package:front/app/util/format_util.dart';
+import 'package:provider/provider.dart'; // Importe o provider aqui
 
 class ScaffoldComp extends StatelessWidget {
   const ScaffoldComp({
@@ -45,6 +46,19 @@ class ScaffoldComp extends StatelessWidget {
               ),
             ),
           ),
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              return Switch(
+                value: themeProvider.isHighContrastTheme,
+                onChanged: (value) {
+                  // Alterar o tema quando o switch é alterado
+                  themeProvider.toggleTheme();
+                },
+                activeColor: Colors.white,
+                inactiveTrackColor: Colors.grey,
+              );
+            },
+          ),
         ].spaceBetowin(wh: 6),
       ),
       body: LayoutBuilder(
@@ -75,63 +89,20 @@ class ScaffoldComp extends StatelessWidget {
                           runSpacing: 8,
                           spacing: 8,
                           children: [
-                            ListTile(
-                              leading: const Icon(
+                            const ExpansionTile(
+                              leading: Icon(
                                 Icons.home,
                                 color: Colors.white,
                               ),
-                              title: const Text(
+                              title: Text(
                                 "Tela Inicial",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
-                              onTap: () => Modular.to.navigate("/"),
                             ),
                             const Divider(),
-                            ListTile(
-                              leading: const Icon(
-                                Icons.request_quote_outlined,
-                                color: Colors.white,
-                              ),
-                              title: const Row(
-                                children: [
-                                  Text(
-                                    "Despesas",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  // IconButton(
-                                  //   onPressed: () => Expanded(
-                                  //     child: Column(
-                                  //       children: [
-                                  //         ListTile(
-                                  //           leading: const Icon(
-                                  //             Icons.home,
-                                  //             color: Colors.white,
-                                  //           ),
-                                  //           title: const Text(
-                                  //             "Tela Inicial",
-                                  //             style: TextStyle(
-                                  //               color: Colors.white,
-                                  //             ),
-                                  //           ),
-                                  //           onTap: () => Modular.to.navigate("/"),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  //   icon: const Icon(
-                                  //     Icons.arrow_drop_down,
-                                  //     color: Colors.white,
-                                  //   ),
-                                  // )
-                                ],
-                              ),
-                              onTap: () => Modular.to.navigate("/"),
-                            ),
-                            ListTile(
+                            ExpansionTile(
                               leading: const Icon(
                                 Icons.edit,
                                 color: Colors.white,
@@ -142,48 +113,268 @@ class ScaffoldComp extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              onTap: () => Modular.to.navigate("/"),
+                              children: [
+                                ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.request_quote_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Row(
+                                    children: [
+                                      Text(
+                                        "Despesas",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.white,
+                                  ),
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Tipo Despesa',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro De Despesa',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
+                                ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Row(
+                                    children: [
+                                      Text(
+                                        "Usuario",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.white,
+                                  ),
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Usuario',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Tipo Usuario',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
+                                ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.maps_home_work_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Orgãos Públicos ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.white,
+                                  ),
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Instituições',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Tipo Instituições',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Secretaria',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
+                                ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.request_quote_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Row(
+                                    children: [
+                                      Text(
+                                        "Unidades",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.request_quote,
+                                    color: Colors.white,
+                                  ),
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Unidade Consumidora',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Unidade Medida',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
+                                ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.request_quote_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Row(
+                                    children: [
+                                      Text(
+                                        "Orçamento",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.price_change_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: const Icon(
+                                        Icons.description,
+                                        color: Colors.white,
+                                      ),
+                                      title: const Text(
+                                        'Cadastro Orçamento',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             const Divider(),
-                            ListTile(
-                              leading: const Icon(
+                            const ExpansionTile(
+                              leading: Icon(
                                 Icons.receipt_long,
                                 color: Colors.white,
                               ),
-                              title: const Text(
+                              title: Text(
                                 "Relatorios",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
-                              onTap: () => Modular.to.navigate("/"),
                             ),
-                            ListTile(
-                              leading: const Icon(
+                            const ExpansionTile(
+                              leading: Icon(
                                 Icons.data_thresholding_outlined,
                                 color: Colors.white,
                               ),
-                              title: const Text(
-                                "Relatorios",
+                              title: Text(
+                                "Dashboard",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
-                              onTap: () => Modular.to.navigate("/"),
                             ),
                             const Divider(),
-                            ListTile(
-                              leading: const Icon(
+                            const ExpansionTile(
+                              leading: Icon(
                                 Icons.person,
                                 color: Colors.white,
                               ),
-                              title: const Text(
+                              title: Text(
                                 "Perfil",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
-                              onTap: () => Modular.to.navigate("/"),
                             ),
                             const Divider(),
                           ],
