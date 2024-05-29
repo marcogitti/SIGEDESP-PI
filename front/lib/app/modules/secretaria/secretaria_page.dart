@@ -48,15 +48,24 @@ class _InstitutionScreenState extends State<SecretariaPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await modalCadastrar();
-                  },
-                  child: const Text('Cadastrar Nova Secretaria'),
+                TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Buscar Secretaria',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: _controller,
                 ),
                 const SizedBox(height: 30),
                 Row(
                   children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await modalCadastrar();
+                      },
+                      child: const Text('Cadastrar Secretaria'),
+                    ),
+                    const SizedBox(width: 15),
                     const Text("Mostrar: "),
                     DropdownButton<String>(
                       borderRadius: BorderRadius.circular(10),
@@ -70,18 +79,7 @@ class _InstitutionScreenState extends State<SecretariaPage> {
                       }).toList(),
                       onChanged: (String? newValue) {},
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Buscar Secretaria',
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
+                    const SizedBox(width: 20),
                   ],
                 ),
               ],

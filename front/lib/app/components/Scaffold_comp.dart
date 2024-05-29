@@ -58,97 +58,134 @@ class ScaffoldComp extends StatelessWidget {
                   child: ListView(
                     padding: EdgeInsets.zero,
                     children: <Widget>[
-                      DrawerHeader(
-                        decoration: const BoxDecoration(
+                      const DrawerHeader(
+                        decoration: BoxDecoration(
                           color: Color(0xFF222D32),
                         ),
                         child: Center(
-                          child: Row(
-                            children: [
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.account_circle,
-                                      color: Colors.white)),
-                              const SizedBox(height: 10),
-                              const Text(
-                                'Nome do Usuario',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
+                          child: Text(
+                            'SIGEDESP',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Wrap(
-                          runSpacing: 16,
-                          spacing: 16,
+                          runSpacing: 8,
+                          spacing: 8,
                           children: [
                             ListTile(
-                              title: const Text(
-                                'Home Page',
-                                style: TextStyle(color: Colors.white),
+                              leading: const Icon(
+                                Icons.home,
+                                color: Colors.white,
                               ),
-                              onTap: () {
-                                return Modular.to.navigate('/');
-                              },
+                              title: const Text(
+                                "Tela Inicial",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onTap: () => Modular.to.navigate("/"),
+                            ),
+                            const Divider(),
+                            ListTile(
+                              leading: const Icon(
+                                Icons.request_quote_outlined,
+                                color: Colors.white,
+                              ),
+                              title: const Row(
+                                children: [
+                                  Text(
+                                    "Despesas",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  // IconButton(
+                                  //   onPressed: () => Expanded(
+                                  //     child: Column(
+                                  //       children: [
+                                  //         ListTile(
+                                  //           leading: const Icon(
+                                  //             Icons.home,
+                                  //             color: Colors.white,
+                                  //           ),
+                                  //           title: const Text(
+                                  //             "Tela Inicial",
+                                  //             style: TextStyle(
+                                  //               color: Colors.white,
+                                  //             ),
+                                  //           ),
+                                  //           onTap: () => Modular.to.navigate("/"),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  //   icon: const Icon(
+                                  //     Icons.arrow_drop_down,
+                                  //     color: Colors.white,
+                                  //   ),
+                                  // )
+                                ],
+                              ),
+                              onTap: () => Modular.to.navigate("/"),
                             ),
                             ListTile(
-                              title: const Text(
-                                'Instituição',
-                                style: TextStyle(color: Colors.white),
+                              leading: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
                               ),
-                              onTap: () {
-                                return Modular.to.navigate('/instituicaoPage');
-                              },
+                              title: const Text(
+                                "Cadastros",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onTap: () => Modular.to.navigate("/"),
+                            ),
+                            const Divider(),
+                            ListTile(
+                              leading: const Icon(
+                                Icons.receipt_long,
+                                color: Colors.white,
+                              ),
+                              title: const Text(
+                                "Relatorios",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onTap: () => Modular.to.navigate("/"),
                             ),
                             ListTile(
-                              title: const Text(
-                                'Secretaria',
-                                style: TextStyle(color: Colors.white),
+                              leading: const Icon(
+                                Icons.data_thresholding_outlined,
+                                color: Colors.white,
                               ),
-                              onTap: () {
-                                return Modular.to.navigate('/secretariaPage');
-                              },
+                              title: const Text(
+                                "Relatorios",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onTap: () => Modular.to.navigate("/"),
                             ),
+                            const Divider(),
                             ListTile(
-                              title: const Text(
-                                'Cadastro de Tipo Despesas',
-                                style: TextStyle(color: Colors.white),
+                              leading: const Icon(
+                                Icons.person,
+                                color: Colors.white,
                               ),
-                              onTap: () {
-                                return Modular.to.navigate('/tipoDeDespesas');
-                              },
-                            ),
-                            ListTile(
                               title: const Text(
-                                'Cadastro de Tipo Instituição',
-                                style: TextStyle(color: Colors.white),
+                                "Perfil",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
-                              onTap: () {
-                                return Modular.to
-                                    .navigate('/tipoInstituicaoPage');
-                              },
+                              onTap: () => Modular.to.navigate("/"),
                             ),
-                            ListTile(
-                              title: const Text(
-                                'Cadastro de Unidade DeMedida',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              onTap: () {
-                                return Modular.to.navigate('/unidadeDeMedida');
-                              },
-                            ),
-                            ListTile(
-                              title: const Text(
-                                'Cadastro de Unidade Consumidora',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              onTap: () {
-                                return Modular.to
-                                    .navigate('/unidadeConsumidora');
-                              },
-                            ),
+                            const Divider(),
                           ],
                         ),
                       ),
