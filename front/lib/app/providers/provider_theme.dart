@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ThemeProvider {
+class ThemeApp {
   final _theme = ValueNotifier(TipoThemeApp.light);
 
   ValueNotifier<TipoThemeApp> get theme => _theme;

@@ -16,7 +16,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void initState() {
     Modular.setObservers([BotToastNavigatorObserver()]);
-    Modular.get<ThemeProvider>().theme.addListener(() {
+    Modular.get<ThemeApp>().theme.addListener(() {
       setState(() {});
     });
     super.initState();
@@ -36,7 +36,7 @@ class _AppWidgetState extends State<AppWidget> {
 }
 
 ThemeData createTheme() {
-  switch (Modular.get<ThemeProvider>().theme.value) {
+  switch (Modular.get<ThemeApp>().theme.value) {
     case TipoThemeApp.light:
       return ThemeData(
         brightness: Brightness.light,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/providers/provider_theme.dart'; // Importe seu provedor de tema aqui
+import 'package:front/app/providers/provider_theme.dart';
 import 'package:front/app/util/format_util.dart';
-import 'package:provider/provider.dart'; // Importe o provider aqui
 
 class ScaffoldComp extends StatelessWidget {
   const ScaffoldComp({
@@ -54,7 +53,7 @@ class ScaffoldComp extends StatelessWidget {
                     return PopupMenuItem(
                       child: tipo.icon,
                       onTap: () {
-                        Modular.get<ThemeProvider>().toggleTheme(tipo);
+                        Modular.get<ThemeApp>().toggleTheme(tipo);
                       },
                     );
                   })

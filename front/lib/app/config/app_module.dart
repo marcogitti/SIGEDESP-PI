@@ -30,11 +30,9 @@ class AppModule extends Module {
     i.addLazySingleton(UsuarioServiceImpl.new);
     i.addLazySingleton(UnidadeMedidaServiceImpl.new);
     i.addLazySingleton(UnidadeConsumidoraServiceImpl.new);
-    i.addSingleton(ThemeProvider.new);
+    i.addSingleton(ThemeApp.new);
     super.binds(i);
   }
-//   @override
-//   List<Bind<Object>> get binds => [];
 
   @override
   void routes(RouteManager r) {
