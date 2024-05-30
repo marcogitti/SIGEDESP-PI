@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/Scaffold_comp.dart';
+import 'package:front/app/components/scaffold_comp.dart';
 import 'package:front/app/modules/secretaria/secretaria_model.dart';
 import 'package:front/app/modules/secretaria/secretaria_service.dart';
 import 'package:result_dart/result_dart.dart';
@@ -129,7 +129,8 @@ class _InstitutionScreenState extends State<SecretariaPage> {
                               DataCell(Row(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.edit,
+                                    icon: const Icon(
+                                      Icons.edit,
                                       color: Color(0xFF0044FF),
                                     ),
                                     onPressed: () async {
@@ -137,7 +138,8 @@ class _InstitutionScreenState extends State<SecretariaPage> {
                                     },
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.delete,
+                                    icon: const Icon(
+                                      Icons.delete,
                                       color: Color(0xFFF44336),
                                     ),
                                     onPressed: () async {

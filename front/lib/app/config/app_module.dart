@@ -14,6 +14,7 @@ import 'package:front/app/modules/unidade/unidade_consumidora_page.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_page.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_service.dart';
+import 'package:front/app/providers/provider_theme.dart';
 import '../modules/despesas/tipo_despesas_page.dart';
 import '../modules/login/usuario_page.dart';
 
@@ -29,6 +30,7 @@ class AppModule extends Module {
     i.addLazySingleton(UsuarioServiceImpl.new);
     i.addLazySingleton(UnidadeMedidaServiceImpl.new);
     i.addLazySingleton(UnidadeConsumidoraServiceImpl.new);
+    i.addSingleton(ThemeProvider.new);
     super.binds(i);
   }
 //   @override

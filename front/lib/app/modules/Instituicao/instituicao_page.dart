@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/Scaffold_comp.dart';
+import 'package:front/app/components/scaffold_comp.dart';
 import 'package:front/app/modules/Instituicao/instituicao_model.dart';
 import 'package:front/app/modules/Instituicao/instituicao_service.dart';
 import 'package:result_dart/result_dart.dart';
@@ -45,45 +45,45 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     ),
                   ),
                 ),
-               Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  decoration: const InputDecoration(
-                    hintText: 'Buscar Instituição',
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(),
-                  ),
-                  controller: _controller,
-                ),
-                const SizedBox(height: 30),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        await modalCadastrar();
-                      },
-                      child: const Text('Cadastrar Nova Instituição'),
+                    TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Buscar Instituição',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: _controller,
                     ),
-                    const SizedBox(width: 15),
-                    const Text("Mostrar: "),
-                    DropdownButton<String>(
-                      borderRadius: BorderRadius.circular(10),
-                      elevation: 10,
-                      items: <String>['Opção 1', 'Opção 2', 'Opção 3']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {},
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            await modalCadastrar();
+                          },
+                          child: const Text('Cadastrar Nova Instituição'),
+                        ),
+                        const SizedBox(width: 15),
+                        const Text("Mostrar: "),
+                        DropdownButton<String>(
+                          borderRadius: BorderRadius.circular(10),
+                          elevation: 10,
+                          items: <String>['Opção 1', 'Opção 2', 'Opção 3']
+                              .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {},
+                        ),
+                        const SizedBox(width: 20),
+                      ],
                     ),
-                    const SizedBox(width: 20),
                   ],
                 ),
-              ],
-            ),
                 Padding(
                   padding: const EdgeInsets.only(top: 60),
                   child: FutureBuilder(
