@@ -38,7 +38,6 @@ namespace api.Migrations
                         .HasColumnName("bairro");
 
                     b.Property<int>("Cep")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("cep");
 
@@ -73,7 +72,6 @@ namespace api.Migrations
                         .HasColumnName("nomefantasia");
 
                     b.Property<int>("Numero")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("numero");
 
@@ -122,7 +120,6 @@ namespace api.Migrations
                         .HasColumnName("bairro");
 
                     b.Property<int>("Cep")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("cep");
 
@@ -159,7 +156,6 @@ namespace api.Migrations
                         .HasColumnName("nome");
 
                     b.Property<int>("Numero")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("numero");
 
@@ -268,7 +264,6 @@ namespace api.Migrations
                         .HasColumnName("bairro");
 
                     b.Property<int>("Cep")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("cep");
 
@@ -303,7 +298,6 @@ namespace api.Migrations
                         .HasColumnName("nome");
 
                     b.Property<int>("Numero")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("numero");
 
