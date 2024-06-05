@@ -28,9 +28,6 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Logradouro { get; set; }
 
-        [Required(ErrorMessage = "O Número é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
         public int Numero { get; set; }
 
         [Required(ErrorMessage = "O Bairro é requerido!")]
@@ -43,9 +40,6 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Rua { get; set; }
 
-        [Required(ErrorMessage = "O CEP é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
         public int Cep { get; set; }
 
         [Required(ErrorMessage = "O Nome de Razão Social é requerido!")]
@@ -67,13 +61,13 @@ namespace api.DTO.Entities
         [JsonIgnore]
         public TipoInstituicaoModel? TipoInstituicaoLista { get; set; }
 
-        [Required(ErrorMessage = "O ID de Tipo Instituição é requerido!")]
+        /*[Required(ErrorMessage = "O ID de Tipo Instituição é requerido!")]*/
         public int IdTipoInstituicao { get; set; }
 
         [JsonIgnore]
         public SecretariaModel? Secretaria { get; set; }
 
-        [Required(ErrorMessage = "O ID de Secretaria é requerido!")]
+        /*[Required(ErrorMessage = "O ID de Secretaria é requerido!")]*/
         public int IdSecretaria { get; set; }
 
     }

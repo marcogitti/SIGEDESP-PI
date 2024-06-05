@@ -18,7 +18,17 @@ namespace api.Migrations
                     fornecedorid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nomefantasia = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
+                    bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cep = table.Column<int>(type: "integer", nullable: false),
+                    nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    telefone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,7 +42,17 @@ namespace api.Migrations
                     secretariaid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
+                    bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cep = table.Column<int>(type: "integer", nullable: false),
+                    nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    telefone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,6 +107,16 @@ namespace api.Migrations
                     instituicaoid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
+                    bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cep = table.Column<int>(type: "integer", nullable: false),
+                    nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    telefone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false),
                     secretariaid = table.Column<int>(type: "integer", nullable: false),
                     SecretariaModelId = table.Column<int>(type: "integer", nullable: true),
