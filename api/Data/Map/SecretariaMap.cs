@@ -11,6 +11,16 @@ namespace api.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Situacao).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Descricao).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Cnpj).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Nome).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Logradouro).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Numero);
+            builder.Property(x => x.Bairro).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Rua).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Cep);
+            builder.Property(x => x.nomeRazaoSocial).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Telefone).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
 
         }
     }

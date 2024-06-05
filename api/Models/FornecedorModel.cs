@@ -21,6 +21,36 @@ public class FornecedorModel
     [Column("situacao")]
     public string Situacao { get; set; }
 
+    [Column("cnpj")]
+    public string Cnpj { get; set; }
+
+    [Column("nome")]
+    public string Nome { get; set; }
+
+    [Column("logradouro")]
+    public string Logradouro { get; set; }
+
+    [Column("numero")]
+    public int Numero { get; set; }
+
+    [Column("bairro")]
+    public string Bairro { get; set; }
+
+    [Column("rua")]
+    public string Rua { get; set; }
+
+    [Column("cep")]
+    public int Cep { get; set; }
+
+    [Column("nomerazaosocial")]
+    public string nomeRazaoSocial { get; set; }
+
+    [Column("telefone")]
+    public string Telefone { get; set; }
+
+    [Column("email")]
+    public string Email { get; set; }
+
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
