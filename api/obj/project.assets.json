@@ -2893,19 +2893,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\55179\\.nuget\\packages\\": {}
+    "C:\\Users\\Gaby\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\55179\\OneDrive\\Área de Trabalho\\SIGEDESP-PI\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\Gaby\\Desktop\\Nova pasta\\SIGEDESP-PI\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\55179\\OneDrive\\Área de Trabalho\\SIGEDESP-PI\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\55179\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\55179\\OneDrive\\Área de Trabalho\\SIGEDESP-PI\\api\\obj\\",
+      "projectPath": "C:\\Users\\Gaby\\Desktop\\Nova pasta\\SIGEDESP-PI\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\Gaby\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Gaby\\Desktop\\Nova pasta\\SIGEDESP-PI\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\55179\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Gaby\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2913,7 +2913,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2997,7 +2996,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

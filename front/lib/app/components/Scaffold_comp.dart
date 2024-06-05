@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/providers/provider_theme.dart'; // Importe seu provedor de tema aqui
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:front/app/providers/provider_theme.dart';
 import 'package:front/app/util/format_util.dart';
-import 'package:provider/provider.dart'; // Importe o provider aqui
 
 class ScaffoldComp extends StatelessWidget {
   const ScaffoldComp({
@@ -46,17 +46,19 @@ class ScaffoldComp extends StatelessWidget {
               ),
             ),
           ),
-          Consumer<ThemeProvider>(
-            builder: (context, themeProvider, child) {
-              return Switch(
-                value: themeProvider.isHighContrastTheme,
-                onChanged: (value) {
-                  // Alterar o tema quando o switch é alterado
-                  themeProvider.toggleTheme();
-                },
-                activeColor: Colors.white,
-                inactiveTrackColor: Colors.grey,
-              );
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return TipoThemeApp.values
+                  .map((tipo) {
+                    return PopupMenuItem(
+                      child: tipo.icon,
+                      onTap: () {
+                        Modular.get<ThemeApp>().toggleTheme(tipo);
+                      },
+                    );
+                  })
+                  .toList()
+                  .cast<PopupMenuItem>();
             },
           ),
         ].spaceBetowin(wh: 6),
