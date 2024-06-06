@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/Scaffold_comp.dart';
+import 'package:front/app/components/scaffold_comp.dart';
 import 'package:front/app/modules/Instituicao/tipo_instituicao_model.dart';
 import 'package:front/app/modules/Instituicao/tipo_instituicao_service.dart';
 import 'package:result_dart/result_dart.dart';
