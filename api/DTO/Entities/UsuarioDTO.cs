@@ -1,4 +1,5 @@
 ﻿using api.Models;
+using api.Models.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -62,7 +63,7 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "A Situação do Usuário é requerida!")]
         [MinLength(1)]
         [MaxLength(100)]
-        public string Situacao { get; set; }
+        public SituacaoEnum Situacao { get; set; }
 
         [Required(ErrorMessage = "A Matrícula é requerida!")]
         [MinLength(1)]
