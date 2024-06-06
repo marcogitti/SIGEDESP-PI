@@ -61,13 +61,13 @@ namespace api.DTO.Entities
         [JsonIgnore]
         public TipoInstituicaoModel? TipoInstituicaoLista { get; set; }
 
-        /*[Required(ErrorMessage = "O ID de Tipo Instituição é requerido!")]*/
+        [Required(ErrorMessage = "O ID de Tipo Instituição é requerido!")]
         public int IdTipoInstituicao { get; set; }
 
         [JsonIgnore]
         public SecretariaModel? Secretaria { get; set; }
 
-        /*[Required(ErrorMessage = "O ID de Secretaria é requerido!")]*/
+        [Required(ErrorMessage = "O ID de Secretaria é requerido!")]
         public int IdSecretaria { get; set; }
 
     }
