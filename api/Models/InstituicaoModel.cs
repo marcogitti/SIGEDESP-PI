@@ -49,6 +49,12 @@ public class InstituicaoModel
     [Column("email")]
     public string Email { get; set; }
 
+    [Column("cidade")]
+    public string Cidade { get; set; }
+
+    [Column("estado")]
+    public string Estado { get; set; }
+
     /*Código para receber chaves estrangeiras de tipoInsituicao e Secretaria*/
     [JsonIgnore]
     public TipoInstituicaoModel? tipoInstituicao { get; set; }

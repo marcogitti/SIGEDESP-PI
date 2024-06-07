@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240607165139_CriarBanco")]
+    [Migration("20240607190752_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -44,6 +44,12 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("cep");
 
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("cidade");
+
                     b.Property<string>("Cnpj")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -55,6 +61,12 @@ namespace api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
@@ -124,6 +136,12 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("cep");
 
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("cidade");
+
                     b.Property<string>("Cnpj")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -135,6 +153,12 @@ namespace api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("estado");
 
                     b.Property<int>("IdSecretaria")
                         .HasColumnType("integer")
@@ -266,6 +290,12 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("cep");
 
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("cidade");
+
                     b.Property<string>("Cnpj")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -283,6 +313,12 @@ namespace api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()

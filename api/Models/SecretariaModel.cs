@@ -52,6 +52,12 @@ public class SecretariaModel
     [Column("email")]
     public string Email { get; set; }
 
+    [Column("cidade")]
+    public string Cidade { get; set; }
+
+    [Column("estado")]
+    public string Estado { get; set; }
+
     [JsonIgnore]
     public ICollection<InstituicaoModel>? InstituicaoLista { get; set; }
 }

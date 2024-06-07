@@ -52,6 +52,12 @@ public class FornecedorModel
     [Column("email")]
     public string Email { get; set; }
 
+    [Column("cidade")]
+    public string Cidade { get; set; }
+
+    [Column("estado")]
+    public string Estado { get; set; }
+
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
