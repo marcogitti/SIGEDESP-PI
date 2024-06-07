@@ -56,6 +56,16 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "A Cidade é requerida!")]
+        [MinLength(1)]
+        [MaxLength(100)]
+        public string Cidade { get; set; }
+
+        [Required(ErrorMessage = "O Estado é requerido!")]
+        [MinLength(1)]
+        [MaxLength(100)]
+        public string Estado { get; set; }
+
         /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
         [JsonIgnore]
         public TipoInstituicaoModel? TipoInstituicaoLista { get; set; }
