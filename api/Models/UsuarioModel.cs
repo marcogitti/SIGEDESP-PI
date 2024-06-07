@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using api.Models.Enum;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -52,7 +53,7 @@ public class UsuarioModel
     public string Senha { get; set; }
 
     [Column("situacao")]
-    public string Situacao { get; set; }
+    public SituacaoEnum Situacao { get; set; }
 
     [Column("matricula")]
     public string Matricula { get; set; }
