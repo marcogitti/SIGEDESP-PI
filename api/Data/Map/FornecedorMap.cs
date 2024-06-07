@@ -10,7 +10,7 @@ namespace api.Data.Map
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.NomeFantasia).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Situacao).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Situacao).IsRequired();
             builder.Property(x => x.Cnpj).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Logradouro).IsRequired().HasMaxLength(50);

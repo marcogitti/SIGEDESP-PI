@@ -81,10 +81,8 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("rua");
 
-                    b.Property<string>("Situacao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                    b.Property<int>("Situacao")
+                        .HasColumnType("integer")
                         .HasColumnName("situacao");
 
                     b.Property<string>("Telefone")
@@ -168,10 +166,8 @@ namespace api.Migrations
                     b.Property<int?>("SecretariaModelId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Situacao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                    b.Property<int>("Situacao")
+                        .HasColumnType("integer")
                         .HasColumnName("situacao");
 
                     b.Property<string>("Telefone")
@@ -307,10 +303,8 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("rua");
 
-                    b.Property<string>("Situacao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                    b.Property<int>("Situacao")
+                        .HasColumnType("integer")
                         .HasColumnName("situacao");
 
                     b.Property<string>("Telefone")
@@ -564,10 +558,8 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("senha");
 
-                    b.Property<string>("Situacao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                    b.Property<int>("Situacao")
+                        .HasColumnType("integer")
                         .HasColumnName("situacao");
 
                     b.Property<int?>("TipoUsuarioModelId")

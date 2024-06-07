@@ -14,8 +14,6 @@ namespace api.DTO.Entities
         public string NomeFantasia { get; set; }
 
         [Required(ErrorMessage = "A Situação é requerida!")]
-        [MinLength(1)]
-        [MaxLength(100)]
         public SituacaoEnum Situacao { get; set; }
 
         [Required(ErrorMessage = "O CNPJ é requerido!")]
