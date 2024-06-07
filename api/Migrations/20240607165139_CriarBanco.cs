@@ -18,7 +18,7 @@ namespace api.Migrations
                     fornecedorid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nomefantasia = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false),
                     cnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -41,7 +41,7 @@ namespace api.Migrations
                 {
                     secretariaid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false),
                     descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     cnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -106,7 +106,7 @@ namespace api.Migrations
                 {
                     instituicaoid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false),
                     cnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -167,7 +167,7 @@ namespace api.Migrations
                     rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     senha = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    situacao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false),
                     matricula = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     tipousuarioid = table.Column<int>(type: "integer", nullable: false),
                     TipoUsuarioModelId = table.Column<int>(type: "integer", nullable: true)

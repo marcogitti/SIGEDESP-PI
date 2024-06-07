@@ -61,8 +61,6 @@ namespace api.DTO.Entities
         public string Senha { get; set; }
 
         [Required(ErrorMessage = "A Situação do Usuário é requerida!")]
-        [MinLength(1)]
-        [MaxLength(100)]
         public SituacaoEnum Situacao { get; set; }
 
         [Required(ErrorMessage = "A Matrícula é requerida!")]

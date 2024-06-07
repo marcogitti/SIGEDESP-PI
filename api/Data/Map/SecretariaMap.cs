@@ -9,7 +9,7 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<SecretariaModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Situacao).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Situacao).IsRequired();
             builder.Property(x => x.Descricao).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Cnpj).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(50);
