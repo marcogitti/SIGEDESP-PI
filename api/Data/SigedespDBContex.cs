@@ -14,7 +14,6 @@ namespace api.Data
         public DbSet<TipoInstituicaoModel> TipoInstituicao { get; set; }
         public DbSet<UnidadeMedidaModel> UnidadeMedida { get; set; }
         public DbSet<UnidadeConsumidoraModel> UnidadeConsumidora { get; set; }
-        public DbSet<TipoUsuarioModel> TipoUsuario { get; set; }
         public DbSet<SecretariaModel> Secretaria { get; set; }
         public DbSet<FornecedorModel> Fornecedor { get; set; }
         public DbSet<InstituicaoModel> Instituicao { get; set; }
@@ -27,7 +26,6 @@ namespace api.Data
             modelBuilder.ApplyConfiguration(new TipoInstituicaoMap());
             modelBuilder.ApplyConfiguration(new UnidadeMedidaMap());
             modelBuilder.ApplyConfiguration(new UnidadeConsumidoraMap());
-            modelBuilder.ApplyConfiguration(new TipoUsuarioMap());
             modelBuilder.ApplyConfiguration(new SecretariaMap());
             modelBuilder.ApplyConfiguration(new FornecedorMap());
             modelBuilder.ApplyConfiguration(new InstituicaoMap());

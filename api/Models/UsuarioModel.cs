@@ -57,12 +57,4 @@ public class UsuarioModel
 
     [Column("matricula")]
     public string Matricula { get; set; }
-
-    /*Código para receber chave estrangeira de TipoUsuario*/
-    [JsonIgnore]
-    public TipoUsuarioModel? TipoUsuario { get; set; }
-
-    [Column("tipousuarioid")]
-    [ForeignKey("tipousuarioid")]
-    public int IdTipoUsuario { get; set; }
 }
