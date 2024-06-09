@@ -45,11 +45,6 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Bairro { get; set; }
 
-        [Required(ErrorMessage = "A Rua é requerida!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string Rua { get; set; }
-
         [Required(ErrorMessage = "O Email é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]

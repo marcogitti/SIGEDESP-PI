@@ -87,12 +87,6 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("numero");
 
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
-
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
                         .HasColumnName("situacao");
@@ -180,12 +174,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int?>("SecretariaModelId")
                         .HasColumnType("integer");
@@ -332,12 +320,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
@@ -551,12 +533,6 @@ namespace api.Migrations
                     b.Property<int>("RgLe")
                         .HasColumnType("integer")
                         .HasColumnName("rgle");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<string>("Senha")
                         .IsRequired()

@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240609212926_CriarBanco")]
+    [Migration("20240609213843_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -89,12 +89,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
@@ -183,12 +177,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int?>("SecretariaModelId")
                         .HasColumnType("integer");
@@ -335,12 +323,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
@@ -554,12 +536,6 @@ namespace api.Migrations
                     b.Property<int>("RgLe")
                         .HasColumnType("integer")
                         .HasColumnName("rgle");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<string>("Senha")
                         .IsRequired()

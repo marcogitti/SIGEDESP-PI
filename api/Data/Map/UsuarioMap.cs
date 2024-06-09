@@ -18,7 +18,6 @@ namespace api.Data.Map
             builder.Property(x => x.Estado).IsRequired().HasMaxLength(50);
             builder.Property(x => x.CEP);
             builder.Property(x => x.Bairro).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Rua).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Senha).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Situacao).IsRequired();

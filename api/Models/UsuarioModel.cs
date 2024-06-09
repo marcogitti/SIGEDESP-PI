@@ -43,9 +43,6 @@ public class UsuarioModel
     [Column("bairro")]
     public string Bairro { get; set; }
 
-    [Column("rua")]
-    public string Rua { get; set; }
-
     [Column("email")]
     public string Email { get; set; }
 
