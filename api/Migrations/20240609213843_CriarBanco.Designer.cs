@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240607190752_CriarBanco")]
+    [Migration("20240609213843_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -89,12 +89,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
@@ -183,12 +177,6 @@ namespace api.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("integer")
                         .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
 
                     b.Property<int?>("SecretariaModelId")
                         .HasColumnType("integer");
@@ -336,12 +324,6 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("numero");
 
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
-
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
                         .HasColumnName("situacao");
@@ -418,32 +400,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tipoinstituicao");
-                });
-
-            modelBuilder.Entity("api.Models.TipoUsuarioModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("tipousuarioid");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("descricao");
-
-                    b.Property<string>("PermiteLogin")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("permitelogin");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tipousuario");
                 });
 
             modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
@@ -555,10 +511,6 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("estado");
 
-                    b.Property<int>("IdTipoUsuario")
-                        .HasColumnType("integer")
-                        .HasColumnName("tipousuarioid");
-
                     b.Property<string>("Logradouro")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -585,12 +537,6 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("rgle");
 
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
-
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -601,14 +547,7 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("situacao");
 
-                    b.Property<int?>("TipoUsuarioModelId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("IdTipoUsuario");
-
-                    b.HasIndex("TipoUsuarioModelId");
 
                     b.ToTable("usuario");
                 });
@@ -709,21 +648,6 @@ namespace api.Migrations
                     b.Navigation("Instituicao");
                 });
 
-            modelBuilder.Entity("api.Models.UsuarioModel", b =>
-                {
-                    b.HasOne("api.Models.TipoUsuarioModel", "TipoUsuario")
-                        .WithMany()
-                        .HasForeignKey("IdTipoUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.TipoUsuarioModel", null)
-                        .WithMany("Usuario")
-                        .HasForeignKey("TipoUsuarioModelId");
-
-                    b.Navigation("TipoUsuario");
-                });
-
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
                     b.Navigation("UnidadeConsumidora");
@@ -749,11 +673,6 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
                 {
                     b.Navigation("InstituicaoLista");
-                });
-
-            modelBuilder.Entity("api.Models.TipoUsuarioModel", b =>
-                {
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>

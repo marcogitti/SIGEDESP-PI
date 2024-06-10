@@ -34,9 +34,6 @@ public class InstituicaoModel
     [Column("bairro")]
     public string Bairro { get; set; }
 
-    [Column("rua")]
-    public string Rua { get; set; }
-
     [Column("cep")]
     public int Cep { get; set; }
 

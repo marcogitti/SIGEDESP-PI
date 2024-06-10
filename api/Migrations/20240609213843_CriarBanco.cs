@@ -24,7 +24,6 @@ namespace api.Migrations
                     logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     numero = table.Column<int>(type: "integer", nullable: false),
                     bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     cep = table.Column<int>(type: "integer", nullable: false),
                     nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     telefone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -50,7 +49,6 @@ namespace api.Migrations
                     logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     numero = table.Column<int>(type: "integer", nullable: false),
                     bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     cep = table.Column<int>(type: "integer", nullable: false),
                     nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     telefone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -77,20 +75,6 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tipousuario",
-                columns: table => new
-                {
-                    tipousuarioid = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    permitelogin = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tipousuario", x => x.tipousuarioid);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "unidademedida",
                 columns: table => new
                 {
@@ -105,6 +89,31 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "usuario",
+                columns: table => new
+                {
+                    usuarioid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cpfcnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    rgle = table.Column<int>(type: "integer", nullable: false),
+                    logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
+                    cidade = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    estado = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    cep = table.Column<int>(type: "integer", nullable: false),
+                    bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    senha = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false),
+                    matricula = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_usuario", x => x.usuarioid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "instituicao",
                 columns: table => new
                 {
@@ -116,7 +125,6 @@ namespace api.Migrations
                     logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     numero = table.Column<int>(type: "integer", nullable: false),
                     bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     cep = table.Column<int>(type: "integer", nullable: false),
                     nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     telefone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
@@ -152,45 +160,6 @@ namespace api.Migrations
                         column: x => x.tipoinstituicaoid,
                         principalTable: "tipoinstituicao",
                         principalColumn: "tipoinstituicaoid",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "usuario",
-                columns: table => new
-                {
-                    usuarioid = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    cpfcnpj = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    nomerazaosocial = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    rgle = table.Column<int>(type: "integer", nullable: false),
-                    logradouro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    numero = table.Column<int>(type: "integer", nullable: false),
-                    cidade = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    estado = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    cep = table.Column<int>(type: "integer", nullable: false),
-                    bairro = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    rua = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    senha = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    situacao = table.Column<int>(type: "integer", nullable: false),
-                    matricula = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    tipousuarioid = table.Column<int>(type: "integer", nullable: false),
-                    TipoUsuarioModelId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_usuario", x => x.usuarioid);
-                    table.ForeignKey(
-                        name: "FK_usuario_tipousuario_TipoUsuarioModelId",
-                        column: x => x.TipoUsuarioModelId,
-                        principalTable: "tipousuario",
-                        principalColumn: "tipousuarioid");
-                    table.ForeignKey(
-                        name: "FK_usuario_tipousuario_tipousuarioid",
-                        column: x => x.tipousuarioid,
-                        principalTable: "tipousuario",
-                        principalColumn: "tipousuarioid",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -369,16 +338,6 @@ namespace api.Migrations
                 name: "IX_unidadeconsumidora_InstituicaoModelId",
                 table: "unidadeconsumidora",
                 column: "InstituicaoModelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_usuario_tipousuarioid",
-                table: "usuario",
-                column: "tipousuarioid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_usuario_TipoUsuarioModelId",
-                table: "usuario",
-                column: "TipoUsuarioModelId");
         }
 
         /// <inheritdoc />
@@ -401,9 +360,6 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "instituicao");
-
-            migrationBuilder.DropTable(
-                name: "tipousuario");
 
             migrationBuilder.DropTable(
                 name: "unidademedida");

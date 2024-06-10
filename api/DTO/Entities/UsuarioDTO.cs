@@ -45,11 +45,6 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Bairro { get; set; }
 
-        [Required(ErrorMessage = "A Rua é requerida!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string Rua { get; set; }
-
         [Required(ErrorMessage = "O Email é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
@@ -67,12 +62,5 @@ namespace api.DTO.Entities
         [MinLength(1)]
         [MaxLength(100)]
         public string Matricula { get; set; }
-
-        /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
-        [JsonIgnore]
-        public TipoUsuarioModel? TipoUsuario { get; set; }
-
-        [Required(ErrorMessage = "O ID de Tipo Usuário é requerido!")]
-        public int IdTipoUsuario { get; set; }
     }
 }

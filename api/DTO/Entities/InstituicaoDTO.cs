@@ -34,11 +34,6 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Bairro { get; set; }
 
-        [Required(ErrorMessage = "A Rua é requerida!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string Rua { get; set; }
-
         public int Cep { get; set; }
 
         [Required(ErrorMessage = "O Nome de Razão Social é requerido!")]
