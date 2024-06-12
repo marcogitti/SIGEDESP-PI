@@ -10,7 +10,7 @@ class TipoInstituicaoModel {
   });
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      // 'id': id,
+      'id': id,
       'descricao': descricao,
     };
   }

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:front/app/util/situacao_enum.dart';
 
-class SecretariaModel {
+class FornecedorModel {
   final int? id;
   final String? nome;
   final String? nomeRazaoSocial;
@@ -18,7 +18,7 @@ class SecretariaModel {
   final String? estado;
   final SituacaoEnum situacao;
 
-  SecretariaModel({
+  FornecedorModel({
     this.id,
     this.nome,
     this.nomeRazaoSocial,
@@ -33,7 +33,6 @@ class SecretariaModel {
     this.estado,
     required this.situacao,
   });
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -53,8 +52,8 @@ class SecretariaModel {
     };
   }
 
-  factory SecretariaModel.fromMap(Map<String, dynamic> map) {
-    return SecretariaModel(
+  factory FornecedorModel.fromMap(Map<String, dynamic> map) {
+    return FornecedorModel(
       id: map['id'] != null ? map['id'] as int : null,
       nome: map['nome'] != null ? map['nome'] as String : null,
       nomeRazaoSocial: map['nomeRazaoSocial'] != null ? map['nomeRazaoSocial'] as String : null,
@@ -73,9 +72,9 @@ class SecretariaModel {
 
   String toJson() => json.encode(toMap());
 
-  factory SecretariaModel.fromJson(String source) => SecretariaModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory FornecedorModel.fromJson(String source) => FornecedorModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  SecretariaModel copyWith({
+  FornecedorModel copyWith({
     int? id,
     String? nome,
     String? nomeRazaoSocial,
@@ -90,7 +89,7 @@ class SecretariaModel {
     String? estado,
     SituacaoEnum? situacao,
   }) {
-    return SecretariaModel(
+    return FornecedorModel(
       id: id ?? this.id,
       nome: nome ?? this.nome,
       nomeRazaoSocial: nomeRazaoSocial ?? this.nomeRazaoSocial,
