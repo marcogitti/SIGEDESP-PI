@@ -1,2 +1,5 @@
 # SIGEDESP-PI
-Projeto de  PI.
+
+Com o propósito de otimizar a administração da Prefeitura de Jales, localizada no estado de São Paulo, o projeto SIGEDESP (Sistema de Gerenciamento de Despesas) foi concebido com a missão de aprimorar significativamente o controle e a gestão das despesas das diversas instituições sob a jurisdição das suas respectivas secretarias. Este projeto está atualmente em fase de desenvolvimento, resultado de uma colaboração estreita com a Fatec de Jales, fazendo parte integrante do programa educacional da disciplina de PI (Projeto Integrador), com um período de desenvolvimento estimado em dois anos.
+
+O SIGEDESP visa proporcionar uma abordagem abrangente no registro preciso das despesas, garantindo um controle minucioso dos gastos por meio da apresentação de gráficos, relatórios detalhados e análises aprofundadas. Além disso, este sistema permitirá a elaboração de orçamentos personalizados, adaptados às necessidades específicas de cada área ou instituição sob a jurisdição da prefeitura. Com a implementação do SIGEDESP, a Prefeitura de Jales visa alcançar uma gestão financeira mais eficiente e transparente, otimizando o uso dos recursos públicos em benefício da comunidade local.
