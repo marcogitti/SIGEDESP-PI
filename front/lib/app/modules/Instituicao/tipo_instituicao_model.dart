@@ -10,7 +10,7 @@ class TipoInstituicaoModel {
   });
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      // 'id': id,
       'descricao': descricao,
     };
   }
@@ -26,6 +26,7 @@ class TipoInstituicaoModel {
 
   factory TipoInstituicaoModel.fromJson(String source) =>
       TipoInstituicaoModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  
   TipoInstituicaoModel copyWith({
     int? id,
     String? descricao,

@@ -8,7 +8,7 @@ class UnidadeConsumidoraPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
   Future<void> _saveToApi(String name) async {
-    var url = Uri.parse('https://localhost:7274/api/add');
+    var url = Uri.parse('https://localhost:5052/api/add');
     var response = await http.post(url, body: {'add': name});
 
     if (response.statusCode == 200) {

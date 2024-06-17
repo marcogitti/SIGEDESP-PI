@@ -48,7 +48,7 @@ class FornecedorModel {
       'bairro': bairro,
       'cidade': cidade,
       'estado': estado,
-      'situacao': situacao.toMap(),
+      'situacao': situacao.index,
     };
   }
 
@@ -56,23 +56,27 @@ class FornecedorModel {
     return FornecedorModel(
       id: map['id'] != null ? map['id'] as int : null,
       nome: map['nome'] != null ? map['nome'] as String : null,
-      nomeRazaoSocial: map['nomeRazaoSocial'] != null ? map['nomeRazaoSocial'] as String : null,
+      nomeRazaoSocial: map['nomeRazaoSocial'] != null
+          ? map['nomeRazaoSocial'] as String
+          : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
       cep: map['cep'] != null ? map['cep'] as String : null,
       descricao: map['descricao'] != null ? map['descricao'] as String : null,
-      logradouro: map['logradouro'] != null ? map['logradouro'] as String : null,
+      logradouro:
+          map['logradouro'] != null ? map['logradouro'] as String : null,
       numero: map['numero'] as int,
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      situacao: SituacaoEnum.fromMap(map['situacao'] as Map<String,dynamic>),
+      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory FornecedorModel.fromJson(String source) => FornecedorModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory FornecedorModel.fromJson(String source) =>
+      FornecedorModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   FornecedorModel copyWith({
     int? id,

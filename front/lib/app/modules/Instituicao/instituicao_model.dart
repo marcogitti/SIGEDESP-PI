@@ -83,7 +83,7 @@ class InstituicaoModel {
       'bairro': bairro,
       'cidade': cidade,
       'estado': estado,
-      'situacao': situacao,
+      'situacao': situacao.index,
       'idTipoInstituicao': idTipoInstituicao,
       'idSecretaria': idSecretaria,
     };
@@ -105,7 +105,7 @@ class InstituicaoModel {
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      situacao: SituacaoEnum.fromMap(map['situacao'] as Map<String, dynamic>),
+      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
       idTipoInstituicao: map['idTipoInstituicao'] != null
           ? map['idTipoInstituicao'] as int
           : null,

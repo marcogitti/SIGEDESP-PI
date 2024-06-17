@@ -12,11 +12,11 @@ class SecretariaModel {
   final String? cep;
   final String? descricao;
   final String? logradouro;
-  final int numero;
+  final int? numero;
   final String? bairro;
   final String? cidade;
   final String? estado;
-  final SituacaoEnum situacao;
+  final SituacaoEnum? situacao;
 
   SecretariaModel({
     this.id,
@@ -27,13 +27,12 @@ class SecretariaModel {
     this.cep,
     this.descricao,
     this.logradouro,
-    required this.numero,
+    this.numero,
     this.bairro,
     this.cidade,
     this.estado,
-    required this.situacao,
+    this.situacao,
   });
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -49,7 +48,7 @@ class SecretariaModel {
       'bairro': bairro,
       'cidade': cidade,
       'estado': estado,
-      'situacao': situacao.toMap(),
+      'situacao': situacao!.index,
     };
   }
 
@@ -57,23 +56,27 @@ class SecretariaModel {
     return SecretariaModel(
       id: map['id'] != null ? map['id'] as int : null,
       nome: map['nome'] != null ? map['nome'] as String : null,
-      nomeRazaoSocial: map['nomeRazaoSocial'] != null ? map['nomeRazaoSocial'] as String : null,
+      nomeRazaoSocial: map['nomeRazaoSocial'] != null
+          ? map['nomeRazaoSocial'] as String
+          : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
       cep: map['cep'] != null ? map['cep'] as String : null,
       descricao: map['descricao'] != null ? map['descricao'] as String : null,
-      logradouro: map['logradouro'] != null ? map['logradouro'] as String : null,
+      logradouro:
+          map['logradouro'] != null ? map['logradouro'] as String : null,
       numero: map['numero'] as int,
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      situacao: SituacaoEnum.fromMap(map['situacao'] as Map<String,dynamic>),
+      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory SecretariaModel.fromJson(String source) => SecretariaModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SecretariaModel.fromJson(String source) =>
+      SecretariaModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   SecretariaModel copyWith({
     int? id,

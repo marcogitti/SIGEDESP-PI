@@ -91,7 +91,7 @@ class ScaffoldComp extends StatelessWidget {
                           runSpacing: 8,
                           spacing: 8,
                           children: [
-                            const ExpansionTile(
+                            const ListTile(
                               leading: Icon(
                                 Icons.home,
                                 color: Colors.white,
@@ -131,29 +131,17 @@ class ScaffoldComp extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  trailing: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.white,
-                                  ),
                                   children: <Widget>[
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Tipo Despesa',
+                                        'Tipo Despesa',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onTap: () {},
                                     ),
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro De Despesa',
+                                        'Despesa',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onTap: () {},
@@ -175,29 +163,17 @@ class ScaffoldComp extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  trailing: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.white,
-                                  ),
                                   children: <Widget>[
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Usuario',
+                                        'Usuario',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onTap: () {},
                                     ),
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Tipo Usuario',
+                                        'Tipo Usuario',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onTap: () {},
@@ -221,43 +197,34 @@ class ScaffoldComp extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  trailing: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.white,
-                                  ),
                                   children: <Widget>[
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Instituições',
+                                        'Instituições',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/instituicaoPage');
+                                      },
                                     ),
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Tipo Instituições',
+                                        'Tipo Instituições',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to
+                                            .navigate('/tipoInstituicaoPage');
+                                      },
                                     ),
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Secretaria',
+                                        'Secretaria',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/secretariaPage');
+                                      },
                                     ),
                                   ],
                                 ),
@@ -276,32 +243,25 @@ class ScaffoldComp extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  trailing: const Icon(
-                                    Icons.request_quote,
-                                    color: Colors.white,
-                                  ),
                                   children: <Widget>[
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Unidade Consumidora',
+                                        'Unidade Consumidora',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to
+                                            .navigate('/unidadeConsumidora');
+                                      },
                                     ),
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Unidade Medida',
+                                        'Unidade Medida',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/unidadeDeMedida');
+                                      },
                                     ),
                                   ],
                                 ),
@@ -320,18 +280,10 @@ class ScaffoldComp extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  trailing: const Icon(
-                                    Icons.price_change_outlined,
-                                    color: Colors.white,
-                                  ),
                                   children: <Widget>[
                                     ListTile(
-                                      leading: const Icon(
-                                        Icons.description,
-                                        color: Colors.white,
-                                      ),
                                       title: const Text(
-                                        'Cadastro Orçamento',
+                                        'Orçamento',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onTap: () {},
@@ -341,7 +293,7 @@ class ScaffoldComp extends StatelessWidget {
                               ],
                             ),
                             const Divider(),
-                            const ExpansionTile(
+                            const ListTile(
                               leading: Icon(
                                 Icons.receipt_long,
                                 color: Colors.white,
@@ -353,7 +305,7 @@ class ScaffoldComp extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const ExpansionTile(
+                            const ListTile(
                               leading: Icon(
                                 Icons.data_thresholding_outlined,
                                 color: Colors.white,
@@ -366,7 +318,7 @@ class ScaffoldComp extends StatelessWidget {
                               ),
                             ),
                             const Divider(),
-                            const ExpansionTile(
+                            const ListTile(
                               leading: Icon(
                                 Icons.person,
                                 color: Colors.white,

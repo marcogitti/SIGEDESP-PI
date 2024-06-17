@@ -1,4 +1,4 @@
-import 'package:front/app/modules/Instituicao/instituicao_model.dart';
+import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/service/service.dart';
 
 class InstituicaoServiceImpl extends IService {

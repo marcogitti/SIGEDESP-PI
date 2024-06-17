@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/scaffold_comp.dart';
-import 'package:front/app/modules/Instituicao/tipo_instituicao_model.dart';
-import 'package:front/app/modules/Instituicao/tipo_instituicao_service.dart';
+import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
+import 'package:front/app/modules/instituicao/tipo_instituicao_service.dart';
 import 'package:result_dart/result_dart.dart';
 
 class TipoInstituicao extends StatefulWidget {
@@ -107,8 +107,11 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                     return const Text("Erro");
                   }
 
-                  final tp =
-                      (snapshot.data ?? []).cast<TipoInstituicaoModel?>();
+                  if (snapshot.data == null) {
+                    return Container();
+                  }
+
+                  final tp = (snapshot.data ?? []) as List;
 
                   return DataTable(
                     border: TableBorder.all(),
@@ -190,7 +193,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
 
   Future<void> modalCadastrar([TipoInstituicaoModel? tipoInstituicao]) async {
     bool isEdit = tipoInstituicao?.id != null;
-    TextEditingController tipoInstituicaoEditCtrl =
+    final tipoInstituicaoEditCtrl =
         TextEditingController(text: tipoInstituicao?.descricao ?? '');
 
     await showDialog(

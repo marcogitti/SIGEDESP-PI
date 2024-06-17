@@ -8,7 +8,7 @@ class CadastroDeDespesas extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
   Future<void> _saveToApi(String name) async {
-    var url = Uri.parse('https://localhost:7274/api/TipoDespesa');
+    var url = Uri.parse('https://localhost:5052/api/TipoDespesa');
     var response = await http.post(url, body: {'tipoDespesa': name});
 
     if (response.statusCode == 200) {

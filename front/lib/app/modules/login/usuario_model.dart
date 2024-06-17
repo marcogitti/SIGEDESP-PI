@@ -21,13 +21,15 @@
 //   final SituacaoEnum situacao;
 
 //   UsuarioModel({
+//     this.rgLe,
+//     this.cpfCnpj,
+//     this.senha,
+//     this.matricula,
 //     this.id,
 //     this.nome,
 //     this.nomeRazaoSocial,
 //     this.email,
-//     this.cnpj,
 //     this.cep,
-//     this.descricao,
 //     this.logradouro,
 //     required this.numero,
 //     this.bairro,
@@ -35,6 +37,4 @@
 //     this.estado,
 //     required this.situacao,
 //   });
-
-  
 // }
