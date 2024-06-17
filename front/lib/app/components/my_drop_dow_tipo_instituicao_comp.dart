@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
 import 'package:front/app/modules/instituicao/tipo_instituicao_service.dart';
-import 'package:result_dart/result_dart.dart';
 
-class MyDropDowComp extends StatefulWidget {
+class MyDropDowTipoInstituicaoComp extends StatefulWidget {
   final TipoInstituicaoModel? initValue;
   final void Function(TipoInstituicaoModel?)? onChanged;
 
-  const MyDropDowComp({super.key, this.initValue, this.onChanged});
+  const MyDropDowTipoInstituicaoComp(
+      {super.key, this.initValue, this.onChanged});
 
   @override
   _MyDropDowCompState createState() => _MyDropDowCompState();
 }
 
-class _MyDropDowCompState extends State<MyDropDowComp> {
-  late Future<Result<List<TipoInstituicaoModel>, String>>
-      futureTipoInstituicoes;
+class _MyDropDowCompState extends State<MyDropDowTipoInstituicaoComp> {
   TipoInstituicaoModel? selectedValue;
 
   @override
   void initState() {
-    super.initState();
-    futureTipoInstituicoes = TipoInstituicaoServiceImpl.instance.getAll();
     selectedValue = widget.initValue;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Result<List<TipoInstituicaoModel>, String>>(
-      future: futureTipoInstituicoes,
+    return FutureBuilder(
+      future: Modular.get<TipoInstituicaoServiceImpl>().getAll(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
@@ -43,12 +41,15 @@ class _MyDropDowCompState extends State<MyDropDowComp> {
                 elevation: 10,
                 hint: const Text('Situação'),
                 value: selectedValue,
-                items: tipoInstituicoes.map((TipoInstituicaoModel value) {
-                  return DropdownMenuItem<TipoInstituicaoModel>(
-                    value: value,
-                    child: Text(value.descricao ?? ''),
-                  );
-                }).toList(),
+                items: tipoInstituicoes
+                    .map((value) {
+                      return DropdownMenuItem<TipoInstituicaoModel>(
+                        value: value as TipoInstituicaoModel,
+                        child: Text(value.descricao ?? ''),
+                      );
+                    })
+                    .toList()
+                    .cast<DropdownMenuItem<TipoInstituicaoModel>>(),
                 onChanged: (TipoInstituicaoModel? newValue) {
                   setState(() {
                     selectedValue = newValue;

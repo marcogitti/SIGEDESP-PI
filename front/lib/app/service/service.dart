@@ -6,15 +6,20 @@ import 'package:result_dart/result_dart.dart';
 class IService<T extends Object> {
   final String path;
   final Function mainConstructor;
+  final Map<String, dynamic> inner;
 
-  IService({required this.path, required this.mainConstructor});
+  IService(
+      {required this.path,
+      required this.mainConstructor,
+      this.inner = const {}});
 
   Future<Result<T, String>> getById(int id, classModel) async {
     try {
       final response = await http.get(Uri.http('localhost:5052', '/api/$path'));
 
       if (response.statusCode == 200) {
-        return (const DSON().fromJson(response.body, mainConstructor))
+        return (const DSON()
+                .fromJson(response.body, mainConstructor, inner: inner))
             .toSuccess();
       } else {
         return 'Falha ao carregar dados da API'.toFailure();
@@ -31,7 +36,7 @@ class IService<T extends Object> {
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body) as List;
         final dataList = decodedData
-            .map((e) => const DSON().fromJson(e, mainConstructor))
+            .map((e) => const DSON().fromJson(e, mainConstructor, inner: inner))
             .toList()
             .cast<T>();
         return dataList.toSuccess();
