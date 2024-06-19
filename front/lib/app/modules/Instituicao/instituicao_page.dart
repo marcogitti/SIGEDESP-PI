@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -116,30 +117,91 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
 
                       final tp =
                           (snapshot.data ?? []).cast<InstituicaoModel?>();
-
-                      return DataTable(
-                        border: TableBorder.all(),
-                        columns: const [DataColumn(label: Text('Descrição'))],
-                        rows: tp
-                            .map((e) {
-                              return DataRow(cells: [
-                                DataCell(
-                                  Row(
+                      return SingleChildScrollView(
+                        dragStartBehavior: DragStartBehavior.start,
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          border: TableBorder.all(),
+                          columns: const [
+                            DataColumn(label: Text('Nome')),
+                            DataColumn(label: Text('Nome Razão Social')),
+                            DataColumn(label: Text('CNPJ')),
+                            DataColumn(label: Text('Email')),
+                            DataColumn(label: Text('Telefone')),
+                            DataColumn(label: Text('CEP')),
+                            DataColumn(label: Text('Numero')),
+                            DataColumn(label: Text('Logradouro')),
+                            DataColumn(label: Text('Bairro')),
+                            DataColumn(label: Text('Cidade')),
+                            DataColumn(label: Text('Estado')),
+                            DataColumn(label: Text('Situação')),
+                            DataColumn(label: Text('Secretaria')),
+                            DataColumn(label: Text('Tipo Instituição')),
+                            DataColumn(label: Text('Ação')),
+                          ],
+                          rows: tp
+                              .map((e) {
+                                return DataRow(cells: [
+                                  DataCell(
+                                    Text(e?.nome.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.nomeRazaoSocial.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.cnpj.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.email.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.telefone.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.cep.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.numero.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.logradouro.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.bairro.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.cidade.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.estado.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.situacao.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.idSecretaria.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.idTipoInstituicao.toString() ?? ''),
+                                  ),
+                                  DataCell(Row(
                                     children: [
-                                      Expanded(
-                                          child: Text(
-                                              e?.situacao.toString() ?? '')),
                                       IconButton(
-                                        icon: const Icon(Icons.edit),
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Color(0xFF0044FF),
+                                        ),
                                         onPressed: () async {
                                           await modalCadastrar(e);
                                         },
                                       ),
                                       IconButton(
-                                        icon: const Icon(Icons.delete),
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Color(0xFFF44336),
+                                        ),
                                         onPressed: () async {
-                                          final confirmDelete =
-                                              await showDialog<bool>(
+                                          await showDialog<bool>(
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
@@ -149,33 +211,36 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                                                     'Tem certeza que deseja excluir este item?'),
                                                 actions: <Widget>[
                                                   TextButton(
+                                                    child:
+                                                        const Text('Cancelar'),
                                                     onPressed: () {
                                                       Modular.to.pop(false);
                                                     },
-                                                    child:
-                                                        const Text('Cancelar'),
                                                   ),
                                                   TextButton(
-                                                    onPressed: () {
-                                                      Modular.to.pop(true);
-                                                    },
                                                     child:
                                                         const Text('Confirmar'),
+                                                    onPressed: () async {
+                                                      Modular.to.pop();
+                                                      await service
+                                                          .deleteData(e!.id);
+
+                                                      setState(() {});
+                                                    },
                                                   ),
                                                 ],
                                               );
                                             },
                                           );
-                                          if (confirmDelete == true) {}
                                         },
                                       ),
                                     ],
-                                  ),
-                                ),
-                              ]);
-                            })
-                            .toList()
-                            .cast<DataRow>(),
+                                  )),
+                                ]);
+                              })
+                              .toList()
+                              .cast<DataRow>(),
+                        ),
                       );
                     },
                   ),

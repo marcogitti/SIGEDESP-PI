@@ -6,7 +6,7 @@ class SecretariaServiceImpl extends IService<SecretariaModel> {
       : super(
           path: 'secretaria',
           fromMap: SecretariaModel.fromMap,
-          toJson: SecretariaModel.fromJson,
+          toJson: SecretariaModel.toJson,
         );
 }
 
