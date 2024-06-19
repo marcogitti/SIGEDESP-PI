@@ -3,50 +3,58 @@ import 'dart:convert';
 
 class OrcamentoModel {
   final int? id;
-  final String descricao;
-  final String solicitaUc;
-  final int idUnidadeMedida;
+  final int? anoOrcamento;
+  final double? valorOrcamento;
+  final int? idTipoDespesa;
+  final int? idInstituicao;
 
   OrcamentoModel({
     this.id,
-    required this.descricao,
-    required this.solicitaUc,
-    required this.idUnidadeMedida,
+    this.anoOrcamento,
+    this.valorOrcamento,
+    this.idTipoDespesa,
+    this.idInstituicao,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'descricao': descricao,
-      'solicitaUc': solicitaUc,
-      'idUnidadeMedida': idUnidadeMedida,
+      'anoOrcamento': anoOrcamento,
+      'valorOrcamento': valorOrcamento,
+      'idTipoDespesa': idTipoDespesa,
+      'idInstituicao': idInstituicao,
     };
   }
 
   factory OrcamentoModel.fromMap(Map<String, dynamic> map) {
     return OrcamentoModel(
       id: map['id'] != null ? map['id'] as int : null,
-      descricao: map['descricao'] as String,
-      solicitaUc: map['solicitaUc'] as String,
-      idUnidadeMedida: map['idUnidadeMedida'] as int,
+      anoOrcamento: map['descricao'] as int,
+      valorOrcamento: map['descricao'] as double,
+      idTipoDespesa: map['descricao'] as int,
+      idInstituicao: map['descricao'] as int,
     );
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(OrcamentoModel value) => json.encode(value.toMap());
 
-  factory OrcamentoModel.fromJson(String source) => OrcamentoModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory OrcamentoModel.fromJson(String source) => OrcamentoModel.fromMap(
+        json.decode(source) as Map<String, dynamic>,
+      );
 
   OrcamentoModel copyWith({
     int? id,
-    String? descricao,
-    String? solicitaUc,
-    int? idUnidadeMedida,
+    int? anoOrcamento,
+    int? valorOrcamento,
+    int? idTipoDespesa,
+    int? idInstituicao,
   }) {
     return OrcamentoModel(
       id: id ?? this.id,
-      descricao: descricao ?? this.descricao,
-      solicitaUc: solicitaUc ?? this.solicitaUc,
-      idUnidadeMedida: idUnidadeMedida ?? this.idUnidadeMedida,
+      anoOrcamento: anoOrcamento ?? this.anoOrcamento,
+      valorOrcamento: double.maxFinite,
+      idTipoDespesa: idTipoDespesa ?? this.idTipoDespesa,
+      idInstituicao: idInstituicao ?? this.idInstituicao,
     );
   }
 }

@@ -8,11 +8,24 @@ class UnidadeConsumidoraModel {
   final int? idInstituicao;
 
   UnidadeConsumidoraModel({
-    required this.id,
+    this.id,
     this.codigoUC,
     this.idFornecedor,
     this.idInstituicao,
   });
+
+  UnidadeConsumidoraModel copyWith({
+    int? id,
+    int? codigoUC,
+    int? idFornecedor,
+    int? idInstituicao,
+  }) {
+    return UnidadeConsumidoraModel(
+      codigoUC: codigoUC ?? this.codigoUC,
+      idFornecedor: idFornecedor ?? this.idFornecedor,
+      idInstituicao: idInstituicao ?? this.idInstituicao,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -39,19 +52,6 @@ class UnidadeConsumidoraModel {
 
   factory UnidadeConsumidoraModel.fromJson(String source) =>
       UnidadeConsumidoraModel.fromMap(
-          json.decode(source) as Map<String, dynamic>);
-
-  UnidadeConsumidoraModel copyWith({
-    int? id,
-    int? codigoUC,
-    int? idFornecedor,
-    int? idInstituicao,
-  }) {
-    return UnidadeConsumidoraModel(
-      id: id ?? this.id,
-      codigoUC: codigoUC ?? this.codigoUC,
-      idFornecedor: idFornecedor ?? this.idFornecedor,
-      idInstituicao: idInstituicao ?? this.idInstituicao,
-    );
-  }
+        json.decode(source) as Map<String, dynamic>,
+      );
 }
