@@ -4,24 +4,23 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_drop_down_comp.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:front/app/modules/Instituicao/instituicao_service.dart';
-import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
-import 'package:front/app/modules/fornecedor/fornecedor_service.dart';
+import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
+import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/instituicao/instituicao_model.dart';
-import 'package:front/app/modules/secretaria/secretaria_model.dart';
-import 'package:front/app/modules/unidade/unidade_consumidora_model.dart';
-import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
+import 'package:front/app/modules/orcamento/orcamento_model.dart';
+import 'package:front/app/modules/orcamento/orcamento_service.dart';
 import 'package:result_dart/result_dart.dart';
 
-class UnidadeConsumidoraPage extends StatefulWidget {
-  const UnidadeConsumidoraPage({Key? key}) : super(key: key);
+class OrcamentoPage extends StatefulWidget {
+  const OrcamentoPage({Key? key}) : super(key: key);
 
   @override
-  State<UnidadeConsumidoraPage> createState() => _UnidadeConsumidoraPageState();
+  State<OrcamentoPage> createState() => _OrcamentoPageState();
 }
 
-class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
+class _OrcamentoPageState extends State<OrcamentoPage> {
   late TextEditingController _controller;
-  final service = Modular.get<UnidadeConsumidoraServiceImpl>();
+  final service = Modular.get<OrcamentoServiceImpl>();
 
   @override
   void initState() {
@@ -45,7 +44,7 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                 const Padding(
                   padding: EdgeInsets.only(bottom: 50),
                   child: Text(
-                    "Cadastro de Unidade consumidora",
+                    "Cadastro de Orçamento",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -57,7 +56,7 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                   children: [
                     TextField(
                       decoration: const InputDecoration(
-                        hintText: 'Buscar Unidade consumidora',
+                        hintText: 'Buscar Orçamento',
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(),
                       ),
@@ -70,8 +69,7 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                           onPressed: () async {
                             await modalCadastrar();
                           },
-                          child:
-                              const Text('Cadastrar Nova Unidade consumidora'),
+                          child: const Text('Cadastrar Novo Orçamento'),
                         ),
                         const SizedBox(width: 15),
                         const Text("Mostrar: "),
@@ -115,7 +113,7 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                         return const Text("Erro");
                       }
 
-                      final tp = (snapshot.data ?? []).cast<SecretariaModel?>();
+                      final tp = (snapshot.data ?? []).cast<OrcamentoModel?>();
 
                       return SizedBox(
                         height: 500,
@@ -123,19 +121,22 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                         child: DataTable(
                           border: TableBorder.all(),
                           columns: const [
-                            DataColumn(label: Text('Codigo UC')),
-                            DataColumn(label: Text('Fornecedor')),
+                            DataColumn(label: Text('Ano Orçamento')),
+                            DataColumn(label: Text('Valor Orçamento')),
+                            DataColumn(label: Text('Tipo de Despesa')),
                             DataColumn(label: Text('Instituição')),
-                            DataColumn(label: Text('Ação')),
                           ],
                           rows: tp
                               .map((e) {
                                 return DataRow(cells: [
                                   DataCell(
-                                    Text(e?.codigoUC.toString() ?? ''),
+                                    Text(e?.anoOrcamento.toString() ?? ''),
                                   ),
                                   DataCell(
-                                    Text(e?.idFornecedor.toString() ?? ''),
+                                    Text(e?.valorOrcamento.toString() ?? ''),
+                                  ),
+                                  DataCell(
+                                    Text(e?.idTipoDespesa.toString() ?? ''),
                                   ),
                                   DataCell(
                                     Text(e?.idInstituicao.toString() ?? ''),
@@ -205,34 +206,36 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
             )));
   }
 
-  Future<void> modalCadastrar(
-      [UnidadeConsumidoraModel? unidadeConsumidora]) async {
-    bool isEdit = unidadeConsumidora?.id != null;
+  Future<void> modalCadastrar([OrcamentoModel? orcamento]) async {
+    bool isEdit = orcamento?.id != null;
     if (!isEdit) {
-      unidadeConsumidora = UnidadeConsumidoraModel();
+      orcamento = OrcamentoModel();
     }
-    FornecedorModel? selectedFornecedor;
+    TipoDespesasModel? selectedTipoDespesa;
     InstituicaoModel? selectedInstituicao;
 
-    TextEditingController unidadeConsumidoraCodigoUCEditCtrl =
-        TextEditingController(
-            text: unidadeConsumidora?.codigoUC != null
-                ? unidadeConsumidora?.codigoUC.toString()
-                : '');
+    TextEditingController orcamentoAnoEditCtrl = TextEditingController(
+        text: orcamento?.anoOrcamento != null
+            ? orcamento?.anoOrcamento.toString()
+            : '');
+    TextEditingController orcamentoValorEditCtrl = TextEditingController(
+        text: orcamento?.valorOrcamento != null
+            ? orcamento?.valorOrcamento.toString()
+            : '');
 
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           scrollable: true,
-          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Instituição'),
+          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Orçamento'),
           content: StatefulBuilder(builder: (context, mSetState) {
             return Column(
               children: [
                 TextFormField(
-                  controller: unidadeConsumidoraCodigoUCEditCtrl,
+                  controller: orcamentoAnoEditCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Codigo UC',
+                    labelText: 'Ano Orçamento',
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
@@ -244,20 +247,35 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                     return null;
                   },
                 ),
-                  MyDropDownGetComp<InstituicaoModel, InstituicaoServiceImpl>(
-                    labelText: 'Instituição',
-                    initValue: selectedInstituicao,
-                    onChanged: (value) {
-                      selectedInstituicao = value;
-                    },
+                TextFormField(
+                  controller: orcamentoValorEditCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Valor Orçamento',
                   ),
-                  MyDropDownGetComp<FornecedorModel, FornecedorServiceImpl>(
-                    labelText: 'Fornecedor',
-                    initValue: selectedFornecedor,
-                    onChanged: (value) {
-                      selectedFornecedor = value;
-                    },
-                  )
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                MyDropDownGetComp<InstituicaoModel, InstituicaoServiceImpl>(
+                  labelText: 'Instituição',
+                  initValue: selectedInstituicao,
+                  onChanged: (value) {
+                    selectedInstituicao = value;
+                  },
+                ),
+                MyDropDownGetComp<TipoDespesasModel, TipoDeDespesasServiceImpl>(
+                  labelText: 'Fornecedor',
+                  initValue: selectedTipoDespesa,
+                  onChanged: (value) {
+                    selectedTipoDespesa = value;
+                  },
+                )
               ],
             );
           }),
@@ -271,22 +289,21 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
             TextButton(
               child: const Text('Salvar'),
               onPressed: () async {
-                unidadeConsumidora = unidadeConsumidora?.copyWith(
-                  codigoUC:
-                      int.tryParse(unidadeConsumidoraCodigoUCEditCtrl.text),
-                  idFornecedor: selectedFornecedor?.id,
+                orcamento = orcamento?.copyWith(
+                  anoOrcamento: int.tryParse(orcamentoAnoEditCtrl.text),
+                  idTipoDespesa: selectedTipoDespesa?.id,
                   idInstituicao: selectedInstituicao?.id,
                 );
                 if (isEdit) {
                   final resp = await service.editData(
-                    unidadeConsumidora!,
+                    orcamento!,
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) => null);
                 } else {
-                  final resp = await service.postData(unidadeConsumidora!);
+                  final resp = await service.postData(orcamento!);
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});
@@ -301,6 +318,7 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
         );
       },
     );
-    unidadeConsumidoraCodigoUCEditCtrl.dispose();
+    orcamentoAnoEditCtrl.dispose();
+    orcamentoValorEditCtrl.dispose();
   }
 }

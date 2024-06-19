@@ -4,34 +4,36 @@ import 'dart:convert';
 import 'package:front/app/util/situacao_enum.dart';
 
 class FornecedorModel {
-  final int? id;
+    final int? id;
   final String? nome;
   final String? nomeRazaoSocial;
   final String? email;
   final String? cnpj;
-  final String? cep;
-  final String? descricao;
+  final int? cep;
   final String? logradouro;
-  final int numero;
+  final String? nomeFantasia;
+  final int? numero;
   final String? bairro;
   final String? cidade;
   final String? estado;
-  final SituacaoEnum situacao;
+  final String? telefone;
+  final SituacaoEnum? situacao;
 
-  FornecedorModel({
+  FornecedorModel( {
     this.id,
     this.nome,
     this.nomeRazaoSocial,
     this.email,
     this.cnpj,
+    this.telefone,
     this.cep,
-    this.descricao,
+    this.nomeFantasia,
     this.logradouro,
-    required this.numero,
+    this.numero,
     this.bairro,
     this.cidade,
     this.estado,
-    required this.situacao,
+     this.situacao,
   });
 
   Map<String, dynamic> toMap() {
@@ -42,13 +44,13 @@ class FornecedorModel {
       'email': email,
       'cnpj': cnpj,
       'cep': cep,
-      'descricao': descricao,
+      'descricao': nomeFantasia,
       'logradouro': logradouro,
       'numero': numero,
       'bairro': bairro,
       'cidade': cidade,
       'estado': estado,
-      'situacao': situacao.index,
+      'situacao': situacao?.index,
     };
   }
 
@@ -61,8 +63,8 @@ class FornecedorModel {
           : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
-      cep: map['cep'] != null ? map['cep'] as String : null,
-      descricao: map['descricao'] != null ? map['descricao'] as String : null,
+      cep: map['cep'] != null ? map['cep'] as int : null,
+      nomeFantasia: map['descricao'] != null ? map['descricao'] as String : null,
       logradouro:
           map['logradouro'] != null ? map['logradouro'] as String : null,
       numero: map['numero'] as int,
@@ -73,21 +75,22 @@ class FornecedorModel {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(FornecedorModel value) => json.encode(value.toMap());
 
-  factory FornecedorModel.fromJson(String source) =>
-      FornecedorModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  FornecedorModel copyWith({
+factory FornecedorModel.fromJson(String source) => FornecedorModel.fromMap(
+        json.decode(source) as Map<String, dynamic>,
+);
+FornecedorModel copyWith({
     int? id,
     String? nome,
     String? nomeRazaoSocial,
     String? email,
     String? cnpj,
-    String? cep,
+    int? cep,
     String? descricao,
     String? logradouro,
     int? numero,
+    String? telefone,
     String? bairro,
     String? cidade,
     String? estado,
@@ -100,7 +103,8 @@ class FornecedorModel {
       email: email ?? this.email,
       cnpj: cnpj ?? this.cnpj,
       cep: cep ?? this.cep,
-      descricao: descricao ?? this.descricao,
+      nomeFantasia: nomeFantasia ?? this.nomeFantasia,
+      telefone: telefone ?? this.telefone,
       logradouro: logradouro ?? this.logradouro,
       numero: numero ?? this.numero,
       bairro: bairro ?? this.bairro,

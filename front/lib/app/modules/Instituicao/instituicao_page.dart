@@ -278,7 +278,9 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
     TextEditingController instituicaoNRSocialEditCtrl =
         TextEditingController(text: instituicao?.nomeRazaoSocial ?? '');
     TextEditingController instituicaoNomeEditCtrl =
-        TextEditingController(text: instituicao?.nomeRazaoSocial ?? '');
+        TextEditingController(text: instituicao?.nome ?? '');
+    TextEditingController instituicaoTelefoneEditCtrl =
+        TextEditingController(text: instituicao?.telefone ?? '');
 
     await showDialog(
       context: context,
@@ -464,7 +466,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                   nomeRazaoSocial: instituicaoNRSocialEditCtrl.text,
                   numero: int.tryParse(instituicaoNumeroEditCtrl.text),
                   situacao: situacaoEnum,
-                  telefone: '123',
+                  telefone: instituicaoTelefoneEditCtrl.text,
                   idSecretaria: selectedSecretaria?.id,
                   idTipoInstituicao: selectedTipoInstituicao?.id,
                 );
