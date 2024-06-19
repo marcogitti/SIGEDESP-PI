@@ -19,7 +19,8 @@ class UnidadeDeMedidaModel {
     };
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(UnidadeDeMedidaModel value) =>
+      json.encode(value.toMap());
 
   factory UnidadeDeMedidaModel.fromMap(Map<String, dynamic> map) {
     return UnidadeDeMedidaModel(

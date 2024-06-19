@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/scaffold_comp.dart';
+import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
 import 'package:front/app/modules/instituicao/tipo_instituicao_service.dart';
 import 'package:result_dart/result_dart.dart';
@@ -224,8 +224,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                 if (isEdit) {
                   final resp = await service.editData(
                     tipoInstituicao!
-                        .copyWith(descricao: tipoInstituicaoEditCtrl.text)
-                        .toJson(),
+                        .copyWith(descricao: tipoInstituicaoEditCtrl.text),
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
@@ -237,7 +236,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                   final resp = await service.postData(
                     TipoInstituicaoModel(
                       descricao: tipoInstituicaoEditCtrl.text,
-                    ).toJson(),
+                    ),
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
