@@ -10,17 +10,19 @@ class SecretariaModel {
   final String? email;
   final String? cnpj;
   final int? cep;
-  final String? descricao;
   final String? logradouro;
+  final String? descricao;
   final int? numero;
   final String? bairro;
   final String? cidade;
   final String? estado;
+  final String? telefone;
   final SituacaoEnum? situacao;
 
   SecretariaModel({
     this.id,
     this.nome,
+    this.telefone,
     this.nomeRazaoSocial,
     this.email,
     this.cnpj,
@@ -38,6 +40,7 @@ class SecretariaModel {
     return <String, dynamic>{
       'id': id,
       'nome': nome,
+      'telefone': telefone,
       'nomeRazaoSocial': nomeRazaoSocial,
       'email': email,
       'cnpj': cnpj,
@@ -48,7 +51,7 @@ class SecretariaModel {
       'bairro': bairro,
       'cidade': cidade,
       'estado': estado,
-      'situacao': situacao!.index,
+      'situacao': situacao?.index,
     };
   }
 
@@ -69,6 +72,7 @@ class SecretariaModel {
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
+      telefone: map['telefone'],
       situacao: SituacaoEnum.fromInt(map['situacao'] as int),
     );
   }
@@ -88,6 +92,7 @@ class SecretariaModel {
     String? descricao,
     String? logradouro,
     int? numero,
+    String? telefone,
     String? bairro,
     String? cidade,
     String? estado,
@@ -101,6 +106,7 @@ class SecretariaModel {
       cnpj: cnpj ?? this.cnpj,
       cep: cep ?? this.cep,
       descricao: descricao ?? this.descricao,
+      telefone: telefone ?? this.telefone,
       logradouro: logradouro ?? this.logradouro,
       numero: numero ?? this.numero,
       bairro: bairro ?? this.bairro,

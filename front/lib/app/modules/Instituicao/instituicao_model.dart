@@ -76,7 +76,7 @@ class InstituicaoModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      // 'id': id,
+      'id': id,
       'nome': nome,
       'nomeRazaoSocial': nomeRazaoSocial,
       'email': email,

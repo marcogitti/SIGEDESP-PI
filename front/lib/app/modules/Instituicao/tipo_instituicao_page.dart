@@ -116,7 +116,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                   return DataTable(
                     border: TableBorder.all(),
                     columns: const [
-                      DataColumn(label: Text('Descrição')),
+                      DataColumn(label: Text('Nome')),
                       DataColumn(label: Text('Ações')),
                     ],
                     rows: tp
@@ -206,7 +206,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
               TextField(
                 controller: tipoInstituicaoEditCtrl,
                 decoration: const InputDecoration(
-                  labelText: 'Descrição',
+                  labelText: 'Nome',
                 ),
               ),
             ],
