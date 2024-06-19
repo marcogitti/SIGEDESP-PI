@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/components/scaffold_comp.dart';
+import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:http/http.dart' as http;
 
 class CadastroDeDespesas extends StatelessWidget {

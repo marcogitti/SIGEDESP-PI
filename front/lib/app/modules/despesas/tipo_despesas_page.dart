@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/scaffold_comp.dart';
+import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:result_dart/result_dart.dart';
@@ -223,7 +223,7 @@ class _TipoDeDespesasState extends State<TipoDeDespesas> {
                 final resp = await service.postData(TipoDespesasModel(
                   tipoDespesa: _tipoDespesaTxt.text,
                   solicitaUC: 'SP',
-                ).toJson());
+                ));
                 resp.fold((success) {
                   Navigator.of(context).pop();
                   setState(() {});

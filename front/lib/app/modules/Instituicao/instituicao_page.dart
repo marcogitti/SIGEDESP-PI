@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/drop_dow.dart';
-import 'package:front/app/components/scaffold_comp.dart';
+import 'package:front/app/components/my_drop_down_comp.dart';
+import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/modules/instituicao/instituicao_service.dart';
+import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
+import 'package:front/app/modules/instituicao/tipo_instituicao_service.dart';
+import 'package:front/app/modules/secretaria/secretaria_model.dart';
+import 'package:front/app/modules/secretaria/secretaria_service.dart';
 import 'package:front/app/util/situacao_enum.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -182,12 +186,17 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
 
   Future<void> modalCadastrar([InstituicaoModel? instituicao]) async {
     bool isEdit = instituicao?.id != null;
+    if (!isEdit) {
+      instituicao = InstituicaoModel();
+    }
     SituacaoEnum situacaoEnum = instituicao?.situacao ?? SituacaoEnum.ativo;
+    SecretariaModel? selectedSecretaria;
+    TipoInstituicaoModel? selectedTipoInstituicao;
 
     TextEditingController instituicaoBairroEditCtrl =
         TextEditingController(text: instituicao?.bairro ?? '');
-    TextEditingController instituicaoCepEditCtrl =
-        TextEditingController(text: instituicao?.cep ?? '');
+    TextEditingController instituicaoCepEditCtrl = TextEditingController(
+        text: instituicao?.cep != null ? instituicao?.cep.toString() : '');
     TextEditingController instituicaoCidadeEditCtrl =
         TextEditingController(text: instituicao?.cidade ?? '');
     TextEditingController instituicaoCnpjEditCtrl =
@@ -198,8 +207,9 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
         TextEditingController(text: instituicao?.estado ?? '');
     TextEditingController instituicaoLogradouroEditCtrl =
         TextEditingController(text: instituicao?.logradouro ?? '');
-    TextEditingController instituicaoNumeroEditCtrl =
-        TextEditingController(text: instituicao?.numero.toString());
+    TextEditingController instituicaoNumeroEditCtrl = TextEditingController(
+        text:
+            instituicao?.numero != null ? instituicao?.numero.toString() : '');
     TextEditingController instituicaoNRSocialEditCtrl =
         TextEditingController(text: instituicao?.nomeRazaoSocial ?? '');
     TextEditingController instituicaoNomeEditCtrl =
@@ -216,74 +226,151 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
               width: 500,
               child: Column(
                 children: [
-                  TextField(
+                  TextFormField(
                     controller: instituicaoNomeEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Nome',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoNRSocialEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Nome Razão Social',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoCnpjEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'CNPJ',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoEmailEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoCepEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'CEP',
                     ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoLogradouroEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Logradouro',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoNumeroEditCtrl,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: const InputDecoration(
-                      labelText: 'Numero',
+                      labelText: 'Número',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoBairroEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Bairro',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoCidadeEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Cidade',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: instituicaoEstadoEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Estado',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                   ),
-                  MyDropDowComp(
+                  MyDropDownComp(
                     initValue: situacaoEnum,
+                    itens: SituacaoEnum.values,
                     onChanged: (value) {
                       situacaoEnum = value!;
-                      mSetState(
-                        () {}
-                      );
+                    },
+                    labelText: 'Secretaria',
+                  ),
+                  MyDropDownGetComp<SecretariaModel, SecretariaServiceImpl>(
+                    labelText: 'Secretaria',
+                    initValue: selectedSecretaria,
+                    onChanged: (value) {
+                      selectedSecretaria = value;
+                    },
+                  ),
+                  MyDropDownGetComp<TipoInstituicaoModel,
+                      TipoInstituicaoServiceImpl>(
+                    labelText: 'Tipo instituicao',
+                    initValue: selectedTipoInstituicao,
+                    onChanged: (value) {
+                      selectedTipoInstituicao = value;
                     },
                   ),
                 ],
@@ -300,10 +387,9 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
             TextButton(
               child: const Text('Salvar'),
               onPressed: () async {
-                // tela load
                 instituicao = instituicao?.copyWith(
                   bairro: instituicaoBairroEditCtrl.text,
-                  cep: instituicaoCepEditCtrl.text,
+                  cep: int.tryParse(instituicaoCepEditCtrl.text),
                   cidade: instituicaoCidadeEditCtrl.text,
                   cnpj: instituicaoCnpjEditCtrl.text,
                   email: instituicaoEmailEditCtrl.text,
@@ -311,19 +397,22 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                   logradouro: instituicaoLogradouroEditCtrl.text,
                   nome: instituicaoNomeEditCtrl.text,
                   nomeRazaoSocial: instituicaoNRSocialEditCtrl.text,
-                  numero: int.parse(instituicaoNumeroEditCtrl.text),
+                  numero: int.tryParse(instituicaoNumeroEditCtrl.text),
                   situacao: situacaoEnum,
+                  telefone: '123',
+                  idSecretaria: selectedSecretaria?.id,
+                  idTipoInstituicao: selectedTipoInstituicao?.id,
                 );
                 if (isEdit) {
                   final resp = await service.editData(
-                    instituicao!.toJson(),
+                    instituicao!,
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) => null);
                 } else {
-                  final resp = await service.postData(instituicao!.toJson());
+                  final resp = await service.postData(instituicao!);
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});

@@ -9,7 +9,7 @@ class SecretariaModel {
   final String? nomeRazaoSocial;
   final String? email;
   final String? cnpj;
-  final String? cep;
+  final int? cep;
   final String? descricao;
   final String? logradouro;
   final int? numero;
@@ -61,7 +61,7 @@ class SecretariaModel {
           : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
-      cep: map['cep'] != null ? map['cep'] as String : null,
+      cep: map['cep'] != null ? map['cep'] as int : null,
       descricao: map['descricao'] != null ? map['descricao'] as String : null,
       logradouro:
           map['logradouro'] != null ? map['logradouro'] as String : null,
@@ -73,7 +73,7 @@ class SecretariaModel {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(SecretariaModel value) => json.encode(value.toMap());
 
   factory SecretariaModel.fromJson(String source) =>
       SecretariaModel.fromMap(json.decode(source) as Map<String, dynamic>);
@@ -84,7 +84,7 @@ class SecretariaModel {
     String? nomeRazaoSocial,
     String? email,
     String? cnpj,
-    String? cep,
+    int? cep,
     String? descricao,
     String? logradouro,
     int? numero,

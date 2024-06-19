@@ -27,14 +27,19 @@ class UnidadeConsumidoraModel {
     return UnidadeConsumidoraModel(
       id: map['id'] != null ? map['id'] as int : null,
       codigoUC: map['codigoUC'] != null ? map['codigoUC'] as int : null,
-      idFornecedor: map['idFornecedor'] != null ? map['idFornecedor'] as int : null,
-      idInstituicao: map['idInstituicao'] != null ? map['idInstituicao'] as int : null,
+      idFornecedor:
+          map['idFornecedor'] != null ? map['idFornecedor'] as int : null,
+      idInstituicao:
+          map['idInstituicao'] != null ? map['idInstituicao'] as int : null,
     );
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(UnidadeConsumidoraModel value) =>
+      json.encode(value.toMap());
 
-  factory UnidadeConsumidoraModel.fromJson(String source) => UnidadeConsumidoraModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UnidadeConsumidoraModel.fromJson(String source) =>
+      UnidadeConsumidoraModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 
   UnidadeConsumidoraModel copyWith({
     int? id,

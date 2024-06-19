@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_card_comp.dart';
-import 'package:front/app/components/scaffold_comp.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:front/app/components/my_scaffold_comp.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

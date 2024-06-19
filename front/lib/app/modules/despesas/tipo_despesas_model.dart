@@ -20,7 +20,7 @@ class TipoDespesasModel {
     };
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(TipoDespesasModel value) => json.encode(value.toMap());
 
   factory TipoDespesasModel.fromMap(Map<String, dynamic> map) {
     return TipoDespesasModel(

@@ -1,9 +1,11 @@
 import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
 import 'package:front/app/service/service.dart';
 
-class TipoInstituicaoServiceImpl extends IService {
+class TipoInstituicaoServiceImpl extends IService<TipoInstituicaoModel> {
   TipoInstituicaoServiceImpl()
       : super(
-            path: 'tipo/instituicao',
-            mainConstructor: TipoInstituicaoModel.new);
+          path: 'tipo/instituicao',
+          fromMap: TipoInstituicaoModel.fromMap,
+          toJson: TipoInstituicaoModel.toJson,
+        );
 }

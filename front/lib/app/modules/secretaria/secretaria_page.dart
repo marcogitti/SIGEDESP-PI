@@ -181,8 +181,8 @@ class _SecretariaPageState extends State<SecretariaPage> {
     bool isEdit = secretaria?.id != null;
     TextEditingController secretariaBairroEditCtrl =
         TextEditingController(text: secretaria?.bairro ?? '');
-    TextEditingController secretariaCepEditCtrl =
-        TextEditingController(text: secretaria?.cep ?? '');
+    TextEditingController secretariaCepEditCtrl = TextEditingController(
+        text: secretaria?.cep != null ? secretaria?.cep.toString() : '');
     TextEditingController secretariaCidadeEditCtrl =
         TextEditingController(text: secretaria?.cidade ?? '');
     TextEditingController secretariaCnpjEditCtrl =
@@ -193,8 +193,8 @@ class _SecretariaPageState extends State<SecretariaPage> {
         TextEditingController(text: secretaria?.estado ?? '');
     TextEditingController secretariaLogradouroEditCtrl =
         TextEditingController(text: secretaria?.logradouro ?? '');
-    TextEditingController secretariaNumeroEditCtrl =
-        TextEditingController(text: secretaria?.numero.toString());
+    TextEditingController secretariaNumeroEditCtrl = TextEditingController(
+        text: secretaria?.numero != null ? secretaria?.numero.toString() : '');
     TextEditingController secretariaNRSocialEditCtrl =
         TextEditingController(text: secretaria?.nomeRazaoSocial ?? '');
     TextEditingController secretariaNomeEditCtrl =
@@ -283,7 +283,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
                 // tela load
                 secretaria = secretaria?.copyWith(
                   bairro: secretariaBairroEditCtrl.text,
-                  cep: secretariaCepEditCtrl.text,
+                  cep: int.tryParse(secretariaCepEditCtrl.text),
                   cidade: secretariaCidadeEditCtrl.text,
                   cnpj: secretariaCnpjEditCtrl.text,
                   email: secretariaEmailEditCtrl.text,
@@ -295,14 +295,14 @@ class _SecretariaPageState extends State<SecretariaPage> {
                 );
                 if (isEdit) {
                   final resp = await service.editData(
-                    secretaria!.toJson(),
+                    secretaria!,
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) => null);
                 } else {
-                  final resp = await service.postData(secretaria!.toJson());
+                  final resp = await service.postData(secretaria!);
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});

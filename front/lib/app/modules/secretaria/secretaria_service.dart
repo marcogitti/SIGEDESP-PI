@@ -1,9 +1,13 @@
 import 'package:front/app/modules/secretaria/secretaria_model.dart';
 import 'package:front/app/service/service.dart';
 
-class SecretariaServiceImpl extends IService {
+class SecretariaServiceImpl extends IService<SecretariaModel> {
   SecretariaServiceImpl()
-      : super(path: 'secretaria', mainConstructor: SecretariaModel.new);
+      : super(
+          path: 'secretaria',
+          fromMap: SecretariaModel.fromMap,
+          toJson: SecretariaModel.fromJson,
+        );
 }
 
 // void main() async {
