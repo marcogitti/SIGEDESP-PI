@@ -17,19 +17,16 @@ public class UsuarioModel
     public int Id { get; set; }
 
     [Column("cpfcnpj")]
-    public string CpfCnpj { get; set; }
+    public string Cpf { get; set; }
 
-    [Column("nomerazaosocial")]
-    public string NomeRazaoSocial { get; set; }
-
-    [Column("rgle")]
-    public int RgLe {  get; set; }
+    [Column("rg")]
+    public string Rg {  get; set; }
 
     [Column("logradouro")]
     public string Logradouro { get; set; }
 
     [Column("numero")]
-    public int Numero {  get; set; }
+    public string Numero {  get; set; }
 
     [Column("cidade")]
     public string Cidade { get; set; }
@@ -38,7 +35,7 @@ public class UsuarioModel
     public string Estado { get; set; }
 
     [Column("cep")]
-    public int CEP { get; set; }
+    public string Cep { get; set; }
 
     [Column("bairro")]
     public string Bairro { get; set; }
@@ -54,4 +51,7 @@ public class UsuarioModel
 
     [Column("matricula")]
     public string Matricula { get; set; }
+
+    [Column("nome")]
+    public string Nome { get; set; }
 }

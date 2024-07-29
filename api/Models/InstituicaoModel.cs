@@ -29,13 +29,13 @@ public class InstituicaoModel
     public string Logradouro { get; set; }
 
     [Column("numero")]
-    public int Numero { get; set; }
+    public string Numero { get; set; }
 
     [Column("bairro")]
     public string Bairro { get; set; }
 
     [Column("cep")]
-    public int Cep { get; set; }
+    public string Cep { get; set; }
 
     [Column("nomerazaosocial")]
     public string nomeRazaoSocial { get; set; }

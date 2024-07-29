@@ -18,8 +18,10 @@ public class TipoDespesaModel
     [Column("descricao")]
     public string Descricao { get; set; }
 
+    /*
     [Column("solicitauc")]
     public string SolicitaUC { get; set; }
+    */
 
     /*Código para receber chave estrangeira de unidadeMedida*/
     public virtual UnidadeMedidaModel? UnidadeMedida { get; set; }
