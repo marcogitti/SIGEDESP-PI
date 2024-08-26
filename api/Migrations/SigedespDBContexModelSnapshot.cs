@@ -22,6 +22,136 @@ namespace api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("api.Models.DespesaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("despesaid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnoEmissao")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer")
+                        .HasColumnName("anoemissao");
+
+                    b.Property<string>("AnoMesConsumo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("anomesconsumo");
+
+                    b.Property<DateOnly>("DataPagamento")
+                        .HasColumnType("date")
+                        .HasColumnName("datapagamento");
+
+                    b.Property<DateOnly>("DataVencimento")
+                        .HasColumnType("date")
+                        .HasColumnName("datavencimento");
+
+                    b.Property<int?>("FornecedorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdFornecedor")
+                        .HasColumnType("integer")
+                        .HasColumnName("fornecedorid");
+
+                    b.Property<int>("IdInstituicao")
+                        .HasColumnType("integer")
+                        .HasColumnName("instituicaoid");
+
+                    b.Property<int>("IdOrcamento")
+                        .HasColumnType("integer")
+                        .HasColumnName("orcamentoid");
+
+                    b.Property<int>("IdTipoDespesa")
+                        .HasColumnType("integer")
+                        .HasColumnName("tipodespesaid");
+
+                    b.Property<int>("IdUnidadeConsumidora")
+                        .HasColumnType("integer")
+                        .HasColumnName("unidadeconsumidoraid");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer")
+                        .HasColumnName("usuarioid");
+
+                    b.Property<int?>("InstituicaoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MesEmissao")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer")
+                        .HasColumnName("mesemissao");
+
+                    b.Property<string>("NumeroControle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("numerocontrole");
+
+                    b.Property<string>("NumeroDocumento")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("numerodocumento");
+
+                    b.Property<int?>("OrcamentoId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("QuantidadeConsumida")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("quantidadeconsumida");
+
+                    b.Property<int>("SemestreEmissao")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer")
+                        .HasColumnName("semestreemissao");
+
+                    b.Property<int>("Situacao")
+                        .HasColumnType("integer")
+                        .HasColumnName("situacao");
+
+                    b.Property<int?>("TipoDespesaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrimestreEmissao")
+                        .HasMaxLength(50)
+                        .HasColumnType("integer")
+                        .HasColumnName("trimestreemissao");
+
+                    b.Property<int?>("UnidadeConsumidoraId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("ValorPago")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("valorpago");
+
+                    b.Property<double>("ValorPrevisto")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("valorprevisto");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FornecedorId");
+
+                    b.HasIndex("InstituicaoId");
+
+                    b.HasIndex("OrcamentoId");
+
+                    b.HasIndex("TipoDespesaId");
+
+                    b.HasIndex("UnidadeConsumidoraId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Despesa");
+                });
+
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
                     b.Property<int>("Id")
@@ -549,6 +679,45 @@ namespace api.Migrations
                     b.ToTable("usuario");
                 });
 
+            modelBuilder.Entity("api.Models.DespesaModel", b =>
+                {
+                    b.HasOne("api.Models.FornecedorModel", "Fornecedor")
+                        .WithMany("Despesa")
+                        .HasForeignKey("FornecedorId");
+
+                    b.HasOne("api.Models.InstituicaoModel", "Instituicao")
+                        .WithMany("Despesa")
+                        .HasForeignKey("InstituicaoId");
+
+                    b.HasOne("api.Models.OrcamentoModel", "Orcamento")
+                        .WithMany("Despesa")
+                        .HasForeignKey("OrcamentoId");
+
+                    b.HasOne("api.Models.TipoDespesaModel", "TipoDespesa")
+                        .WithMany("Despesa")
+                        .HasForeignKey("TipoDespesaId");
+
+                    b.HasOne("api.Models.UnidadeConsumidoraModel", "UnidadeConsumidora")
+                        .WithMany("Despesa")
+                        .HasForeignKey("UnidadeConsumidoraId");
+
+                    b.HasOne("api.Models.UsuarioModel", "Usuario")
+                        .WithMany("Despesa")
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Instituicao");
+
+                    b.Navigation("Orcamento");
+
+                    b.Navigation("TipoDespesa");
+
+                    b.Navigation("UnidadeConsumidora");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("api.Models.InstituicaoModel", b =>
                 {
                     b.HasOne("api.Models.SecretariaModel", "Secretaria")
@@ -647,14 +816,23 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
+                    b.Navigation("Despesa");
+
                     b.Navigation("UnidadeConsumidora");
                 });
 
             modelBuilder.Entity("api.Models.InstituicaoModel", b =>
                 {
+                    b.Navigation("Despesa");
+
                     b.Navigation("Orcamento");
 
                     b.Navigation("UnidadeConsumidora");
+                });
+
+            modelBuilder.Entity("api.Models.OrcamentoModel", b =>
+                {
+                    b.Navigation("Despesa");
                 });
 
             modelBuilder.Entity("api.Models.SecretariaModel", b =>
@@ -664,6 +842,8 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.TipoDespesaModel", b =>
                 {
+                    b.Navigation("Despesa");
+
                     b.Navigation("Orcamento");
                 });
 
@@ -672,9 +852,19 @@ namespace api.Migrations
                     b.Navigation("InstituicaoLista");
                 });
 
+            modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
+                {
+                    b.Navigation("Despesa");
+                });
+
             modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
                 {
                     b.Navigation("TipoDespesa");
+                });
+
+            modelBuilder.Entity("api.Models.UsuarioModel", b =>
+                {
+                    b.Navigation("Despesa");
                 });
 #pragma warning restore 612, 618
         }

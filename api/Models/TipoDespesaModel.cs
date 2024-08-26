@@ -31,4 +31,8 @@ public class TipoDespesaModel
     /*Código para criar coleção de Orçamento*/
     [JsonIgnore]
     public ICollection<OrcamentoModel>? Orcamento { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

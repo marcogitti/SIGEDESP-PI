@@ -2893,24 +2893,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emell\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\55179\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emell\\Desktop\\SIGEDESP-PI\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\55179\\OneDrive\\Área de Trabalho\\SIGEDESP-PI\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\emell\\Desktop\\SIGEDESP-PI\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\emell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emell\\Desktop\\SIGEDESP-PI\\api\\obj\\",
+      "projectPath": "C:\\Users\\55179\\OneDrive\\Área de Trabalho\\SIGEDESP-PI\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\55179\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\55179\\OneDrive\\Área de Trabalho\\SIGEDESP-PI\\api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\emell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\55179\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3002,7 +2997,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

@@ -54,4 +54,8 @@ public class UsuarioModel
 
     [Column("matricula")]
     public string Matricula { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

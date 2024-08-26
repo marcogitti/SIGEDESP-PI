@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -269,6 +270,103 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Despesa",
+                columns: table => new
+                {
+                    despesaid = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    numerodocumento = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    numerocontrole = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    anomesconsumo = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    quantidadeconsumida = table.Column<double>(type: "numeric(18,2)", nullable: false),
+                    datavencimento = table.Column<DateOnly>(type: "date", nullable: false),
+                    valorprevisto = table.Column<double>(type: "numeric(18,2)", nullable: false),
+                    datapagamento = table.Column<DateOnly>(type: "date", nullable: false),
+                    valorpago = table.Column<double>(type: "numeric(18,2)", nullable: false),
+                    anoemissao = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
+                    semestreemissao = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
+                    trimestreemissao = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
+                    mesemissao = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false),
+                    FornecedorId = table.Column<int>(type: "integer", nullable: true),
+                    fornecedorid = table.Column<int>(type: "integer", nullable: false),
+                    UnidadeConsumidoraId = table.Column<int>(type: "integer", nullable: true),
+                    unidadeconsumidoraid = table.Column<int>(type: "integer", nullable: false),
+                    InstituicaoId = table.Column<int>(type: "integer", nullable: true),
+                    instituicaoid = table.Column<int>(type: "integer", nullable: false),
+                    OrcamentoId = table.Column<int>(type: "integer", nullable: true),
+                    orcamentoid = table.Column<int>(type: "integer", nullable: false),
+                    TipoDespesaId = table.Column<int>(type: "integer", nullable: true),
+                    tipodespesaid = table.Column<int>(type: "integer", nullable: false),
+                    UsuarioId = table.Column<int>(type: "integer", nullable: true),
+                    usuarioid = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Despesa", x => x.despesaid);
+                    table.ForeignKey(
+                        name: "FK_Despesa_fornecedor_FornecedorId",
+                        column: x => x.FornecedorId,
+                        principalTable: "fornecedor",
+                        principalColumn: "fornecedorid");
+                    table.ForeignKey(
+                        name: "FK_Despesa_instituicao_InstituicaoId",
+                        column: x => x.InstituicaoId,
+                        principalTable: "instituicao",
+                        principalColumn: "instituicaoid");
+                    table.ForeignKey(
+                        name: "FK_Despesa_orcamento_OrcamentoId",
+                        column: x => x.OrcamentoId,
+                        principalTable: "orcamento",
+                        principalColumn: "orcamentoid");
+                    table.ForeignKey(
+                        name: "FK_Despesa_tipodespesa_TipoDespesaId",
+                        column: x => x.TipoDespesaId,
+                        principalTable: "tipodespesa",
+                        principalColumn: "tipodespesaid");
+                    table.ForeignKey(
+                        name: "FK_Despesa_unidadeconsumidora_UnidadeConsumidoraId",
+                        column: x => x.UnidadeConsumidoraId,
+                        principalTable: "unidadeconsumidora",
+                        principalColumn: "unidadeconsumidoraid");
+                    table.ForeignKey(
+                        name: "FK_Despesa_usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "usuario",
+                        principalColumn: "usuarioid");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_FornecedorId",
+                table: "Despesa",
+                column: "FornecedorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_InstituicaoId",
+                table: "Despesa",
+                column: "InstituicaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_OrcamentoId",
+                table: "Despesa",
+                column: "OrcamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_TipoDespesaId",
+                table: "Despesa",
+                column: "TipoDespesaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_UnidadeConsumidoraId",
+                table: "Despesa",
+                column: "UnidadeConsumidoraId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Despesa_UsuarioId",
+                table: "Despesa",
+                column: "UsuarioId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_instituicao_secretariaid",
                 table: "instituicao",
@@ -343,6 +441,9 @@ namespace api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Despesa");
+
             migrationBuilder.DropTable(
                 name: "orcamento");
 

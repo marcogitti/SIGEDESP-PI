@@ -74,4 +74,8 @@ public class InstituicaoModel
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

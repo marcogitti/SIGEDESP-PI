@@ -35,4 +35,8 @@ public class OrcamentoModel
     [Column("instituicaoid")]
     [ForeignKey("instituicaoid")]
     public int IdInstituicao { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }
