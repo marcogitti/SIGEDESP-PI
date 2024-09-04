@@ -67,6 +67,10 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "A Situação do Usuário é requerida!")]
         public SituacaoEnum Situacao { get; set; }
 
+
+        [Required(ErrorMessage = "O Tipo do Usuário é requerido!")]
+        public TipoUsuarioEnum TipoUsuario { get; set; }
+
         [Required(ErrorMessage = "A Matrícula é requerida!")]
         [MinLength(1)]
         [MaxLength(100)]
