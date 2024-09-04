@@ -9,8 +9,8 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<UnidadeMedidaModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Descricao).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Abreviatura).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Descricao).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Abreviatura).IsRequired().HasMaxLength(10);
 
         }
     }

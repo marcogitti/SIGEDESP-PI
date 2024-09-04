@@ -17,8 +17,8 @@ namespace api.DTO.Entities
         public SituacaoEnum Situacao { get; set; }
 
         [Required(ErrorMessage = "O CNPJ é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
+        [MinLength(14)]
+        [MaxLength(14)]
         public string Cnpj { get; set; }
 
         [Required(ErrorMessage = "O Nome é requerido!")]
@@ -31,23 +31,24 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Logradouro { get; set; }
 
-        public int Numero { get; set; }
+        [Required(ErrorMessage = "O Número é requerido!")]
+        [MinLength(1)]
+        [MaxLength(15)]
+        public string Numero { get; set; }
 
         [Required(ErrorMessage = "O Bairro é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
         public string Bairro { get; set; }
 
-        public int Cep { get; set; }
-
-        [Required(ErrorMessage = "O Nome de Razão Social é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string nomeRazaoSocial { get; set; }
+        [Required(ErrorMessage = "O CEP é requerido!")]
+        [MinLength(8)]
+        [MaxLength(8)]
+        public string Cep { get; set; }
 
         [Required(ErrorMessage = "O Telefone é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
+        [MinLength(11)]
+        [MaxLength(11)]
         public string Telefone { get; set; }
 
         [Required(ErrorMessage = "O E-mail é requerido!")]
@@ -57,12 +58,12 @@ namespace api.DTO.Entities
 
         [Required(ErrorMessage = "A Cidade é requerida!")]
         [MinLength(1)]
-        [MaxLength(100)]
+        [MaxLength(25)]
         public string Cidade { get; set; }
 
         [Required(ErrorMessage = "O Estado é requerido!")]
         [MinLength(1)]
-        [MaxLength(100)]
+        [MaxLength(25)]
         public string Estado { get; set; }
 
 

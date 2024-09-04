@@ -9,8 +9,10 @@ namespace api.DTO.Entities
     {
         public int? Id { get; set; }
 
-        [Required(ErrorMessage = "O código de Unidade Consumidora é requerido!")]
-        public int CodigoUC { get; set; }
+        [Required(ErrorMessage = "O Código de Unidade Consumidora é requerido!")]
+        [MinLength(1)]
+        [MaxLength(10)]
+        public string CodigoUC { get; set; }
 
         /*Código para colocar atributos das classes que dão chave estrangeira no cadastro*/
         [JsonIgnore]
