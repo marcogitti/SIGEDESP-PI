@@ -13,10 +13,7 @@ namespace api.Models
         [Column("usuarioid")]
         public int Id { get; set; }
 
-        [Column("cpfcnpj")]
-        public string CpfCnpj { get; set; }
-
-        [Column("cpfcnpj")]
+        [Column("cpf")]
         public string Cpf { get; set; }
 
         [Column("rg")]
@@ -38,7 +35,7 @@ namespace api.Models
         public string Estado { get; set; }
 
         [Column("cep")]
-        public string CEP { get; set; }
+        public string Cep { get; set; }
 
         [Column("email")]
         public string Email { get; set; }

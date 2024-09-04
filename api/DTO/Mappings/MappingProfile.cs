@@ -34,6 +34,9 @@ namespace api.DTO.Mappings
 
             CreateMap<UsuarioDTO, UsuarioModel>();
             CreateMap<UsuarioModel, UsuarioDTO>().ReverseMap();
+
+            CreateMap<DespesaDTO, DespesaModel>();
+            CreateMap<DespesaModel, DespesaDTO>().ReverseMap();
         }
     }
 }
