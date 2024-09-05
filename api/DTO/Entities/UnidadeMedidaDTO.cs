@@ -14,7 +14,7 @@ namespace api.DTO.Entities
 
         [Required(ErrorMessage = "A abreviatura da Unidade de Medida é requerida!")]
         [MinLength(1)]
-        [MaxLength(100)]
+        [MaxLength(10)]
         public string Abreviatura { get; set; }
 
     }

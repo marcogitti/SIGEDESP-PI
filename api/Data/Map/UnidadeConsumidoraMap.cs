@@ -9,7 +9,7 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<UnidadeConsumidoraModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.CodigoUC).IsRequired();
+            builder.Property(x => x.CodigoUC).IsRequired().HasMaxLength(10);
             builder.HasOne(x => x.Fornecedor).WithMany().HasForeignKey(x => x.IdFornecedor);
             builder.HasOne(x => x.Instituicao).WithMany().HasForeignKey(x => x.IdInstituicao);
         }

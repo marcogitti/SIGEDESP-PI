@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Repositorios.Interfaces;
+using api.Models.Enum;
 
 namespace api.Repositorios
 {
@@ -25,6 +26,16 @@ namespace api.Repositorios
 
         public async Task<UsuarioModel> Adicionar(UsuarioModel usuario)
         {
+            if (!Enum.IsDefined(typeof(TipoUsuarioEnum), usuario.TipoUsuario))
+            {
+                throw new ArgumentException("Tipo de usuário inválido");
+            }
+
+            if (!Enum.IsDefined(typeof(SituacaoEnum), usuario.Situacao))
+            {
+                throw new ArgumentException("Tipo de situação inválida");
+            }
+
             await _dbContext.Usuario.AddAsync(usuario);
             await _dbContext.SaveChangesAsync();
 

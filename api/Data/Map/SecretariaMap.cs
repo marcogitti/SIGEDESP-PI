@@ -10,18 +10,18 @@ namespace api.Data.Map
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Situacao).IsRequired();
-            builder.Property(x => x.Descricao).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Cnpj).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Nome).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Logradouro).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Numero);
-            builder.Property(x => x.Bairro).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Cep);
-            builder.Property(x => x.nomeRazaoSocial).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Telefone).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Cidade).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Estado).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Descricao).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Cnpj).IsRequired().HasMaxLength(14);
+            builder.Property(x => x.Nome).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Logradouro).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Numero).IsRequired().HasMaxLength(15);
+            builder.Property(x => x.Bairro).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Cep).IsRequired().HasMaxLength(8);
+            builder.Property(x => x.nomeRazaoSocial).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Telefone).IsRequired().HasMaxLength(11);
+            builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Cidade).IsRequired().HasMaxLength(25);
+            builder.Property(x => x.Estado).IsRequired().HasMaxLength(25);
 
         }
     }

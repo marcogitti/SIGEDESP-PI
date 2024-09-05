@@ -13,8 +13,10 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Descricao { get; set; }
 
+        /*
         [Required(ErrorMessage = "O Solicita Unidade Consumidora é requerido!")]
         public string SolicitaUC { get; set; }
+        */
 
         /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
         [JsonIgnore]
