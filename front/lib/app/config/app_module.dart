@@ -39,9 +39,10 @@ class AppModule extends Module {
     r.child('/', child: (_) => const HomePage());
     r.child('/instituicaoPage', child: (_) => const InstituicaoPage());
     r.child('/tipoInstituicaoPage', child: (_) => const TipoInstituicao());
-    // r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesas());
+    r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesas());
     r.child('/unidadeDeMedida', child: (_) => const UnidadeDeMedidaPage());
-    r.child('/unidadeConsumidora', child: (_) => const UnidadeConsumidoraPage());
+    r.child('/unidadeConsumidora',
+        child: (_) => const UnidadeConsumidoraPage());
     r.child('/usuarioPage', child: (_) => const UsuarioPage());
     r.child('/secretariaPage', child: (_) => const SecretariaPage());
     super.routes(r);
