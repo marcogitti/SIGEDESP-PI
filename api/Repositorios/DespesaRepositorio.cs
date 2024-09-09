@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Repositorios.Interfaces;
+using api.Models.Enum;
 
 namespace api.Repositorios
 {
@@ -25,6 +26,11 @@ namespace api.Repositorios
 
         public async Task<DespesaModel> Adicionar(DespesaModel despesa)
         {
+            if (!Enum.IsDefined(typeof(EnumStatusDespesaModel), despesa.StatusDespesa))
+            {
+                throw new ArgumentException("Tipo de status de despesa inválido");
+            }
+
             await _dbContext.Despesa.AddAsync(despesa);
             await _dbContext.SaveChangesAsync();
 

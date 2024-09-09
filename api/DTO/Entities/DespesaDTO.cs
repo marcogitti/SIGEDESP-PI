@@ -86,6 +86,10 @@ namespace api.DTO.Entities
         public int IdOrcamento { get; set; }
 
 
+        [Required(ErrorMessage = "A Situação de Despesa é requerida!")]
+        public EnumStatusDespesaModel StatusDespesa { get; set; }
+
+
         [JsonIgnore]
         public TipoDespesaModel? TipoDespesa { get; set; }
 
