@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20240904181455_CriarBanco")]
+    [Migration("20240909191725_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -115,6 +115,10 @@ namespace api.Migrations
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
                         .HasColumnName("situacao");
+
+                    b.Property<int>("StatusDespesa")
+                        .HasColumnType("integer")
+                        .HasColumnName("statusdespesa");
 
                     b.Property<int?>("TipoDespesaId")
                         .HasColumnType("integer");

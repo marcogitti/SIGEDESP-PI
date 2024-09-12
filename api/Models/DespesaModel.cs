@@ -90,6 +90,10 @@ namespace api.Models
         [ForeignKey("tipodespesaid")]
         public int IdTipoDespesa { get; set; }
 
+        [Column("statusdespesa")]
+        [EnumDataType(typeof(EnumStatusDespesaModel))]
+        public EnumStatusDespesaModel StatusDespesa { get; set; }
+
         [JsonIgnore]
         public UsuarioModel? Usuario { get; set; }
 

@@ -113,6 +113,10 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("situacao");
 
+                    b.Property<int>("StatusDespesa")
+                        .HasColumnType("integer")
+                        .HasColumnName("statusdespesa");
+
                     b.Property<int?>("TipoDespesaId")
                         .HasColumnType("integer");
 

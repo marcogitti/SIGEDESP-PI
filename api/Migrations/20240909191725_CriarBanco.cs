@@ -298,6 +298,7 @@ namespace api.Migrations
                     orcamentoid = table.Column<int>(type: "integer", nullable: false),
                     TipoDespesaId = table.Column<int>(type: "integer", nullable: true),
                     tipodespesaid = table.Column<int>(type: "integer", nullable: false),
+                    statusdespesa = table.Column<int>(type: "integer", nullable: false),
                     UsuarioId = table.Column<int>(type: "integer", nullable: true),
                     usuarioid = table.Column<int>(type: "integer", nullable: false)
                 },

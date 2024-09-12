@@ -65,6 +65,8 @@ namespace Sigedesp
             builder.Services.AddTransient<IOrcamentoService, OrcamentoService>();
             builder.Services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+            builder.Services.AddTransient<IDespesaRepositorio, DespesaRepositorio>();
+            builder.Services.AddTransient<IDespesaService, DespesaService>();
 
             var app = builder.Build();
 
