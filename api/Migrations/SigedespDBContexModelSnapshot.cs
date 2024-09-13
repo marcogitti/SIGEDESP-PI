@@ -501,6 +501,10 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("idunidademedida");
 
+                    b.Property<int>("SolicitaUC")
+                        .HasColumnType("integer")
+                        .HasColumnName("solicitauc");
+
                     b.Property<int?>("UnidadeMedidaModelId")
                         .HasColumnType("integer");
 

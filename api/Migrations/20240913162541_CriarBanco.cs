@@ -171,6 +171,7 @@ namespace api.Migrations
                     tipodespesaid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    solicitauc = table.Column<int>(type: "integer", nullable: false),
                     idunidademedida = table.Column<int>(type: "integer", nullable: false),
                     UnidadeMedidaModelId = table.Column<int>(type: "integer", nullable: true)
                 },
