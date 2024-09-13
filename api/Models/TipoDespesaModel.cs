@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using api.Models.Enum;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,10 @@ public class TipoDespesaModel
 
     [Column("descricao")]
     public string Descricao { get; set; }
+
+    [Column("solicitauc")]
+    [EnumDataType(typeof(EnumSolicitaUCModel))]
+    public EnumSolicitaUCModel SolicitaUC { get; set; }
 
     /*
     [Column("solicitauc")]

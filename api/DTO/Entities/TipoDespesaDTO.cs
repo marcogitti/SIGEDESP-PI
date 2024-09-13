@@ -1,4 +1,5 @@
 ﻿using api.Models;
+using api.Models.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -12,6 +13,9 @@ namespace api.DTO.Entities
         [MinLength(1)]
         [MaxLength(100)]
         public string Descricao { get; set; }
+
+        [Required(ErrorMessage = "A Unidade Consumidora é requerida!")]
+        public EnumSolicitaUCModel SolicitaUC { get; set; }
 
         /*
         [Required(ErrorMessage = "O Solicita Unidade Consumidora é requerido!")]

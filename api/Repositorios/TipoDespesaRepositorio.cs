@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Repositorios.Interfaces;
+using api.Models.Enum;
 
 namespace api.Repositorios
 {
@@ -25,7 +26,12 @@ namespace api.Repositorios
 
         public async Task<TipoDespesaModel> Adicionar(TipoDespesaModel tipoDespesa)
         {
-           await _dbContext.TipoDespesa.AddAsync(tipoDespesa);
+            if (!Enum.IsDefined(typeof(EnumSolicitaUCModel), tipoDespesa.SolicitaUC))
+            {
+                throw new ArgumentException("Tipo de unidade consumidora inválido");
+            }
+
+            await _dbContext.TipoDespesa.AddAsync(tipoDespesa);
            await _dbContext.SaveChangesAsync();
 
             return tipoDespesa;
