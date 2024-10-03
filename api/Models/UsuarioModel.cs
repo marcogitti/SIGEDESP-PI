@@ -43,10 +43,13 @@ namespace api.Models
         [Column("senha")]
         public string Senha { get; set; }
 
-        // Mapear o campo situacao como enum
-        [Column("situacao")]
-        [EnumDataType(typeof(SituacaoEnum))]
-        public SituacaoEnum Situacao { get; set; }
+        [Column("bairro")]
+        public string Bairro { get; set; }
+
+        /*Código para receber enum de Situação*/
+        [Column("situcao")]
+        [EnumDataType(typeof(EnumSituacaoModel))]
+        public EnumSituacaoModel Situacao { get; set; }
 
         [Column("matricula")]
         public string Matricula { get; set; }

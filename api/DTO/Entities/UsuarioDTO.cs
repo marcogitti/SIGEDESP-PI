@@ -65,7 +65,7 @@ namespace api.DTO.Entities
         public string Senha { get; set; }
 
         [Required(ErrorMessage = "A Situação do Usuário é requerida!")]
-        public SituacaoEnum Situacao { get; set; }
+        public EnumSituacaoModel Situacao { get; set; }
 
 
         [Required(ErrorMessage = "O Tipo do Usuário é requerido!")]

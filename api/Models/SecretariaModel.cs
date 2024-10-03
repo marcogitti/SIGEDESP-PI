@@ -16,8 +16,10 @@ public class SecretariaModel
     [Column("secretariaid")]
     public int Id { get; set; }
 
-    [Column("situacao")]
-    public SituacaoEnum Situacao { get; set; }
+    /*Código para receber enum de Situação*/
+    [Column("situcao")]
+    [EnumDataType(typeof(EnumSituacaoModel))]
+    public EnumSituacaoModel Situacao { get; set; }
 
     [Column("descricao")]
     public string Descricao { get; set; }
@@ -55,6 +57,7 @@ public class SecretariaModel
     [Column("estado")]
     public string Estado { get; set; }
 
+    /*Código para receber chaves estrangeiras de instituição*/
     [JsonIgnore]
     public ICollection<InstituicaoModel>? InstituicaoLista { get; set; }
 }
