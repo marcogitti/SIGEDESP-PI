@@ -25,7 +25,9 @@ namespace Sigedesp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var connectionString = builder.Configuration.GetConnectionString("DataBase");
+            // Busca a string de conexão
+            var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
+                                   ?? builder.Configuration.GetConnectionString("DataBase");
 
             builder.Services.AddCors(o => o.AddPolicy("MyPolicy",
                     builder =>
