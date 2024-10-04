@@ -31,7 +31,7 @@ namespace api.Repositorios
                 throw new ArgumentException("Tipo de usuário inválido");
             }
 
-            if (!Enum.IsDefined(typeof(SituacaoEnum), usuario.Situacao))
+            if (!Enum.IsDefined(typeof(EnumSituacaoModel), usuario.Situacao))
             {
                 throw new ArgumentException("Tipo de situação inválida");
             }

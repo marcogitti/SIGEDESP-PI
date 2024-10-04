@@ -1,42 +1,56 @@
-﻿using api.DTO.Entities;
+﻿using AutoMapper;
+using api.DTO.Entities;
 using api.Models;
-using AutoMapper;
 
-namespace api.DTO.Mappings
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile() 
-        {
-            CreateMap<TipoDespesaDTO, TipoDespesaModel>();
-            CreateMap<TipoDespesaModel, TipoDespesaDTO>().ReverseMap();
 
-            CreateMap<TipoInstituicaoDTO, TipoInstituicaoModel>();
-            CreateMap<TipoInstituicaoModel, TipoInstituicaoDTO>().ReverseMap();
+        CreateMap<TipoDespesaDTO, TipoDespesaModel>().ReverseMap();
+        CreateMap<TipoInstituicaoDTO, TipoInstituicaoModel>().ReverseMap();
+        CreateMap<UnidadeMedidaDTO, UnidadeMedidaModel>().ReverseMap();
+        CreateMap<UnidadeConsumidoraDTO, UnidadeConsumidoraModel>().ReverseMap();
+        CreateMap<SecretariaDTO, SecretariaModel>().ReverseMap();
+        CreateMap<FornecedorDTO, FornecedorModel>().ReverseMap();
+        CreateMap<InstituicaoDTO, InstituicaoModel>().ReverseMap();
+        CreateMap<OrcamentoDTO, OrcamentoModel>().ReverseMap();
+        CreateMap<UsuarioDTO, UsuarioModel>().ReverseMap();
 
-            CreateMap<UnidadeMedidaDTO, UnidadeMedidaModel>();
-            CreateMap<UnidadeMedidaModel, UnidadeMedidaDTO>().ReverseMap();
+        CreateMap<DespesaModel, DespesaDTO>()
+            .ForMember(dest => dest.Fornecedor, opt => opt.MapFrom(src => new FornecedorDTO
+            {
+                Id = src.Fornecedor.Id,
+                NomeFantasia = src.Fornecedor.NomeFantasia
+            }))
+            .ForMember(dest => dest.UnidadeConsumidora, opt => opt.MapFrom(src => new UnidadeConsumidoraDTO
+            {
+                Id = src.UnidadeConsumidora.Id,
+                CodigoUC = src.UnidadeConsumidora.CodigoUC
+            }))
+            .ForMember(dest => dest.Instituicao, opt => opt.MapFrom(src => new InstituicaoDTO
+            {
+                Id = src.Instituicao.Id,
+                Nome = src.Instituicao.Nome
+            }))
+            .ForMember(dest => dest.Orcamento, opt => opt.MapFrom(src => new OrcamentoDTO
+            {
+                Id = src.Orcamento.Id,
+                ValorOrcamento = src.Orcamento.ValorOrcamento
+            }))
+            .ForMember(dest => dest.TipoDespesa, opt => opt.MapFrom(src => new TipoDespesaDTO
+            {
+                Id = src.TipoDespesa.Id,
+                Descricao = src.TipoDespesa.Descricao
+            }))
+            .ForMember(dest => dest.Usuario, opt => opt.MapFrom(src => new UsuarioDTO
+            {
+                Id = src.Usuario.Id,
+                Nome = src.Usuario.Nome
+            }));
 
-            CreateMap<UnidadeConsumidoraDTO, UnidadeConsumidoraModel>();
-            CreateMap<UnidadeConsumidoraModel, UnidadeConsumidoraDTO>().ReverseMap();
+        CreateMap<DespesaAdicionarAtualizarDTO, DespesaModel>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore()); // Ignorar o campo Id na operação de atualização
 
-            CreateMap<SecretariaDTO, SecretariaModel>();
-            CreateMap<SecretariaModel, SecretariaDTO>().ReverseMap();
-
-            CreateMap<FornecedorDTO, FornecedorModel>();
-            CreateMap<FornecedorModel, FornecedorDTO>().ReverseMap();
-
-            CreateMap<InstituicaoDTO, InstituicaoModel>();
-            CreateMap<InstituicaoModel, InstituicaoDTO>().ReverseMap();
-
-            CreateMap<OrcamentoDTO, OrcamentoModel>();
-            CreateMap<OrcamentoModel, OrcamentoDTO>().ReverseMap();
-
-            CreateMap<UsuarioDTO, UsuarioModel>();
-            CreateMap<UsuarioModel, UsuarioDTO>().ReverseMap();
-
-            CreateMap<DespesaDTO, DespesaModel>();
-            CreateMap<DespesaModel, DespesaDTO>().ReverseMap();
-        }
     }
 }

@@ -19,8 +19,10 @@ public class FornecedorModel
     [Column("nomefantasia")]
     public string NomeFantasia { get; set; }
 
-    [Column("situacao")]
-    public SituacaoEnum Situacao { get; set; }
+    /*Código para receber enum de Situação*/
+    [Column("situcao")]
+    [EnumDataType(typeof(EnumSituacaoModel))]
+    public EnumSituacaoModel Situacao { get; set; }
 
     [Column("cnpj")]
     public string Cnpj { get; set; }
@@ -55,4 +57,8 @@ public class FornecedorModel
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

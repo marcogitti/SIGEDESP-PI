@@ -22,6 +22,41 @@ namespace api.Data.Map
             builder.Property(x => x.Cidade).IsRequired().HasMaxLength(25);
             builder.Property(x => x.Estado).IsRequired().HasMaxLength(25);
 
+            // Inserções de teste
+            builder.HasData(
+                new FornecedorModel
+                {
+                    Id = 1,
+                    NomeFantasia = "Sabesp",
+                    Situacao = Models.Enum.EnumSituacaoModel.ativo,
+                    Cnpj = "12345678000195",
+                    Nome = "Cia de Saneamento Básico do Estado de São Paulo",
+                    Logradouro = "Rua das Inovações",
+                    Numero = "123",
+                    Bairro = "Centro",
+                    Cep = "12345678",
+                    Telefone = "17987654321",
+                    Email = "contato@sabesp.com",
+                    Cidade = "Jales",
+                    Estado = "São Paulo"
+                },
+                new FornecedorModel
+                {
+                    Id = 2,
+                    NomeFantasia = "Elektro",
+                    Situacao = Models.Enum.EnumSituacaoModel.ativo,
+                    Cnpj = "98765432000190",
+                    Nome = "Neoenergia Elektro",
+                    Logradouro = "Avenida Brasil",
+                    Numero = "456",
+                    Bairro = "Jardim América",
+                    Cep = "87654321",
+                    Telefone = "17987654321",
+                    Email = "contatos@elektro.com",
+                    Cidade = "Jales",
+                    Estado = "São Paulo"
+                }
+            );
         }
     }
 }

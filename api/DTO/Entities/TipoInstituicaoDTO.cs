@@ -12,10 +12,5 @@ namespace api.DTO.Entities
         [MaxLength(100)]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "O Nome é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string Nome { get; set; }
-
     }
 }
