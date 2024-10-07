@@ -27,8 +27,10 @@ namespace Sigedesp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Database connection
-            var connectionString = builder.Configuration.GetConnectionString("DataBase");
+            // Busca a string de conex�o
+            var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
+                                   ?? builder.Configuration.GetConnectionString("DataBase");
+          
             builder.Services.AddDbContext<SigedespDBContex>(options =>
                 options.UseNpgsql(connectionString));
 
