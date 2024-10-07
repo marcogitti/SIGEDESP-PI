@@ -9,7 +9,7 @@ namespace api.DTO.Entities
         public int? Id { get; set; }
 
         [Required(ErrorMessage = "A Situação da Secretaria é requerida!")]
-        public SituacaoEnum Situacao { get; set; }
+        public EnumSituacaoModel Situacao { get; set; }
 
         [Required(ErrorMessage = "A Descrição é requerida!")]
         [MinLength(1)]

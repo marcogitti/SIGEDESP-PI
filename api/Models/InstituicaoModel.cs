@@ -16,8 +16,10 @@ public class InstituicaoModel
     [Column("instituicaoid")]
     public int Id { get; set; }
 
-    [Column("situacao")]
-    public SituacaoEnum Situacao { get; set; }
+    /*Código para receber enum de Situação*/
+    [Column("situcao")]
+    [EnumDataType(typeof(EnumSituacaoModel))]
+    public EnumSituacaoModel Situacao { get; set; }
 
     [Column("cnpj")]
     public string Cnpj { get; set; }
@@ -52,7 +54,7 @@ public class InstituicaoModel
     [Column("estado")]
     public string Estado { get; set; }
 
-    /*Código para receber chaves estrangeiras de tipoInsituicao e Secretaria*/
+    /*Código para receber chaves estrangeiras de tipoInsituicao*/
     [JsonIgnore]
     public TipoInstituicaoModel? tipoInstituicao { get; set; }
 
@@ -60,6 +62,7 @@ public class InstituicaoModel
     [ForeignKey("tipoinstituicaoid")]
     public int IdTipoInstituicao { get; set; }
 
+    /*Código para receber chaves estrangeiras de Secretaria*/
     [JsonIgnore]
     public SecretariaModel? Secretaria { get; set; }
 
@@ -74,4 +77,8 @@ public class InstituicaoModel
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }
