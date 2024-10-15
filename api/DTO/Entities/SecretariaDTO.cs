@@ -19,7 +19,7 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O CNPJ é requerido!")]
         [MinLength(14)]
         [MaxLength(14)]
-        public string Cnpj { get; set; }
+        public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "O Nome é requerido!")]
         [MinLength(1)]
@@ -44,12 +44,12 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O CEP é requerido!")]
         [MinLength(8)]
         [MaxLength(8)]
-        public string Cep { get; set; }
+        public string CEP { get; set; }
 
         [Required(ErrorMessage = "O Nome de Razão Social é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
-        public string nomeRazaoSocial { get; set; }
+        public string NomeRazaoSocial { get; set; }
 
         [Required(ErrorMessage = "O Telefone é requerido!")]
         [MinLength(11)]

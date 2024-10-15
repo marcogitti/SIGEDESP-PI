@@ -34,9 +34,16 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "A Data de Pagamento é requerida!")]
         public DateOnly DataPagamento { get; set; }
 
+        [Required(ErrorMessage = "O Ano de Emissão é requerido!")]
         public int AnoEmissao { get; set; }
+
+        [Required(ErrorMessage = "O Semestre de Emissão é requerido!")]
         public int SemestreEmissao { get; set; }
+
+        [Required(ErrorMessage = "O Trimestre de Emissão é requerido!")]
         public int TrimestreEmissao { get; set; }
+
+        [Required(ErrorMessage = "O Mês de Emissão é requerido!")]
         public int MesEmissao { get; set; }
 
         [Required(ErrorMessage = "O ID de Usuário é requerido!")]

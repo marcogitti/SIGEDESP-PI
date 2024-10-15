@@ -22,7 +22,7 @@ public class InstituicaoModel
     public EnumSituacaoModel Situacao { get; set; }
 
     [Column("cnpj")]
-    public string Cnpj { get; set; }
+    public string CNPJ { get; set; }
 
     [Column("nome")]
     public string Nome { get; set; }
@@ -37,10 +37,10 @@ public class InstituicaoModel
     public string Bairro { get; set; }
 
     [Column("cep")]
-    public string Cep { get; set; }
+    public string CEP { get; set; }
 
     [Column("nomerazaosocial")]
-    public string nomeRazaoSocial { get; set; }
+    public string NomeRazaoSocial { get; set; }
 
     [Column("telefone")]
     public string Telefone { get; set; }
@@ -56,7 +56,7 @@ public class InstituicaoModel
 
     /*Código para receber chaves estrangeiras de tipoInsituicao*/
     [JsonIgnore]
-    public TipoInstituicaoModel? tipoInstituicao { get; set; }
+    public TipoInstituicaoModel? TipoInstituicao { get; set; }
 
     [Column("tipoinstituicaoid")]
     [ForeignKey("tipoinstituicaoid")]
