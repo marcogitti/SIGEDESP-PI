@@ -1,115 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/my_card_comp.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:front/app/components/my_scaffold_comp.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final lineData = [
-    charts.Series<int, int>(
-      id: 'Vendas',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (int vendas, _) => vendas,
-      measureFn: (int vendas, _) => vendas,
-      data: [1, 2, 3, 4],
-    )
-  ];
-
-  final pieData = [
-    charts.Series<int, String>(
-      id: 'Vendas',
-      domainFn: (int vendas, _) => vendas.toString(),
-      measureFn: (int vendas, _) => vendas,
-      data: [1, 2, 3, 4],
-    )
-  ];
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldComp(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: Wrap(
-            runSpacing: 16,
-            spacing: 16,
+      body: ResponsiveCards(),
+    );
+  }
+}
+
+class ResponsiveCards extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        // Linha com 3 cards horizontais
+        Expanded(
+          flex:
+              2, // Ajuste o flex para controlar o espaço ocupado por esta linha
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MyCardComp(
-                textButton: TextButton(
-                  onPressed: () {
-                    Modular.to.navigate('//instituicaoPage');
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("Cadastro de Tipo"),
-                        Text("Instituição"),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              MyCardComp(
-                textButton: TextButton(
-                  onPressed: () {
-                    Modular.to.navigate('/tipoDeDespesas');
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("Cadastro de Tipo"),
-                        Text("Despesas"),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              MyCardComp(
-                textButton: TextButton(
-                  onPressed: () {
-                    Modular.to.navigate('/unidadeDeMedida');
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("Cadastro de Unidade"),
-                        Text("De Medida"),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              MyCardComp(
-                textButton: TextButton(
-                  onPressed: () {
-                    Modular.to.navigate('/unidadeConsumidora');
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("Cadastro de Unidade"),
-                        Text("Consumidora"),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              Expanded(child: CardWidget()),
+              SizedBox(
+                  width: 8), // Espaçamento reduzido entre os cards horizontais
+              Expanded(child: CardWidget()),
+              SizedBox(width: 8),
+              Expanded(child: CardWidget()),
             ],
+          ),
+        ),
+        SizedBox(height: 8), // Espaçamento reduzido entre as linhas de cards
+        // Linha com 2 cards verticais maiores
+        Expanded(
+          flex:
+              3, // Ajuste o flex para controlar o espaço ocupado por esta linha
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(child: CardWidget(vertical: true)),
+              SizedBox(
+                  width: 8), // Espaçamento reduzido entre os cards verticais
+              Expanded(child: CardWidget(vertical: true)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CardWidget extends StatelessWidget {
+  final bool vertical;
+
+  const CardWidget({Key? key, this.vertical = false}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        color: Colors.blueAccent,
+        height: vertical ? MediaQuery.of(context).size.height / 2 : 150,
+        child: Center(
+          child: Text(
+            'Card ${vertical ? 'Vertical' : 'Horizontal'}',
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ),

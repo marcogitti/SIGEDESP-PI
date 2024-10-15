@@ -116,17 +116,9 @@ class _SecretariaPageState extends State<SecretariaPage> {
                   child: DataTable(
                     border: TableBorder.all(),
                     columns: const [
+                      DataColumn(label: Text('Id')),
                       DataColumn(label: Text('Nome')),
-                      DataColumn(label: Text('Nome Razão Social')),
                       DataColumn(label: Text('CNPJ')),
-                      DataColumn(label: Text('Email')),
-                      DataColumn(label: Text('Telefone')),
-                      DataColumn(label: Text('CEP')),
-                      DataColumn(label: Text('Numero')),
-                      DataColumn(label: Text('Logradouro')),
-                      DataColumn(label: Text('Bairro')),
-                      DataColumn(label: Text('Cidade')),
-                      DataColumn(label: Text('Estado')),
                       DataColumn(label: Text('Situação')),
                       DataColumn(label: Text('Ação')),
                     ],
@@ -134,37 +126,13 @@ class _SecretariaPageState extends State<SecretariaPage> {
                         .map((e) {
                           return DataRow(cells: [
                             DataCell(
+                              Text(e?.id.toString() ?? ''),
+                            ),
+                            DataCell(
                               Text(e?.nome.toString() ?? ''),
                             ),
                             DataCell(
-                              Text(e?.nomeRazaoSocial.toString() ?? ''),
-                            ),
-                            DataCell(
                               Text(e?.cnpj.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.email.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.telefone.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.cep.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.numero.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.logradouro.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.bairro.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.cidade.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.estado.toString() ?? ''),
                             ),
                             DataCell(
                               Text(e?.situacao.toString() ?? ''),
@@ -476,6 +444,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
                     setState(() {});
                   }, (failure) {
                     //snack bar
+                    // ignore: avoid_print
                     print('erro$failure');
                   });
                 }

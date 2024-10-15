@@ -83,11 +83,9 @@ factory FornecedorModel.fromJson(String source) => FornecedorModel.fromMap(
 FornecedorModel copyWith({
     int? id,
     String? nome,
-    String? nomeRazaoSocial,
     String? email,
     String? cnpj,
     int? cep,
-    String? descricao,
     String? logradouro,
     int? numero,
     String? telefone,
@@ -99,7 +97,6 @@ FornecedorModel copyWith({
     return FornecedorModel(
       id: id ?? this.id,
       nome: nome ?? this.nome,
-      nomeRazaoSocial: nomeRazaoSocial ?? this.nomeRazaoSocial,
       email: email ?? this.email,
       cnpj: cnpj ?? this.cnpj,
       cep: cep ?? this.cep,

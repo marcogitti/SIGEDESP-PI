@@ -39,7 +39,7 @@ class _MyDropDownCompState<T extends Object, TC extends Object>
   @override
   Widget build(BuildContext context) {
     if (isLoad) {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     }
     return DropdownButtonFormField<T?>(
       borderRadius: BorderRadius.circular(10),

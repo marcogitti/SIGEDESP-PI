@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
@@ -32,11 +33,13 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
   Widget build(BuildContext context) {
     return ScaffoldComp(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:
+            const EdgeInsets.all(16.0), // Ajuste o valor conforme necessário
         child: ListView(
           children: [
             const Padding(
-              padding: EdgeInsets.only(bottom: 50),
+              padding:
+                  EdgeInsets.only(bottom: 30), // Ajuste conforme necessário
               child: Text(
                 "Cadastro de Unidade de Medida",
                 style: TextStyle(
@@ -56,7 +59,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                   ),
                   controller: _controller,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20), // Ajuste o espaçamento
                 Row(
                   children: [
                     ElevatedButton(
@@ -79,116 +82,109 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                       }).toList(),
                       onChanged: (String? newValue) {},
                     ),
-                    const SizedBox(width: 20),
                   ],
                 ),
+                const SizedBox(height: 40), // Ajuste o espaçamento
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 60),
-              child: FutureBuilder(
-                future: service.getAll().getOrNull(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.none) {
-                    return const Text("Sem internet");
-                  }
+            FutureBuilder(
+              future: service.getAll().getOrNull(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.none) {
+                  return const Text("Sem internet");
+                }
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: SizedBox(
-                        width: 26,
-                        height: 26,
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: SizedBox(
+                      width: 26,
+                      height: 26,
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
 
-                  if (snapshot.hasError) {
-                    return const Text("Erro");
-                  }
+                if (snapshot.hasError) {
+                  return const Text("Erro");
+                }
 
-                  if (snapshot.data == null) {
-                    return Container();
-                  }
+                final List<UnidadeDeMedidaModel?> tp =
+                    (snapshot.data ?? []).cast<UnidadeDeMedidaModel?>();
 
-                  final tp = (snapshot.data ?? []) as List;
-
-                  return DataTable(
+                return SingleChildScrollView(
+                  dragStartBehavior: DragStartBehavior.start,
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
                     border: TableBorder.all(),
                     columns: const [
-                      DataColumn(label: Text('Nome')),
+                      DataColumn(label: Text('Id')),
+                      DataColumn(label: Text('Descrição')),
                       DataColumn(label: Text('Abreviatura')),
                       DataColumn(label: Text('Ações')),
                     ],
-                    rows: tp
-                        .map((e) {
-                          return DataRow(
-                            cells: [
-                              DataCell(
-                                Text(e?.descricao.toString() ?? ''),
+                    rows: tp.map((e) {
+                      return DataRow(
+                        cells: [
+                          DataCell(Text(e?.id?.toString() ?? '')),
+                          DataCell(Text(e?.descricao ?? '')),
+                          DataCell(Text(e?.abreviatura ?? '')),
+                          DataCell(Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Color(0xFF0044FF),
+                                ),
+                                onPressed: () async {
+                                  await modalCadastrar(e);
+                                },
                               ),
-                              DataCell(
-                                Text(e?.abreviatura.toString() ?? ''),
-                              ),
-                              DataCell(Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Color(0xFF0044FF),
-                                    ),
-                                    onPressed: () async {
-                                      await modalCadastrar(e);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Color(0xFFF44336),
-                                    ),
-                                    onPressed: () async {
-                                      await showDialog<bool>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Confirmar exclusão'),
-                                            content: const Text(
-                                                'Tem certeza que deseja excluir este item?'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text('Cancelar'),
-                                                onPressed: () {
-                                                  Modular.to.pop(false);
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text('Confirmar'),
-                                                onPressed: () async {
-                                                  Modular.to.pop();
-                                                  await service
-                                                      .deleteData(e!.id);
-
-                                                  setState(() {});
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Color(0xFFF44336),
+                                ),
+                                onPressed: () async {
+                                  await showDialog<bool>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirmar exclusão'),
+                                        content: const Text(
+                                            'Tem certeza que deseja excluir este item?'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text('Cancelar'),
+                                            onPressed: () {
+                                              Modular.to.pop(false);
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: const Text('Confirmar'),
+                                            onPressed: () async {
+                                              Modular.to.pop();
+                                              if (e?.id != null) {
+                                                await service
+                                                    .deleteData(e!.id!);
+                                                setState(() {});
+                                              }
+                                            },
+                                          ),
+                                        ],
                                       );
                                     },
-                                  ),
-                                ],
-                              )),
+                                  );
+                                },
+                              ),
                             ],
-                          );
-                        })
-                        .toList()
-                        .cast<DataRow>(),
-                  );
-                },
-              ),
-            )
+                          )),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -210,13 +206,13 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
           content: Wrap(
             children: [
               TextField(
-                controller:  unidadeDeMedidaDescEditCtrl,
+                controller: unidadeDeMedidaDescEditCtrl,
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
               ),
               TextField(
-                controller:  unidadeDeMedidaDescEditCtrl,
+                controller: unidadeDeMedidaAbreviaturaEditCtrl,
                 decoration: const InputDecoration(
                   labelText: 'Abreviatura',
                 ),
@@ -235,17 +231,16 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
               onPressed: () async {
                 if (isEdit) {
                   final resp = await service.editData(
-                    unidadeDeMedida!
-                        .copyWith(
-                          descricao: unidadeDeMedidaDescEditCtrl.text,
-                        abreviatura: unidadeDeMedidaAbreviaturaEditCtrl.text,
-                        ),
+                    unidadeDeMedida!.copyWith(
+                      descricao: unidadeDeMedidaDescEditCtrl.text,
+                      abreviatura: unidadeDeMedidaAbreviaturaEditCtrl.text,
+                    ),
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) {
-                    print('erro$failure');
+                    print('Erro: $failure');
                   });
                 } else {
                   final resp = await service.postData(
@@ -258,7 +253,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) {
-                    print('erro$failure');
+                    print('Erro: $failure');
                   });
                 }
               },
