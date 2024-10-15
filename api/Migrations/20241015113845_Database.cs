@@ -9,11 +9,29 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class Banco : Migration
+    public partial class Database : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "auditoria",
+                columns: table => new
+                {
+                    auditoriaid = table.Column<Guid>(type: "uuid", nullable: false),
+                    data = table.Column<string>(type: "text", nullable: false),
+                    hora = table.Column<string>(type: "text", nullable: false),
+                    operacao = table.Column<string>(type: "text", nullable: false),
+                    nomeentidade = table.Column<string>(type: "text", nullable: false),
+                    valoresantigos = table.Column<string>(type: "text", nullable: true),
+                    novosvalores = table.Column<string>(type: "text", nullable: true),
+                    idusuario = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_auditoria", x => x.auditoriaid);
+                });
+
             migrationBuilder.CreateTable(
                 name: "fornecedor",
                 columns: table => new
@@ -132,8 +150,8 @@ namespace api.Migrations
                     nomerazaosocial = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     telefone = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    cidade = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
-                    estado = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
+                    cidade = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    estado = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     tipoinstituicaoid = table.Column<int>(type: "integer", nullable: false),
                     secretariaid = table.Column<int>(type: "integer", nullable: false),
                     SecretariaModelId = table.Column<int>(type: "integer", nullable: true),
@@ -199,7 +217,7 @@ namespace api.Migrations
                 {
                     unidadeconsumidoraid = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    unidadeconsumidora = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    unidadeconsumidora = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     fornecedorid = table.Column<int>(type: "integer", nullable: false),
                     instituicaoid = table.Column<int>(type: "integer", nullable: false),
                     FornecedorModelId = table.Column<int>(type: "integer", nullable: true),
@@ -372,21 +390,21 @@ namespace api.Migrations
 
             migrationBuilder.InsertData(
                 table: "fornecedor",
-                columns: new[] { "fornecedorid", "bairro", "cep", "cidade", "cnpj", "email", "estado", "logradouro", "nome", "nomefantasia", "numero", "situcao", "telefone" },
+                columns: new[] { "fornecedorid", "bairro", "cep", "cnpj", "cidade", "email", "estado", "logradouro", "nome", "nomefantasia", "numero", "situcao", "telefone" },
                 values: new object[,]
                 {
-                    { 1, "Centro", "12345678", "Jales", "12345678000195", "contato@sabesp.com", "São Paulo", "Rua das Inovações", "Cia de Saneamento Básico do Estado de São Paulo", "Sabesp", "123", 1, "17987654321" },
-                    { 2, "Jardim América", "87654321", "Jales", "98765432000190", "contatos@elektro.com", "São Paulo", "Avenida Brasil", "Neoenergia Elektro", "Elektro", "456", 1, "17987654321" }
+                    { 1, "Centro", "12345678", "12345678000195", "Jales", "contato@sabesp.com", "São Paulo", "Rua das Inovações", "Cia de Saneamento Básico do Estado de São Paulo", "Sabesp", "123", 1, "17987654321" },
+                    { 2, "Jardim América", "87654321", "98765432000190", "Jales", "contatos@elektro.com", "São Paulo", "Avenida Brasil", "Neoenergia Elektro", "Elektro", "456", 1, "17987654321" }
                 });
 
             migrationBuilder.InsertData(
                 table: "secretaria",
-                columns: new[] { "secretariaid", "bairro", "cep", "cidade", "cnpj", "descricao", "email", "estado", "logradouro", "nome", "numero", "situcao", "telefone", "nomerazaosocial" },
+                columns: new[] { "secretariaid", "bairro", "cep", "cnpj", "cidade", "descricao", "email", "estado", "logradouro", "nome", "nomerazaosocial", "numero", "situcao", "telefone" },
                 values: new object[,]
                 {
-                    { 1, "Centro", "12345678", "Jales", "12345678000195", "Secretaria de Saúde", "saude@prefeitura.com", "São Paulo", "Rua Central", "Sec. Saúde", "100", 1, "11987654321", "Prefeitura Municipal" },
-                    { 2, "Jardim Paulista", "87654321", "Jales", "98765432000190", "Secretaria de Educação", "educacao@prefeitura.com", "São Paulo", "Avenida da Cultura", "Sec. Educação", "200", 1, "21987654321", "Prefeitura Municipal" },
-                    { 3, "Vila Nova", "65432187", "Jales", "23456789000188", "Secretaria de Obras", "obras@prefeitura.com", "São Paulo", "Rua das Construções", "Sec. Obras", "300", 0, "31987654321", "Prefeitura Municipal" }
+                    { 1, "Centro", "12345678", "12345678000195", "Jales", "Secretaria de Saúde", "saude@prefeitura.com", "São Paulo", "Rua Central", "Sec. Saúde", "Prefeitura Municipal", "100", 1, "11987654321" },
+                    { 2, "Jardim Paulista", "87654321", "98765432000190", "Jales", "Secretaria de Educação", "educacao@prefeitura.com", "São Paulo", "Avenida da Cultura", "Sec. Educação", "Prefeitura Municipal", "200", 1, "21987654321" },
+                    { 3, "Vila Nova", "65432187", "23456789000188", "Jales", "Secretaria de Obras", "obras@prefeitura.com", "São Paulo", "Rua das Construções", "Sec. Obras", "Prefeitura Municipal", "300", 0, "31987654321" }
                 });
 
             migrationBuilder.InsertData(
@@ -416,21 +434,21 @@ namespace api.Migrations
 
             migrationBuilder.InsertData(
                 table: "usuario",
-                columns: new[] { "usuarioid", "bairro", "cep", "cidade", "cpf", "email", "estado", "logradouro", "matricula", "nome", "numero", "rg", "senha", "situcao", "tipousuario" },
+                columns: new[] { "usuarioid", "bairro", "cep", "cpf", "cidade", "email", "estado", "logradouro", "matricula", "nome", "numero", "rg", "senha", "situcao", "tipousuario" },
                 values: new object[,]
                 {
-                    { 1, "Centro", "12345678", "Jales", "12345678901", "joao.silva@gmail.com", "São Paulo", "Rua A", "20240001", "João Silva", "10", "123456789", "senha123", 1, 0 },
-                    { 2, "Centro", "87654321", "Jales", "98765432100", "maria.souza@example.com", "São Paulo", "Avenida B", "20240002", "Maria Souza", "20", "987654321", "senha456", 0, 1 },
-                    { 3, "Nova York", "87654330", "Jales", "98785432100", "rafael.andrade@gmail.com", "São Paulo", "Avenida C", "20240003", "Rafael Andrade", "30", "787654321", "senha789", 1, 2 }
+                    { 1, "Centro", "12345678", "12345678901", "Jales", "joao.silva@gmail.com", "São Paulo", "Rua A", "20240001", "João Silva", "10", "123456789", "senha123", 1, 0 },
+                    { 2, "Centro", "87654321", "98765432100", "Jales", "maria.souza@example.com", "São Paulo", "Avenida B", "20240002", "Maria Souza", "20", "987654321", "senha456", 0, 1 },
+                    { 3, "Nova York", "87654330", "98785432100", "Jales", "rafael.andrade@gmail.com", "São Paulo", "Avenida C", "20240003", "Rafael Andrade", "30", "787654321", "senha789", 1, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "instituicao",
-                columns: new[] { "instituicaoid", "bairro", "cep", "cidade", "cnpj", "email", "estado", "secretariaid", "tipoinstituicaoid", "logradouro", "nome", "numero", "SecretariaModelId", "situcao", "telefone", "TipoInstituicaoModelId", "nomerazaosocial" },
+                columns: new[] { "instituicaoid", "bairro", "cep", "cnpj", "cidade", "email", "estado", "secretariaid", "tipoinstituicaoid", "logradouro", "nome", "nomerazaosocial", "numero", "SecretariaModelId", "situcao", "telefone", "TipoInstituicaoModelId" },
                 values: new object[,]
                 {
-                    { 1, "Centro", "12345678", "Jales", "12345678000195", "contato@escolaelzapirro@gamil.com", "São Paulo", 2, 4, "Rua dos Educadores", "Elza Pirro", "100", null, 1, "11987654321", null, "Elza Pirro Vianna" },
-                    { 2, "Jardim América", "87654321", "Jales", "98765432000190", "contato@centrosaude.sp.gov.br", "São Paulo", 1, 5, "Avenida da Saúde", "ESF JACB", "200", null, 0, "21987654321", null, "Dr Luis Ernesto Sandi Mori " }
+                    { 1, "Centro", "12345678", "12345678000195", "Jales", "contato@escolaelzapirro@gamil.com", "São Paulo", 2, 4, "Rua dos Educadores", "Elza Pirro", "Elza Pirro Vianna", "100", null, 1, "11987654321", null },
+                    { 2, "Jardim América", "87654321", "98765432000190", "Jales", "contato@centrosaude.sp.gov.br", "São Paulo", 1, 5, "Avenida da Saúde", "ESF JACB", "Dr Luis Ernesto Sandi Mori ", "200", null, 0, "21987654321", null }
                 });
 
             migrationBuilder.InsertData(
@@ -598,6 +616,9 @@ namespace api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "auditoria");
+
             migrationBuilder.DropTable(
                 name: "despesa");
 

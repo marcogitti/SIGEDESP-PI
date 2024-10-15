@@ -202,7 +202,7 @@ public class DespesaController : ControllerBase
         _context.Despesa.Remove(despesa);
         await _context.SaveChangesAsync();
 
-        var despesaRemovida = new
+        var despesaRemovida = new DespesaDTO
         {
             Id = despesa.Id,
             NumeroDocumento = despesa.NumeroDocumento,
@@ -213,32 +213,32 @@ public class DespesaController : ControllerBase
             ValorPrevisto = despesa.ValorPrevisto,
             DataPagamento = despesa.DataPagamento,
             ValorPago = despesa.ValorPago,
-            Fornecedor = new
+            Fornecedor = new FornecedorDTO
             {
                 Id = despesa.Fornecedor.Id,
                 NomeFantasia = despesa.Fornecedor.NomeFantasia
             },
-            UnidadeConsumidora = new
+            UnidadeConsumidora = new UnidadeConsumidoraDTO
             {
                 Id = despesa.UnidadeConsumidora.Id,
                 CodigoUC = despesa.UnidadeConsumidora.CodigoUC
             },
-            Instituicao = new
+            Instituicao = new InstituicaoDTO
             {
                 Id = despesa.Instituicao.Id,
                 Nome = despesa.Instituicao.Nome
             },
-            Orcamento = new
+            Orcamento = new OrcamentoDTO
             {
                 Id = despesa.Orcamento.Id,
                 ValorOrcamento = despesa.Orcamento.ValorOrcamento
             },
-            TipoDespesa = new
+            TipoDespesa = new TipoDespesaDTO
             {
                 Id = despesa.TipoDespesa.Id,
                 Descricao = despesa.TipoDespesa.Descricao
             },
-            Usuario = new
+            Usuario = new UsuarioDTO
             {
                 Id = despesa.Usuario.Id,
                 Nome = despesa.Usuario.Nome

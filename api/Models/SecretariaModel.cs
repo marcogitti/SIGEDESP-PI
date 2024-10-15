@@ -25,7 +25,7 @@ public class SecretariaModel
     public string Descricao { get; set; }
 
     [Column("cnpj")]
-    public string Cnpj { get; set; }
+    public string CNPJ { get; set; }
 
     [Column("nome")]
     public string Nome { get; set; }
@@ -40,10 +40,10 @@ public class SecretariaModel
     public string Bairro { get; set; }
 
     [Column("cep")]
-    public string Cep { get; set; }
+    public string CEP { get; set; }
 
     [Column("nomerazaosocial")]
-    public string nomeRazaoSocial { get; set; }
+    public string NomeRazaoSocial { get; set; }
 
     [Column("telefone")]
     public string Telefone { get; set; }

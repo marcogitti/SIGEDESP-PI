@@ -1,4 +1,5 @@
 ﻿using api.Models.Enum;
+using static api.DTO.Entities.ObjetosSimplificados;
 
 namespace api.DTO.Entities
 {
@@ -27,41 +28,11 @@ namespace api.DTO.Entities
         public OrcamentoDTO Orcamento { get; set; }
         public TipoDespesaDTO TipoDespesa { get; set; }
         public UsuarioDTO Usuario { get; set; }
-    }
-
-    public class DTOFornecedor
-    {
-        public int Id { get; set; }
-        public string NomeFantasia { get; set; }
-    }
-
-    public class DTOUnidadeConsumidora
-    {
-        public int Id { get; set; }
-        public string CodigoUC { get; set; }
-    }
-
-    public class DTOInstituicao
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-    }
-
-    public class DTOOrcamento
-    {
-        public int Id { get; set; }
-        public double ValorOrcamento { get; set; }
-    }
-
-    public class DTOTipoDespesa
-    {
-        public int Id { get; set; }
-        public string Descricao { get; set; }
-    }
-
-    public class DTOUsuario
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
+        public DTOFornecedor DTOFornecedor { get; set; }
+        public DTOUnidadeConsumidora DTOUnidadeConsumidora { get; set; }
+        public DTOInstituicao DTOInstituicao { get; set; }
+        public DTOOrcamento DTOOrcamento { get; set; }
+        public DTOTipoDespesa DTOTipoDespesa { get; set; }
+        public DTOUsuario DTOUsuario { get; set; }
     }
 }

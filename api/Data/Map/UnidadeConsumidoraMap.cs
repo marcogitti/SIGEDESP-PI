@@ -9,16 +9,22 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<UnidadeConsumidoraModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.CodigoUC).IsRequired().HasMaxLength(10);
 
-            // Definindo as chaves estrangeiras para Fornecedor e Instituicao
-            builder.HasOne(x => x.Fornecedor)
-                   .WithMany()
-                   .HasForeignKey(x => x.IdFornecedor);
+            builder.Property(x => x.CodigoUC)
+            .IsRequired()
+            .HasMaxLength(50);
 
-            builder.HasOne(x => x.Instituicao)
-                   .WithMany()
-                   .HasForeignKey(x => x.IdInstituicao);
+            // Configuração das chaves estrangeiras
+
+            builder.HasOne(d => d.Fornecedor)
+                .WithMany()
+                .HasForeignKey(d => d.IdFornecedor)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(d => d.Instituicao)
+                .WithMany()
+                .HasForeignKey(d => d.IdInstituicao)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Inserções de teste
             builder.HasData(

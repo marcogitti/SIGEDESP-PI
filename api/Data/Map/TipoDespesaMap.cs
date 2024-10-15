@@ -9,13 +9,19 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<TipoDespesaModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Descricao).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.SolicitaUC).IsRequired();
+
+            builder.Property(x => x.Descricao)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(x => x.SolicitaUC)
+                .IsRequired();
 
             // Definindo a chave estrangeira para UnidadeMedida
-            builder.HasOne(x => x.UnidadeMedida)
-                   .WithMany()
-                   .HasForeignKey(x => x.IdUnidadeMedida);
+            builder.HasOne(d => d.UnidadeMedida)
+                 .WithMany()
+                 .HasForeignKey(d => d.IdUnidadeMedida)
+                 .OnDelete(DeleteBehavior.Cascade);
 
             // Inserções de teste
             builder.HasData(

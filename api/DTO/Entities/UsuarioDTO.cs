@@ -12,7 +12,7 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O CPF do Usuario é requerido!")]
         [MinLength(11)]
         [MaxLength(11)]
-        public string Cpf { get; set; }
+        public string CPF { get; set; }
 
         [Required(ErrorMessage = "O Nome é requerido!")]
         [MinLength(1)]
@@ -22,7 +22,7 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O RG é requerido!")]
         [MinLength(7)]
         [MaxLength(12)]
-        public string Rg {  get; set; }
+        public string RG {  get; set; }
 
         [Required(ErrorMessage = "O Logradouro é requerido!")]
         [MinLength(1)]
@@ -47,7 +47,7 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O CEP é requerido!")]
         [MinLength(8)]
         [MaxLength(8)]
-        public string Cep { get; set; }
+        public string CEP { get; set; }
 
         [Required(ErrorMessage = "O Bairro é requerido!")]
         [MinLength(1)]

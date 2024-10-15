@@ -10,20 +10,22 @@ namespace api.Data.Map
         {
             builder.HasKey(x => x.Id);
 
-            // Definir AnoOrcamento como int ou string, removendo HasMaxLength
-            builder.Property(x => x.AnoOrcamento).IsRequired();
+            builder.Property(x => x.AnoOrcamento)
+                .IsRequired();
 
-            // Definir ValorOrcamento como double
-            builder.Property(x => x.ValorOrcamento).IsRequired();
+            builder.Property(x => x.ValorOrcamento)
+                .IsRequired();
 
             // Definir as chaves estrangeiras para Instituicao e TipoDespesa
-            builder.HasOne(x => x.Instituicao)
-                   .WithMany()
-                   .HasForeignKey(x => x.IdInstituicao);
+            builder.HasOne(d => d.Instituicao)
+                .WithMany()
+                .HasForeignKey(d => d.IdInstituicao)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(x => x.TipoDespesa)
-                   .WithMany()
-                   .HasForeignKey(x => x.IdTipoDespesa);
+            builder.HasOne(d => d.TipoDespesa)
+                .WithMany()
+                .HasForeignKey(d => d.IdTipoDespesa)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Inserções de teste
             builder.HasData(

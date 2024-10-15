@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Repositorios.Interfaces;
+using api.DTO.Entities;
+using AutoMapper;
 using api.Models.Enum;
 
 namespace api.Repositorios
@@ -9,51 +11,67 @@ namespace api.Repositorios
     public class TipoDespesaRepositorio : ITipoDespesaRepositorio
     {
         private readonly SigedespDBContex _dbContext;
-        public TipoDespesaRepositorio(SigedespDBContex sigedespDBContex) 
+        private readonly IMapper _mapper;
+
+        public TipoDespesaRepositorio(SigedespDBContex sigedespDBContex, IMapper mapper)
         {
             _dbContext = sigedespDBContex;
+            _mapper = mapper;  // Injeta o AutoMapper
         }
 
-        public async Task<TipoDespesaModel> BuscarPorId(int id)
+        public async Task<TipoDespesaDTO> BuscarPorId(int id)
         {
-           return await _dbContext.TipoDespesa.FirstOrDefaultAsync(x => x.Id == id);
+            var tipodespesa = await _dbContext.TipoDespesa.AsNoTracking()
+                .Include(d => d.UnidadeMedida)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return _mapper.Map<TipoDespesaDTO>(tipodespesa);  // Usa o AutoMapper para mapear para o DTO
         }
 
-        public async Task<List<TipoDespesaModel>> BuscarTodosTipoDespesa()
+        public async Task<List<TipoDespesaDTO>> BuscarTodosTipoDespesa()
         {
-           return await _dbContext.TipoDespesa.ToListAsync();
+            var tipodespesas = await _dbContext.TipoDespesa.AsNoTracking()
+                .Include(d => d.UnidadeMedida)
+                .ToListAsync(); // Alterado para ToListAsync()
+
+            return _mapper.Map<List<TipoDespesaDTO>>(tipodespesas); // Mapeia a lista para TipoDespesaDTO
         }
 
-        public async Task<TipoDespesaModel> Adicionar(TipoDespesaModel tipoDespesa)
+        public async Task<TipoDespesaModel> Adicionar(TipoDespesaModel tipodespesa)
         {
-            if (!Enum.IsDefined(typeof(EnumSolicitaUCModel), tipoDespesa.SolicitaUC))
+            if (!Enum.IsDefined(typeof(EnumSolicitaUCModel), tipodespesa.SolicitaUC))
             {
-                throw new ArgumentException("Tipo de unidade consumidora inválido");
+                throw new ArgumentException("Solicita Unidade Consumidora inválido");
             }
 
-            await _dbContext.TipoDespesa.AddAsync(tipoDespesa);
-           await _dbContext.SaveChangesAsync();
+            await _dbContext.TipoDespesa.AddAsync(tipodespesa);
+            await _dbContext.SaveChangesAsync();
 
-            return tipoDespesa;
+            return tipodespesa;
         }
 
-        public async Task<TipoDespesaModel> Atualizar(TipoDespesaModel tipoDespesa)
+        public async Task<TipoDespesaModel> Atualizar(TipoDespesaModel tipodespesa)
         {
-            _dbContext.Entry(tipoDespesa).State = EntityState.Modified;
+            var tipodespesaExistente = await _dbContext.TipoDespesa.AsNoTracking().FirstOrDefaultAsync(d => d.Id == tipodespesa.Id);
+            if (tipodespesaExistente == null)
+            {
+                throw new Exception($"Tipo Despesa para o ID: {tipodespesa.Id} não foi encontrado no banco de dados");
+            }
+
+            _dbContext.Entry(tipodespesa).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
-            return tipoDespesa;
+            return tipodespesa;
         }
 
         public async Task<bool> Apagar(int id)
         {
-            TipoDespesaModel tipoDespesaPorId = await BuscarPorId(id);
-
-            if (tipoDespesaPorId == null)
+            var tipodespesaPorId = await _dbContext.TipoDespesa.FindAsync(id);
+            if (tipodespesaPorId == null)
             {
                 throw new Exception($"Tipo Despesa para o ID: {id} não foi encontrado no banco de dados");
             }
 
-            _dbContext.TipoDespesa.Remove(tipoDespesaPorId);
+            _dbContext.TipoDespesa.Remove(tipodespesaPorId);
             await _dbContext.SaveChangesAsync();
             return true;
         }

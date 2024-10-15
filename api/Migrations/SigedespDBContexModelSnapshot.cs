@@ -22,6 +22,50 @@ namespace api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("api.Models.AuditoriaModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("auditoriaid");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("data");
+
+                    b.Property<string>("Hora")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hora");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer")
+                        .HasColumnName("idusuario");
+
+                    b.Property<string>("NomeEntidade")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("nomeentidade");
+
+                    b.Property<string>("NovosValores")
+                        .HasColumnType("text")
+                        .HasColumnName("novosvalores");
+
+                    b.Property<string>("Operacao")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("operacao");
+
+                    b.Property<string>("ValoresAntigos")
+                        .HasColumnType("text")
+                        .HasColumnName("valoresantigos");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("auditoria");
+                });
+
             modelBuilder.Entity("api.Models.DespesaModel", b =>
                 {
                     b.Property<int>("Id")
@@ -224,23 +268,23 @@ namespace api.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("CEP")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
+
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)")
+                        .HasColumnName("cnpj");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("character varying(25)")
                         .HasColumnName("cidade");
-
-                    b.Property<string>("Cnpj")
-                        .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("character varying(14)")
-                        .HasColumnName("cnpj");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -297,9 +341,9 @@ namespace api.Migrations
                         {
                             Id = 1,
                             Bairro = "Centro",
-                            Cep = "12345678",
+                            CEP = "12345678",
+                            CNPJ = "12345678000195",
                             Cidade = "Jales",
-                            Cnpj = "12345678000195",
                             Email = "contato@sabesp.com",
                             Estado = "São Paulo",
                             Logradouro = "Rua das Inovações",
@@ -313,9 +357,9 @@ namespace api.Migrations
                         {
                             Id = 2,
                             Bairro = "Jardim América",
-                            Cep = "87654321",
+                            CEP = "87654321",
+                            CNPJ = "98765432000190",
                             Cidade = "Jales",
-                            Cnpj = "98765432000190",
                             Email = "contatos@elektro.com",
                             Estado = "São Paulo",
                             Logradouro = "Avenida Brasil",
@@ -342,23 +386,23 @@ namespace api.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("CEP")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
 
-                    b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)")
-                        .HasColumnName("cidade");
-
-                    b.Property<string>("Cnpj")
+                    b.Property<string>("CNPJ")
                         .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("character varying(14)")
                         .HasColumnName("cnpj");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("cidade");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -368,8 +412,8 @@ namespace api.Migrations
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("estado");
 
                     b.Property<int>("IdSecretaria")
@@ -391,6 +435,12 @@ namespace api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("nome");
+
+                    b.Property<string>("NomeRazaoSocial")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nomerazaosocial");
 
                     b.Property<string>("Numero")
                         .IsRequired()
@@ -414,12 +464,6 @@ namespace api.Migrations
                     b.Property<int?>("TipoInstituicaoModelId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("nomeRazaoSocial")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("nomerazaosocial");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdSecretaria");
@@ -437,37 +481,37 @@ namespace api.Migrations
                         {
                             Id = 1,
                             Bairro = "Centro",
-                            Cep = "12345678",
+                            CEP = "12345678",
+                            CNPJ = "12345678000195",
                             Cidade = "Jales",
-                            Cnpj = "12345678000195",
                             Email = "contato@escolaelzapirro@gamil.com",
                             Estado = "São Paulo",
                             IdSecretaria = 2,
                             IdTipoInstituicao = 4,
                             Logradouro = "Rua dos Educadores",
                             Nome = "Elza Pirro",
+                            NomeRazaoSocial = "Elza Pirro Vianna",
                             Numero = "100",
                             Situacao = 1,
-                            Telefone = "11987654321",
-                            nomeRazaoSocial = "Elza Pirro Vianna"
+                            Telefone = "11987654321"
                         },
                         new
                         {
                             Id = 2,
                             Bairro = "Jardim América",
-                            Cep = "87654321",
+                            CEP = "87654321",
+                            CNPJ = "98765432000190",
                             Cidade = "Jales",
-                            Cnpj = "98765432000190",
                             Email = "contato@centrosaude.sp.gov.br",
                             Estado = "São Paulo",
                             IdSecretaria = 1,
                             IdTipoInstituicao = 5,
                             Logradouro = "Avenida da Saúde",
                             Nome = "ESF JACB",
+                            NomeRazaoSocial = "Dr Luis Ernesto Sandi Mori ",
                             Numero = "200",
                             Situacao = 0,
-                            Telefone = "21987654321",
-                            nomeRazaoSocial = "Dr Luis Ernesto Sandi Mori "
+                            Telefone = "21987654321"
                         });
                 });
 
@@ -548,23 +592,23 @@ namespace api.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("CEP")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
+
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)")
+                        .HasColumnName("cnpj");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("character varying(25)")
                         .HasColumnName("cidade");
-
-                    b.Property<string>("Cnpj")
-                        .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("character varying(14)")
-                        .HasColumnName("cnpj");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -596,6 +640,12 @@ namespace api.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("nome");
 
+                    b.Property<string>("NomeRazaoSocial")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nomerazaosocial");
+
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -612,12 +662,6 @@ namespace api.Migrations
                         .HasColumnType("character varying(11)")
                         .HasColumnName("telefone");
 
-                    b.Property<string>("nomeRazaoSocial")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("nomerazaosocial");
-
                     b.HasKey("Id");
 
                     b.ToTable("secretaria");
@@ -627,52 +671,52 @@ namespace api.Migrations
                         {
                             Id = 1,
                             Bairro = "Centro",
-                            Cep = "12345678",
+                            CEP = "12345678",
+                            CNPJ = "12345678000195",
                             Cidade = "Jales",
-                            Cnpj = "12345678000195",
                             Descricao = "Secretaria de Saúde",
                             Email = "saude@prefeitura.com",
                             Estado = "São Paulo",
                             Logradouro = "Rua Central",
                             Nome = "Sec. Saúde",
+                            NomeRazaoSocial = "Prefeitura Municipal",
                             Numero = "100",
                             Situacao = 1,
-                            Telefone = "11987654321",
-                            nomeRazaoSocial = "Prefeitura Municipal"
+                            Telefone = "11987654321"
                         },
                         new
                         {
                             Id = 2,
                             Bairro = "Jardim Paulista",
-                            Cep = "87654321",
+                            CEP = "87654321",
+                            CNPJ = "98765432000190",
                             Cidade = "Jales",
-                            Cnpj = "98765432000190",
                             Descricao = "Secretaria de Educação",
                             Email = "educacao@prefeitura.com",
                             Estado = "São Paulo",
                             Logradouro = "Avenida da Cultura",
                             Nome = "Sec. Educação",
+                            NomeRazaoSocial = "Prefeitura Municipal",
                             Numero = "200",
                             Situacao = 1,
-                            Telefone = "21987654321",
-                            nomeRazaoSocial = "Prefeitura Municipal"
+                            Telefone = "21987654321"
                         },
                         new
                         {
                             Id = 3,
                             Bairro = "Vila Nova",
-                            Cep = "65432187",
+                            CEP = "65432187",
+                            CNPJ = "23456789000188",
                             Cidade = "Jales",
-                            Cnpj = "23456789000188",
                             Descricao = "Secretaria de Obras",
                             Email = "obras@prefeitura.com",
                             Estado = "São Paulo",
                             Logradouro = "Rua das Construções",
                             Nome = "Sec. Obras",
+                            NomeRazaoSocial = "Prefeitura Municipal",
                             Numero = "300",
                             Situacao = 0,
-                            Telefone = "31987654321",
-                            nomeRazaoSocial = "Prefeitura Municipal"
+                            Telefone = "31987654321"
                         });
                 });
 
@@ -785,8 +829,8 @@ namespace api.Migrations
 
                     b.Property<string>("CodigoUC")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("unidadeconsumidora");
 
                     b.Property<int?>("FornecedorModelId")
@@ -911,23 +955,23 @@ namespace api.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("CEP")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
+                        .HasColumnName("cpf");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("character varying(25)")
                         .HasColumnName("cidade");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)")
-                        .HasColumnName("cpf");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -965,7 +1009,7 @@ namespace api.Migrations
                         .HasColumnType("character varying(15)")
                         .HasColumnName("numero");
 
-                    b.Property<string>("Rg")
+                    b.Property<string>("RG")
                         .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("character varying(12)")
@@ -994,16 +1038,16 @@ namespace api.Migrations
                         {
                             Id = 1,
                             Bairro = "Centro",
-                            Cep = "12345678",
+                            CEP = "12345678",
+                            CPF = "12345678901",
                             Cidade = "Jales",
-                            Cpf = "12345678901",
                             Email = "joao.silva@gmail.com",
                             Estado = "São Paulo",
                             Logradouro = "Rua A",
                             Matricula = "20240001",
                             Nome = "João Silva",
                             Numero = "10",
-                            Rg = "123456789",
+                            RG = "123456789",
                             Senha = "senha123",
                             Situacao = 1,
                             TipoUsuario = 0
@@ -1012,16 +1056,16 @@ namespace api.Migrations
                         {
                             Id = 2,
                             Bairro = "Centro",
-                            Cep = "87654321",
+                            CEP = "87654321",
+                            CPF = "98765432100",
                             Cidade = "Jales",
-                            Cpf = "98765432100",
                             Email = "maria.souza@example.com",
                             Estado = "São Paulo",
                             Logradouro = "Avenida B",
                             Matricula = "20240002",
                             Nome = "Maria Souza",
                             Numero = "20",
-                            Rg = "987654321",
+                            RG = "987654321",
                             Senha = "senha456",
                             Situacao = 0,
                             TipoUsuario = 1
@@ -1030,16 +1074,16 @@ namespace api.Migrations
                         {
                             Id = 3,
                             Bairro = "Nova York",
-                            Cep = "87654330",
+                            CEP = "87654330",
+                            CPF = "98785432100",
                             Cidade = "Jales",
-                            Cpf = "98785432100",
                             Email = "rafael.andrade@gmail.com",
                             Estado = "São Paulo",
                             Logradouro = "Avenida C",
                             Matricula = "20240003",
                             Nome = "Rafael Andrade",
                             Numero = "30",
-                            Rg = "787654321",
+                            RG = "787654321",
                             Senha = "senha789",
                             Situacao = 1,
                             TipoUsuario = 2
@@ -1125,7 +1169,7 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Models.TipoInstituicaoModel", "tipoInstituicao")
+                    b.HasOne("api.Models.TipoInstituicaoModel", "TipoInstituicao")
                         .WithMany()
                         .HasForeignKey("IdTipoInstituicao")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1141,7 +1185,7 @@ namespace api.Migrations
 
                     b.Navigation("Secretaria");
 
-                    b.Navigation("tipoInstituicao");
+                    b.Navigation("TipoInstituicao");
                 });
 
             modelBuilder.Entity("api.Models.OrcamentoModel", b =>
