@@ -91,17 +91,18 @@ class ScaffoldComp extends StatelessWidget {
                           runSpacing: 8,
                           spacing: 8,
                           children: [
-                            const ListTile(
-                              leading: Icon(
+                            ListTile(
+                              leading: const Icon(
                                 Icons.home,
                                 color: Colors.white,
                               ),
-                              title: Text(
+                              title: const Text(
                                 "Tela Inicial",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
+                              onTap: () => Modular.to.navigate("/"),
                             ),
                             const Divider(),
                             ExpansionTile(
@@ -137,7 +138,9 @@ class ScaffoldComp extends StatelessWidget {
                                         'Tipo Despesa',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/tipoDeDespesas');
+                                      },
                                     ),
                                     ListTile(
                                       title: const Text(

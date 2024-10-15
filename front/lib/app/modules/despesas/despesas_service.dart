@@ -5,7 +5,7 @@ class DespesasServiceImpl extends IService<DespesaModel> {
   DespesasServiceImpl()
       : super(
           path: 'despesa',
-          toJson: DespesaModel.new,
-          fromMap: DespesaModel.new,
+          toJson: DespesaModel.toJson,
+          fromMap: DespesaModel.fromMap,
         );
 }

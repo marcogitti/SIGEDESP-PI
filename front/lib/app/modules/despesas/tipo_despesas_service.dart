@@ -6,6 +6,6 @@ class TipoDespesasServiceImpl extends IService<TipoDespesasModel> {
       : super(
           path: 'tipo/despesa',
           fromMap: TipoDespesasModel.fromMap,
-          toJson: (TipoDespesasModel model) => TipoDespesasModel.toJson(model),
+          toJson: TipoDespesasModel.toJson,
         );
 }

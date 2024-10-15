@@ -269,7 +269,7 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                     selectedInstituicao = value;
                   },
                 ),
-                MyDropDownGetComp<TipoDespesasModel, TipoDeDespesasServiceImpl>(
+                MyDropDownGetComp<TipoDespesasModel, TipoDespesasServiceImpl>(
                   labelText: 'Fornecedor',
                   initValue: selectedTipoDespesa,
                   onChanged: (value) {
@@ -309,6 +309,7 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                     setState(() {});
                   }, (failure) {
                     //snack bar
+                    // ignore: avoid_print
                     print('erro$failure');
                   });
                 }

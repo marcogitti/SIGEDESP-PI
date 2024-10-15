@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/instituicao/instituicao_page.dart';
 import 'package:front/app/modules/instituicao/instituicao_service.dart';
 import 'package:front/app/modules/instituicao/tipo_instituicao_page.dart';
@@ -15,14 +16,14 @@ import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_page.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_service.dart';
 import 'package:front/app/providers/provider_theme.dart';
-// import '../modules/despesas/tipo_despesas_page.dart';
+import '../modules/despesas/tipo_despesas_page.dart';
 import '../modules/login/usuario_page.dart';
 
 class AppModule extends Module {
   @override
   void binds(Injector i) {
     i.addLazySingleton(SecretariaServiceImpl.new);
-    // i.addLazySingleton(TipoDeDespesasServiceImpl.new);
+    i.addLazySingleton(TipoDespesasServiceImpl.new);
     i.addLazySingleton(DespesasServiceImpl.new);
     i.addLazySingleton(TipoInstituicaoServiceImpl.new);
     i.addLazySingleton(InstituicaoServiceImpl.new);
@@ -36,10 +37,10 @@ class AppModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (_) => const HomePage());
+    r.child('/', child: (_) => HomePage());
     r.child('/instituicaoPage', child: (_) => const InstituicaoPage());
     r.child('/tipoInstituicaoPage', child: (_) => const TipoInstituicao());
-    r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesas());
+    r.child('/tipoDeDespesas', child: (_) => const TipoDeDespesasPage());
     r.child('/unidadeDeMedida', child: (_) => const UnidadeDeMedidaPage());
     r.child('/unidadeConsumidora',
         child: (_) => const UnidadeConsumidoraPage());

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
@@ -107,80 +108,82 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                     return const Text("Erro");
                   }
 
-                  if (snapshot.data == null) {
-                    return Container();
-                  }
+                  final tp =
+                      (snapshot.data ?? []).cast<TipoInstituicaoModel?>();
 
-                  final tp = (snapshot.data ?? []) as List;
-
-                  return DataTable(
-                    border: TableBorder.all(),
-                    columns: const [
-                      DataColumn(label: Text('Nome')),
-                      DataColumn(label: Text('Ações')),
-                    ],
-                    rows: tp
-                        .map((e) {
-                          return DataRow(
-                            cells: [
-                              DataCell(
-                                Text(e?.descricao.toString() ?? ''),
-                              ),
-                              DataCell(Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Color(0xFF0044FF),
+                  return SingleChildScrollView(
+                    dragStartBehavior: DragStartBehavior.start,
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      border: TableBorder.all(),
+                      columns: const [
+                        DataColumn(label: Text('Nome')),
+                        DataColumn(label: Text('Ações')),
+                      ],
+                      rows: tp
+                          .map((e) {
+                            return DataRow(
+                              cells: [
+                                DataCell(
+                                  Text(e?.descricao.toString() ?? ''),
+                                ),
+                                DataCell(Row(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        color: Color(0xFF0044FF),
+                                      ),
+                                      onPressed: () async {
+                                        await modalCadastrar(e);
+                                      },
                                     ),
-                                    onPressed: () async {
-                                      await modalCadastrar(e);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Color(0xFFF44336),
-                                    ),
-                                    onPressed: () async {
-                                      await showDialog<bool>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Confirmar exclusão'),
-                                            content: const Text(
-                                                'Tem certeza que deseja excluir este item?'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text('Cancelar'),
-                                                onPressed: () {
-                                                  Modular.to.pop(false);
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text('Confirmar'),
-                                                onPressed: () async {
-                                                  Modular.to.pop();
-                                                  await service
-                                                      .deleteData(e!.id);
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Color(0xFFF44336),
+                                      ),
+                                      onPressed: () async {
+                                        await showDialog<bool>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                  'Confirmar exclusão'),
+                                              content: const Text(
+                                                  'Tem certeza que deseja excluir este item?'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text('Cancelar'),
+                                                  onPressed: () {
+                                                    Modular.to.pop(false);
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child:
+                                                      const Text('Confirmar'),
+                                                  onPressed: () async {
+                                                    Modular.to.pop();
+                                                    await service
+                                                        .deleteData(e!.id);
 
-                                                  setState(() {});
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              )),
-                            ],
-                          );
-                        })
-                        .toList()
-                        .cast<DataRow>(),
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            );
+                          })
+                          .toList()
+                          .cast<DataRow>(),
+                    ),
                   );
                 },
               ),

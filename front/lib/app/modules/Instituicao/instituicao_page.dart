@@ -39,214 +39,179 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldComp(
-        body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ListView(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 50),
-                  child: Text(
-                    "Cadastro de Instituição",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 30),
+              child: Text(
+                "Cadastro de Instituição",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Buscar Instituição',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: _controller,
+                ),
+                const SizedBox(height: 20),
+                Row(
                   children: [
-                    TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Buscar Instituição',
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: _controller,
+                    ElevatedButton(
+                      onPressed: () async {
+                        await modalCadastrar();
+                      },
+                      child: const Text('Cadastrar Nova Instituição'),
                     ),
-                    const SizedBox(height: 30),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            await modalCadastrar();
-                          },
-                          child: const Text('Cadastrar Nova Instituição'),
-                        ),
-                        const SizedBox(width: 15),
-                        const Text("Mostrar: "),
-                        DropdownButton<String>(
-                          borderRadius: BorderRadius.circular(10),
-                          elevation: 10,
-                          items: <String>['Opção 1', 'Opção 2', 'Opção 3']
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {},
-                        ),
-                        const SizedBox(width: 20),
-                      ],
+                    const SizedBox(width: 10),
+                    const Text("Mostrar: "),
+                    DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(10),
+                      elevation: 10,
+                      items: <String>['Opção 1', 'Opção 2', 'Opção 3']
+                          .map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {},
                     ),
+                    const SizedBox(width: 15),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 60),
-                  child: FutureBuilder(
-                    future: service.getAll().getOrNull(),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.none) {
-                        return const Text("sem internet");
-                      }
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40), // Ajuste aqui
+              child: FutureBuilder(
+                future: service.getAll().getOrNull(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return const Text("sem internet");
+                  }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: SizedBox(
-                            width: 26,
-                            height: 26,
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SizedBox(
+                        width: 26,
+                        height: 26,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
 
-                      if (snapshot.hasError) {
-                        return const Text("Erro");
-                      }
+                  if (snapshot.hasError) {
+                    return const Text("Erro");
+                  }
 
-                      final tp =
-                          (snapshot.data ?? []).cast<InstituicaoModel?>();
-                      return SingleChildScrollView(
-                        dragStartBehavior: DragStartBehavior.start,
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          border: TableBorder.all(),
-                          columns: const [
-                            DataColumn(label: Text('Nome')),
-                            DataColumn(label: Text('Nome Razão Social')),
-                            DataColumn(label: Text('CNPJ')),
-                            DataColumn(label: Text('Email')),
-                            DataColumn(label: Text('Telefone')),
-                            DataColumn(label: Text('CEP')),
-                            DataColumn(label: Text('Numero')),
-                            DataColumn(label: Text('Logradouro')),
-                            DataColumn(label: Text('Bairro')),
-                            DataColumn(label: Text('Cidade')),
-                            DataColumn(label: Text('Estado')),
-                            DataColumn(label: Text('Situação')),
-                            DataColumn(label: Text('Secretaria')),
-                            DataColumn(label: Text('Tipo Instituição')),
-                            DataColumn(label: Text('Ação')),
-                          ],
-                          rows: tp
-                              .map((e) {
-                                return DataRow(cells: [
-                                  DataCell(
-                                    Text(e?.nome.toString() ?? ''),
+                  final tp = (snapshot.data ?? []).cast<InstituicaoModel?>();
+                  return SingleChildScrollView(
+                    dragStartBehavior: DragStartBehavior.start,
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      border: TableBorder.all(),
+                      columns: const [
+                        DataColumn(label: Text('Nome')),
+                        DataColumn(label: Text('CNPJ')),
+                        DataColumn(label: Text('Situação')),
+                        DataColumn(label: Text('Secretaria')),
+                        DataColumn(label: Text('Tipo Instituição')),
+                        DataColumn(label: Text('Ação')),
+                      ],
+                      rows: tp
+                          .map((e) {
+                            return DataRow(cells: [
+                              DataCell(
+                                Text(e?.nome.toString() ?? ''),
+                              ),
+                              DataCell(
+                                Text(e?.cnpj.toString() ?? ''),
+                              ),
+                              DataCell(
+                                Text(e?.situacao.toString() ?? ''),
+                              ),
+                              DataCell(
+                                Text(e?.idSecretaria.toString() ?? ''),
+                              ),
+                              DataCell(
+                                Text(e?.idTipoInstituicao.toString() ?? ''),
+                              ),
+                              DataCell(Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Color(0xFF0044FF),
+                                    ),
+                                    onPressed: () async {
+                                      await modalCadastrar(e);
+                                    },
                                   ),
-                                  DataCell(
-                                    Text(e?.nomeRazaoSocial.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.cnpj.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.email.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.telefone.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.cep.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.numero.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.logradouro.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.bairro.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.cidade.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.estado.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.situacao.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.idSecretaria.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.idTipoInstituicao.toString() ?? ''),
-                                  ),
-                                  DataCell(Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: Color(0xFF0044FF),
-                                        ),
-                                        onPressed: () async {
-                                          await modalCadastrar(e);
-                                        },
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Color(0xFFF44336),
-                                        ),
-                                        onPressed: () async {
-                                          await showDialog<bool>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text(
-                                                    'Confirmar exclusão'),
-                                                content: const Text(
-                                                    'Tem certeza que deseja excluir este item?'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    child:
-                                                        const Text('Cancelar'),
-                                                    onPressed: () {
-                                                      Modular.to.pop(false);
-                                                    },
-                                                  ),
-                                                  TextButton(
-                                                    child:
-                                                        const Text('Confirmar'),
-                                                    onPressed: () async {
-                                                      Modular.to.pop();
-                                                      await service
-                                                          .deleteData(e!.id);
-
-                                                      setState(() {});
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFF44336),
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog<bool>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Confirmar exclusão'),
+                                            content: const Text(
+                                                'Tem certeza que deseja excluir este item?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cancelar'),
+                                                onPressed: () {
+                                                  Modular.to.pop(false);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: const Text('Confirmar'),
+                                                onPressed: () async {
+                                                  Modular.to.pop();
+                                                  if (e != null &&
+                                                      e.id != null) {
+                                                    await service
+                                                        .deleteData(e.id!);
+                                                  }
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ],
                                           );
                                         },
-                                      ),
-                                    ],
-                                  )),
-                                ]);
-                              })
-                              .toList()
-                              .cast<DataRow>(),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            )));
+                                      );
+                                    },
+                                  ),
+                                ],
+                              )),
+                            ]);
+                          })
+                          .toList()
+                          .cast<DataRow>(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> modalCadastrar([InstituicaoModel? instituicao]) async {
@@ -485,6 +450,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     setState(() {});
                   }, (failure) {
                     //snack bar
+                    // ignore: avoid_print
                     print('erro$failure');
                   });
                 }
