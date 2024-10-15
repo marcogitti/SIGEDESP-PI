@@ -2,13 +2,13 @@ import 'dart:convert';
 
 class UnidadeDeMedidaModel {
   final int? id;
-  final String descricao;
-  final String abreviatura;
+  final String? descricao;
+  final String? abreviatura;
 
   UnidadeDeMedidaModel({
     this.id,
-    required this.descricao,
-    required this.abreviatura,
+     this.descricao,
+     this.abreviatura,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,7 +19,8 @@ class UnidadeDeMedidaModel {
     };
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(UnidadeDeMedidaModel value) =>
+      json.encode(value.toMap());
 
   factory UnidadeDeMedidaModel.fromMap(Map<String, dynamic> map) {
     return UnidadeDeMedidaModel(
@@ -29,6 +30,17 @@ class UnidadeDeMedidaModel {
     );
   }
 
-  factory UnidadeDeMedidaModel.fromJson(String source) =>
+ factory UnidadeDeMedidaModel.fromJson(String source) =>
       UnidadeDeMedidaModel.fromMap(json.decode(source) as Map<String, dynamic>);
+ UnidadeDeMedidaModel copyWith({
+    int? id,
+    String? descricao,
+    String? abreviatura,
+  }) {
+    return UnidadeDeMedidaModel(
+      id: id ?? this.id,
+      descricao: descricao ?? descricao,
+      abreviatura: abreviatura ?? abreviatura,
+    );
+  }
 }
