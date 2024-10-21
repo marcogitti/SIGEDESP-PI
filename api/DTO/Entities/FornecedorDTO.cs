@@ -14,12 +14,12 @@ namespace api.DTO.Entities
         public string NomeFantasia { get; set; }
 
         [Required(ErrorMessage = "A Situação é requerida!")]
-        public SituacaoEnum Situacao { get; set; }
+        public EnumSituacaoModel Situacao { get; set; }
 
         [Required(ErrorMessage = "O CNPJ é requerido!")]
         [MinLength(14)]
         [MaxLength(14)]
-        public string Cnpj { get; set; }
+        public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "O Nome é requerido!")]
         [MinLength(1)]
@@ -44,7 +44,7 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O CEP é requerido!")]
         [MinLength(8)]
         [MaxLength(8)]
-        public string Cep { get; set; }
+        public string CEP { get; set; }
 
         [Required(ErrorMessage = "O Telefone é requerido!")]
         [MinLength(11)]

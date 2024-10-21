@@ -21,7 +21,7 @@ public class OrcamentoModel
     [Column("valororcamento")]
     public double ValorOrcamento { get; set; }
 
-    /*Código para receber chaves estrangeiras de tipoDespesa e insituição*/
+    /*Código para receber chaves estrangeiras de tipoDespesa*/
     [JsonIgnore]
     public TipoDespesaModel? TipoDespesa { get; set; }
 
@@ -29,10 +29,16 @@ public class OrcamentoModel
     [ForeignKey("tipodespesaid")]
     public int IdTipoDespesa { get; set; }
 
+    /*Código para receber chaves estrangeiras de instituição*/
     [JsonIgnore]
     public InstituicaoModel? Instituicao { get; set; }
 
     [Column("instituicaoid")]
     [ForeignKey("instituicaoid")]
     public int IdInstituicao { get; set; }
+
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }
