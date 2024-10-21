@@ -46,25 +46,26 @@ namespace api.DTO.Entities
         [Required(ErrorMessage = "O Mês de Emissão é requerido!")]
         public int MesEmissao { get; set; }
 
-        [Required(ErrorMessage = "O ID de Usuário é requerido!")]
-        public int IdUsuario { get; set; }
-
-        [Required(ErrorMessage = "O ID de Fornecedor é requerido!")]
-        public int IdFornecedor { get; set; }
-
-        [Required(ErrorMessage = "O ID de Unidade Consumidora é requerido!")]
-        public int IdUnidadeConsumidora { get; set; }
-
-        [Required(ErrorMessage = "O ID de Instituição é requerido!")]
-        public int IdInstituicao { get; set; }
-
-        [Required(ErrorMessage = "O ID de Orçamento é requerido!")]
-        public int IdOrcamento { get; set; }
-
         [Required(ErrorMessage = "A Situação de Despesa é requerida!")]
         public EnumStatusDespesaModel StatusDespesa { get; set; }
 
-        [Required(ErrorMessage = "O ID de Tipo de Despesa é requerido!")]
+        // Apenas IDs para chaves estrangeiras
+        [Required(ErrorMessage = "O ID do Fornecedor é requerido!")]
+        public int IdFornecedor { get; set; }
+
+        [Required(ErrorMessage = "O ID da Unidade Consumidora é requerido!")]
+        public int IdUnidadeConsumidora { get; set; }
+
+        [Required(ErrorMessage = "O ID da Instituição é requerido!")]
+        public int IdInstituicao { get; set; }
+
+        [Required(ErrorMessage = "O ID do Orçamento é requerido!")]
+        public int IdOrcamento { get; set; }
+
+        [Required(ErrorMessage = "O ID do Tipo de Despesa é requerido!")]
         public int IdTipoDespesa { get; set; }
+
+        [Required(ErrorMessage = "O ID do Usuário é requerido!")]
+        public int IdUsuario { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace api.DTO.Entities
 {
     public class UsuarioDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "O CPF do Usuario é requerido!")]
         [MinLength(11)]
