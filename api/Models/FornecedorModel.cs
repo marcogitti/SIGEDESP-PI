@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using api.Models.Enum;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,11 +19,13 @@ public class FornecedorModel
     [Column("nomefantasia")]
     public string NomeFantasia { get; set; }
 
-    [Column("situacao")]
-    public string Situacao { get; set; }
+    /*Código para receber enum de Situação*/
+    [Column("situcao")]
+    [EnumDataType(typeof(EnumSituacaoModel))]
+    public EnumSituacaoModel Situacao { get; set; }
 
     [Column("cnpj")]
-    public string Cnpj { get; set; }
+    public string CNPJ { get; set; }
 
     [Column("nome")]
     public string Nome { get; set; }
@@ -31,19 +34,13 @@ public class FornecedorModel
     public string Logradouro { get; set; }
 
     [Column("numero")]
-    public int Numero { get; set; }
+    public string Numero { get; set; }
 
     [Column("bairro")]
     public string Bairro { get; set; }
 
-    [Column("rua")]
-    public string Rua { get; set; }
-
     [Column("cep")]
-    public int Cep { get; set; }
-
-    [Column("nomerazaosocial")]
-    public string nomeRazaoSocial { get; set; }
+    public string CEP { get; set; }
 
     [Column("telefone")]
     public string Telefone { get; set; }
@@ -51,7 +48,17 @@ public class FornecedorModel
     [Column("email")]
     public string Email { get; set; }
 
+    [Column("cidade")]
+    public string Cidade { get; set; }
+
+    [Column("estado")]
+    public string Estado { get; set; }
+
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

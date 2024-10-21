@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/scaffold_comp.dart';
-import 'package:front/app/modules/Instituicao/tipo_instituicao_model.dart';
-import 'package:front/app/modules/Instituicao/tipo_instituicao_service.dart';
+import 'package:front/app/components/my_scaffold_comp.dart';
+import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
+import 'package:front/app/modules/instituicao/tipo_instituicao_service.dart';
 import 'package:result_dart/result_dart.dart';
 
 class TipoInstituicao extends StatefulWidget {
@@ -107,13 +107,16 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                     return const Text("Erro");
                   }
 
-                  final tp =
-                      (snapshot.data ?? []).cast<TipoInstituicaoModel?>();
+                  if (snapshot.data == null) {
+                    return Container();
+                  }
+
+                  final tp = (snapshot.data ?? []) as List;
 
                   return DataTable(
                     border: TableBorder.all(),
                     columns: const [
-                      DataColumn(label: Text('Descrição')),
+                      DataColumn(label: Text('Nome')),
                       DataColumn(label: Text('Ações')),
                     ],
                     rows: tp
@@ -190,7 +193,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
 
   Future<void> modalCadastrar([TipoInstituicaoModel? tipoInstituicao]) async {
     bool isEdit = tipoInstituicao?.id != null;
-    TextEditingController tipoInstituicaoEditCtrl =
+    final tipoInstituicaoEditCtrl =
         TextEditingController(text: tipoInstituicao?.descricao ?? '');
 
     await showDialog(
@@ -203,7 +206,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
               TextField(
                 controller: tipoInstituicaoEditCtrl,
                 decoration: const InputDecoration(
-                  labelText: 'Descrição',
+                  labelText: 'Nome',
                 ),
               ),
             ],
@@ -221,8 +224,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                 if (isEdit) {
                   final resp = await service.editData(
                     tipoInstituicao!
-                        .copyWith(descricao: tipoInstituicaoEditCtrl.text)
-                        .toJson(),
+                        .copyWith(descricao: tipoInstituicaoEditCtrl.text),
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();
@@ -234,7 +236,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                   final resp = await service.postData(
                     TipoInstituicaoModel(
                       descricao: tipoInstituicaoEditCtrl.text,
-                    ).toJson(),
+                    ),
                   );
                   resp.fold((success) {
                     Navigator.of(context).pop();

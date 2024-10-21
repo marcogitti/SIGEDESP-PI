@@ -8,14 +8,16 @@ class TipoInstituicaoModel {
     this.id,
     this.descricao,
   });
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      // 'id': id,
+      'id': id,
       'descricao': descricao,
     };
   }
 
-  String toJson() => json.encode(toMap());
+  static String toJson(TipoInstituicaoModel value) =>
+      json.encode(value.toMap());
 
   factory TipoInstituicaoModel.fromMap(Map<String, dynamic> map) {
     return TipoInstituicaoModel(
@@ -26,6 +28,7 @@ class TipoInstituicaoModel {
 
   factory TipoInstituicaoModel.fromJson(String source) =>
       TipoInstituicaoModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
   TipoInstituicaoModel copyWith({
     int? id,
     String? descricao,

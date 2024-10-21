@@ -17,7 +17,7 @@
 //   late IService service;
 
 //   Future<void> _saveToApi(String name) async {
-//     var url = Uri.parse('localhost:7274/api/TipoUsuario');
+//     var url = Uri.parse('localhost:5052/api/TipoUsuario');
 //     var response = await http.post(url, body: {'tipoUsuario': name});
 
 //     if (response.statusCode == 200) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:front/app/components/scaffold_comp.dart';
+import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_model.dart';
 import 'package:front/app/modules/unidade/unidade_de_medida_service.dart';
 import 'package:result_dart/result_dart.dart';
@@ -13,24 +13,18 @@ class UnidadeDeMedidaPage extends StatefulWidget {
 }
 
 class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
-  late TextEditingController _abreviatura;
-  late TextEditingController _descricao;
   late TextEditingController _controller;
-  String _currentUnidadeDeMedida = '';
   final service = Modular.get<UnidadeMedidaServiceImpl>();
 
   @override
   void initState() {
     _controller = TextEditingController();
-    _abreviatura = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _abreviatura.dispose();
-    _descricao.dispose();
     super.dispose();
   }
 
@@ -44,7 +38,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
             const Padding(
               padding: EdgeInsets.only(bottom: 50),
               child: Text(
-                "Cadastro de Unidade De Medida",
+                "Cadastro de Unidade de Medida",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -56,7 +50,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
               children: [
                 TextField(
                   decoration: const InputDecoration(
-                    hintText: 'Buscar Unidade De Medida',
+                    hintText: 'Buscar Unidade de Medida',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -69,7 +63,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                       onPressed: () async {
                         await modalCadastrar();
                       },
-                      child: const Text('Cadastrar Unidade De Medida'),
+                      child: const Text('Cadastrar Unidade de Medida'),
                     ),
                     const SizedBox(width: 15),
                     const Text("Mostrar: "),
@@ -96,7 +90,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                 future: service.getAll().getOrNull(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.none) {
-                    return const Text("sem internet");
+                    return const Text("Sem internet");
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -113,86 +107,84 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                     return const Text("Erro");
                   }
 
-                  final tp =
-                      (snapshot.data ?? []).cast<UnidadeDeMedidaModel?>();
+                  if (snapshot.data == null) {
+                    return Container();
+                  }
+
+                  final tp = (snapshot.data ?? []) as List;
 
                   return DataTable(
                     border: TableBorder.all(),
                     columns: const [
+                      DataColumn(label: Text('Nome')),
                       DataColumn(label: Text('Abreviatura')),
-                      DataColumn(label: Text('Descrição'))
+                      DataColumn(label: Text('Ações')),
                     ],
-                    rows: tp.map((e) {
-                      return DataRow(cells: [
-                        DataCell(
-                          Row(
-                            children: [
-                              Expanded(child: Text(e?.abreviatura ?? '')),
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () async {
-                                  final newText = await showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text(
-                                            'Editar Unidade De Medida'),
-                                        content: TextField(
-                                          controller: TextEditingController(
-                                              text: _currentUnidadeDeMedida),
-                                          onChanged: (value) {
-                                            _currentUnidadeDeMedida = value;
-                                          },
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .pop(_currentUnidadeDeMedida);
-                                            },
-                                            child: const Text('Salvar'),
-                                          ),
-                                        ],
+                    rows: tp
+                        .map((e) {
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Text(e?.descricao.toString() ?? ''),
+                              ),
+                              DataCell(
+                                Text(e?.abreviatura.toString() ?? ''),
+                              ),
+                              DataCell(Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Color(0xFF0044FF),
+                                    ),
+                                    onPressed: () async {
+                                      await modalCadastrar(e);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFF44336),
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog<bool>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Confirmar exclusão'),
+                                            content: const Text(
+                                                'Tem certeza que deseja excluir este item?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cancelar'),
+                                                onPressed: () {
+                                                  Modular.to.pop(false);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: const Text('Confirmar'),
+                                                onPressed: () async {
+                                                  Modular.to.pop();
+                                                  await service
+                                                      .deleteData(e!.id);
+
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () async {
-                                  final confirmDelete = await showDialog<bool>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Confirmar exclusão'),
-                                        content: const Text(
-                                            'Tem certeza que deseja excluir este item?'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Modular.to.pop(false);
-                                            },
-                                            child: const Text('Cancelar'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Modular.to.pop(true);
-                                            },
-                                            child: const Text('Confirmar'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  if (confirmDelete == true) {}
-                                },
-                              ),
+                                  ),
+                                ],
+                              )),
                             ],
-                          ),
-                        ),
-                      ]);
-                    }).toList(),
+                          );
+                        })
+                        .toList()
+                        .cast<DataRow>(),
                   );
                 },
               ),
@@ -203,24 +195,30 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
     );
   }
 
-  Future<void> modalCadastrar() async {
+  Future<void> modalCadastrar([UnidadeDeMedidaModel? unidadeDeMedida]) async {
+    bool isEdit = unidadeDeMedida?.id != null;
+    final unidadeDeMedidaDescEditCtrl =
+        TextEditingController(text: unidadeDeMedida?.descricao ?? '');
+    final unidadeDeMedidaAbreviaturaEditCtrl =
+        TextEditingController(text: unidadeDeMedida?.abreviatura ?? '');
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Cadastro de Unidade De Medida'),
+          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Unidade de Medida'),
           content: Wrap(
             children: [
               TextField(
-                controller: _abreviatura,
+                controller:  unidadeDeMedidaDescEditCtrl,
                 decoration: const InputDecoration(
-                  hintText: 'Abreviatura da Unidade De Medida',
+                  labelText: 'Nome',
                 ),
               ),
               TextField(
-                controller: _descricao,
+                controller:  unidadeDeMedidaDescEditCtrl,
                 decoration: const InputDecoration(
-                  hintText: 'Descricao da Unidade De Medida',
+                  labelText: 'Abreviatura',
                 ),
               ),
             ],
@@ -235,25 +233,41 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
             TextButton(
               child: const Text('Salvar'),
               onPressed: () async {
-                //tela load
-                final resp = await service.postData(UnidadeDeMedidaModel(
-                  abreviatura: _abreviatura.text,
-                  descricao: _descricao.text,
-                ).toJson());
-                resp.fold((success) {
-                  Navigator.of(context).pop();
-                  setState(() {});
-                }, (failure) {
-                  //snack bar
-                  print('erro');
-                });
+                if (isEdit) {
+                  final resp = await service.editData(
+                    unidadeDeMedida!
+                        .copyWith(
+                          descricao: unidadeDeMedidaDescEditCtrl.text,
+                        abreviatura: unidadeDeMedidaAbreviaturaEditCtrl.text,
+                        ),
+                  );
+                  resp.fold((success) {
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  }, (failure) {
+                    print('erro$failure');
+                  });
+                } else {
+                  final resp = await service.postData(
+                    UnidadeDeMedidaModel(
+                      descricao: unidadeDeMedidaDescEditCtrl.text,
+                      abreviatura: unidadeDeMedidaAbreviaturaEditCtrl.text,
+                    ),
+                  );
+                  resp.fold((success) {
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  }, (failure) {
+                    print('erro$failure');
+                  });
+                }
               },
             ),
           ],
         );
       },
     );
-    _abreviatura.dispose();
-    _descricao.dispose();
+    unidadeDeMedidaDescEditCtrl.dispose();
+    unidadeDeMedidaAbreviaturaEditCtrl.dispose();
   }
 }

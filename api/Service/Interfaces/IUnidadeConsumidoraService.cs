@@ -6,8 +6,8 @@ namespace api.Service.Interfaces
     {
         Task<IEnumerable<UnidadeConsumidoraDTO>> BuscarTodosUnidadeConsumidora();
         Task<UnidadeConsumidoraDTO> BuscarPorId(int id);
-        Task Adicionar(UnidadeConsumidoraDTO UnidadeConsumidoraDTO);
-        Task Atualizar(UnidadeConsumidoraDTO UnidadeConsumidoraDTO);
+        Task Adicionar(UnidadeConsumidoraAdicionarAtualizarDTO unidadeconsumidoraDTO);
+        Task Atualizar(UnidadeConsumidoraAdicionarAtualizarDTO unidadeconsumidoraDTO);
         Task Apagar(int id);
     }
 }
