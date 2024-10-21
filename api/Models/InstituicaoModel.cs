@@ -16,11 +16,13 @@ public class InstituicaoModel
     [Column("instituicaoid")]
     public int Id { get; set; }
 
-    [Column("situacao")]
-    public SituacaoEnum Situacao { get; set; }
+    /*Código para receber enum de Situação*/
+    [Column("situcao")]
+    [EnumDataType(typeof(EnumSituacaoModel))]
+    public EnumSituacaoModel Situacao { get; set; }
 
     [Column("cnpj")]
-    public string Cnpj { get; set; }
+    public string CNPJ { get; set; }
 
     [Column("nome")]
     public string Nome { get; set; }
@@ -29,19 +31,16 @@ public class InstituicaoModel
     public string Logradouro { get; set; }
 
     [Column("numero")]
-    public int Numero { get; set; }
+    public string Numero { get; set; }
 
     [Column("bairro")]
     public string Bairro { get; set; }
 
-    [Column("rua")]
-    public string Rua { get; set; }
-
     [Column("cep")]
-    public int Cep { get; set; }
+    public string CEP { get; set; }
 
     [Column("nomerazaosocial")]
-    public string nomeRazaoSocial { get; set; }
+    public string NomeRazaoSocial { get; set; }
 
     [Column("telefone")]
     public string Telefone { get; set; }
@@ -49,14 +48,21 @@ public class InstituicaoModel
     [Column("email")]
     public string Email { get; set; }
 
-    /*Código para receber chaves estrangeiras de tipoInsituicao e Secretaria*/
+    [Column("cidade")]
+    public string Cidade { get; set; }
+
+    [Column("estado")]
+    public string Estado { get; set; }
+
+    /*Código para receber chaves estrangeiras de tipoInsituicao*/
     [JsonIgnore]
-    public TipoInstituicaoModel? tipoInstituicao { get; set; }
+    public TipoInstituicaoModel? TipoInstituicao { get; set; }
 
     [Column("tipoinstituicaoid")]
     [ForeignKey("tipoinstituicaoid")]
     public int IdTipoInstituicao { get; set; }
 
+    /*Código para receber chaves estrangeiras de Secretaria*/
     [JsonIgnore]
     public SecretariaModel? Secretaria { get; set; }
 
@@ -71,4 +77,8 @@ public class InstituicaoModel
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

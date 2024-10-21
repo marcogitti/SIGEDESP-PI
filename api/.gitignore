@@ -209,6 +209,9 @@ project.lock.json
 # Visual Studio Code
 .vscode/
 
+# Visual Studio
+.vs/
+
 # Output folder used by Webpack or other FE stuff
 **/node_modules/*
 **/wwwroot/*

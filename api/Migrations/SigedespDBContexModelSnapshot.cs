@@ -22,6 +22,237 @@ namespace api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("api.Models.AuditoriaModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("auditoriaid");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("data");
+
+                    b.Property<string>("Hora")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hora");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer")
+                        .HasColumnName("idusuario");
+
+                    b.Property<string>("NomeEntidade")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("nomeentidade");
+
+                    b.Property<string>("NovosValores")
+                        .HasColumnType("text")
+                        .HasColumnName("novosvalores");
+
+                    b.Property<string>("Operacao")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("operacao");
+
+                    b.Property<string>("ValoresAntigos")
+                        .HasColumnType("text")
+                        .HasColumnName("valoresantigos");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("auditoria");
+                });
+
+            modelBuilder.Entity("api.Models.DespesaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("despesaid");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnoEmissao")
+                        .HasColumnType("integer")
+                        .HasColumnName("anoemissao");
+
+                    b.Property<string>("AnoMesConsumo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("anomesconsumo");
+
+                    b.Property<DateOnly>("DataPagamento")
+                        .HasColumnType("date")
+                        .HasColumnName("datapagamento");
+
+                    b.Property<DateOnly>("DataVencimento")
+                        .HasColumnType("date")
+                        .HasColumnName("datavencimento");
+
+                    b.Property<int?>("FornecedorModelId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdFornecedor")
+                        .HasColumnType("integer")
+                        .HasColumnName("fornecedorid");
+
+                    b.Property<int>("IdInstituicao")
+                        .HasColumnType("integer")
+                        .HasColumnName("instituicaoid");
+
+                    b.Property<int>("IdOrcamento")
+                        .HasColumnType("integer")
+                        .HasColumnName("orcamentoid");
+
+                    b.Property<int>("IdTipoDespesa")
+                        .HasColumnType("integer")
+                        .HasColumnName("tipodespesaid");
+
+                    b.Property<int>("IdUnidadeConsumidora")
+                        .HasColumnType("integer")
+                        .HasColumnName("unidadeconsumidoraid");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer")
+                        .HasColumnName("usuarioid");
+
+                    b.Property<int?>("InstituicaoModelId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MesEmissao")
+                        .HasColumnType("integer")
+                        .HasColumnName("mesemissao");
+
+                    b.Property<string>("NumeroControle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("numerocontrole");
+
+                    b.Property<string>("NumeroDocumento")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("numerodocumento");
+
+                    b.Property<int?>("OrcamentoModelId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("QuantidadeConsumida")
+                        .HasColumnType("double precision")
+                        .HasColumnName("quantidadeconsumida");
+
+                    b.Property<int>("SemestreEmissao")
+                        .HasColumnType("integer")
+                        .HasColumnName("semestreemissao");
+
+                    b.Property<int>("Situacao")
+                        .HasColumnType("integer")
+                        .HasColumnName("situcao");
+
+                    b.Property<int>("StatusDespesa")
+                        .HasColumnType("integer")
+                        .HasColumnName("statusdespesa");
+
+                    b.Property<int?>("TipoDespesaModelId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrimestreEmissao")
+                        .HasColumnType("integer")
+                        .HasColumnName("trimestreemissao");
+
+                    b.Property<int?>("UsuarioModelId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("ValorPago")
+                        .HasColumnType("double precision")
+                        .HasColumnName("valorpago");
+
+                    b.Property<double>("ValorPrevisto")
+                        .HasColumnType("double precision")
+                        .HasColumnName("valorprevisto");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FornecedorModelId");
+
+                    b.HasIndex("IdFornecedor");
+
+                    b.HasIndex("IdInstituicao");
+
+                    b.HasIndex("IdOrcamento");
+
+                    b.HasIndex("IdTipoDespesa");
+
+                    b.HasIndex("IdUnidadeConsumidora");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.HasIndex("InstituicaoModelId");
+
+                    b.HasIndex("OrcamentoModelId");
+
+                    b.HasIndex("TipoDespesaModelId");
+
+                    b.HasIndex("UsuarioModelId");
+
+                    b.ToTable("despesa");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AnoEmissao = 2024,
+                            AnoMesConsumo = "202401",
+                            DataPagamento = new DateOnly(2024, 2, 5),
+                            DataVencimento = new DateOnly(2024, 1, 31),
+                            IdFornecedor = 1,
+                            IdInstituicao = 1,
+                            IdOrcamento = 1,
+                            IdTipoDespesa = 1,
+                            IdUnidadeConsumidora = 1,
+                            IdUsuario = 1,
+                            MesEmissao = 1,
+                            NumeroControle = "NC001",
+                            NumeroDocumento = "DOC001",
+                            QuantidadeConsumida = 100.5,
+                            SemestreEmissao = 1,
+                            Situacao = 1,
+                            StatusDespesa = 0,
+                            TrimestreEmissao = 1,
+                            ValorPago = 1400.0,
+                            ValorPrevisto = 1500.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AnoEmissao = 2024,
+                            AnoMesConsumo = "202401",
+                            DataPagamento = new DateOnly(2024, 3, 5),
+                            DataVencimento = new DateOnly(2024, 2, 28),
+                            IdFornecedor = 2,
+                            IdInstituicao = 2,
+                            IdOrcamento = 2,
+                            IdTipoDespesa = 2,
+                            IdUnidadeConsumidora = 2,
+                            IdUsuario = 2,
+                            MesEmissao = 2,
+                            NumeroControle = "NC002",
+                            NumeroDocumento = "DOC002",
+                            QuantidadeConsumida = 200.0,
+                            SemestreEmissao = 1,
+                            Situacao = 1,
+                            StatusDespesa = 0,
+                            TrimestreEmissao = 1,
+                            ValorPago = 2900.0,
+                            ValorPrevisto = 3000.0
+                        });
+                });
+
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
                     b.Property<int>("Id")
@@ -33,73 +264,111 @@ namespace api.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<int>("Cep")
-                        .HasColumnType("integer")
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
 
-                    b.Property<string>("Cnpj")
+                    b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)")
                         .HasColumnName("cnpj");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
+                        .HasColumnName("cidade");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("logradouro");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("nome");
 
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("nomefantasia");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("integer")
-                        .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
+                    b.Property<string>("Numero")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)")
+                        .HasColumnName("numero");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
-                        .HasColumnName("situacao");
+                        .HasColumnName("situcao");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
                         .HasColumnName("telefone");
-
-                    b.Property<string>("nomeRazaoSocial")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("nomerazaosocial");
 
                     b.HasKey("Id");
 
                     b.ToTable("fornecedor");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bairro = "Centro",
+                            CEP = "12345678",
+                            CNPJ = "12345678000195",
+                            Cidade = "Jales",
+                            Email = "contato@sabesp.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Rua das Inovações",
+                            Nome = "Cia de Saneamento Básico do Estado de São Paulo",
+                            NomeFantasia = "Sabesp",
+                            Numero = "123",
+                            Situacao = 1,
+                            Telefone = "17987654321"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bairro = "Jardim América",
+                            CEP = "87654321",
+                            CNPJ = "98765432000190",
+                            Cidade = "Jales",
+                            Email = "contatos@elektro.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Avenida Brasil",
+                            Nome = "Neoenergia Elektro",
+                            NomeFantasia = "Elektro",
+                            Numero = "456",
+                            Situacao = 1,
+                            Telefone = "17987654321"
+                        });
                 });
 
             modelBuilder.Entity("api.Models.InstituicaoModel", b =>
@@ -113,25 +382,39 @@ namespace api.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<int>("Cep")
-                        .HasColumnType("integer")
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
 
-                    b.Property<string>("Cnpj")
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)")
+                        .HasColumnName("cnpj");
+
+                    b.Property<string>("Cidade")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("cnpj");
+                        .HasColumnName("cidade");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("email");
+                        .HasColumnName("estado");
 
                     b.Property<int>("IdSecretaria")
                         .HasColumnType("integer")
@@ -143,47 +426,43 @@ namespace api.Migrations
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("logradouro");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("nome");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("integer")
-                        .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
+                    b.Property<string>("NomeRazaoSocial")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nomerazaosocial");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)")
+                        .HasColumnName("numero");
 
                     b.Property<int?>("SecretariaModelId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
-                        .HasColumnName("situacao");
+                        .HasColumnName("situcao");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
                         .HasColumnName("telefone");
 
                     b.Property<int?>("TipoInstituicaoModelId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("nomeRazaoSocial")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("nomerazaosocial");
 
                     b.HasKey("Id");
 
@@ -196,6 +475,44 @@ namespace api.Migrations
                     b.HasIndex("TipoInstituicaoModelId");
 
                     b.ToTable("instituicao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bairro = "Centro",
+                            CEP = "12345678",
+                            CNPJ = "12345678000195",
+                            Cidade = "Jales",
+                            Email = "contato@escolaelzapirro@gamil.com",
+                            Estado = "São Paulo",
+                            IdSecretaria = 2,
+                            IdTipoInstituicao = 4,
+                            Logradouro = "Rua dos Educadores",
+                            Nome = "Elza Pirro",
+                            NomeRazaoSocial = "Elza Pirro Vianna",
+                            Numero = "100",
+                            Situacao = 1,
+                            Telefone = "11987654321"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bairro = "Jardim América",
+                            CEP = "87654321",
+                            CNPJ = "98765432000190",
+                            Cidade = "Jales",
+                            Email = "contato@centrosaude.sp.gov.br",
+                            Estado = "São Paulo",
+                            IdSecretaria = 1,
+                            IdTipoInstituicao = 5,
+                            Logradouro = "Avenida da Saúde",
+                            Nome = "ESF JACB",
+                            NomeRazaoSocial = "Dr Luis Ernesto Sandi Mori ",
+                            Numero = "200",
+                            Situacao = 0,
+                            Telefone = "21987654321"
+                        });
                 });
 
             modelBuilder.Entity("api.Models.OrcamentoModel", b =>
@@ -208,7 +525,6 @@ namespace api.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AnoOrcamento")
-                        .HasMaxLength(50)
                         .HasColumnType("integer")
                         .HasColumnName("anoorcamento");
 
@@ -227,7 +543,6 @@ namespace api.Migrations
                         .HasColumnType("integer");
 
                     b.Property<double>("ValorOrcamento")
-                        .HasMaxLength(50)
                         .HasColumnType("double precision")
                         .HasColumnName("valororcamento");
 
@@ -242,6 +557,24 @@ namespace api.Migrations
                     b.HasIndex("TipoDespesaModelId");
 
                     b.ToTable("orcamento");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AnoOrcamento = 2024,
+                            IdInstituicao = 1,
+                            IdTipoDespesa = 1,
+                            ValorOrcamento = 5000000.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AnoOrcamento = 2024,
+                            IdInstituicao = 2,
+                            IdTipoDespesa = 2,
+                            ValorOrcamento = 1200000.0
+                        });
                 });
 
             modelBuilder.Entity("api.Models.SecretariaModel", b =>
@@ -255,73 +588,136 @@ namespace api.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<int>("Cep")
-                        .HasColumnType("integer")
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
 
-                    b.Property<string>("Cnpj")
+                    b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)")
                         .HasColumnName("cnpj");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
+                        .HasColumnName("cidade");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("descricao");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("email");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("logradouro");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("nome");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("integer")
-                        .HasColumnName("numero");
-
-                    b.Property<string>("Rua")
+                    b.Property<string>("NomeRazaoSocial")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nomerazaosocial");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)")
+                        .HasColumnName("numero");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
-                        .HasColumnName("situacao");
+                        .HasColumnName("situcao");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
                         .HasColumnName("telefone");
-
-                    b.Property<string>("nomeRazaoSocial")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("nomerazaosocial");
 
                     b.HasKey("Id");
 
                     b.ToTable("secretaria");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bairro = "Centro",
+                            CEP = "12345678",
+                            CNPJ = "12345678000195",
+                            Cidade = "Jales",
+                            Descricao = "Secretaria de Saúde",
+                            Email = "saude@prefeitura.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Rua Central",
+                            Nome = "Sec. Saúde",
+                            NomeRazaoSocial = "Prefeitura Municipal",
+                            Numero = "100",
+                            Situacao = 1,
+                            Telefone = "11987654321"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bairro = "Jardim Paulista",
+                            CEP = "87654321",
+                            CNPJ = "98765432000190",
+                            Cidade = "Jales",
+                            Descricao = "Secretaria de Educação",
+                            Email = "educacao@prefeitura.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Avenida da Cultura",
+                            Nome = "Sec. Educação",
+                            NomeRazaoSocial = "Prefeitura Municipal",
+                            Numero = "200",
+                            Situacao = 1,
+                            Telefone = "21987654321"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Bairro = "Vila Nova",
+                            CEP = "65432187",
+                            CNPJ = "23456789000188",
+                            Cidade = "Jales",
+                            Descricao = "Secretaria de Obras",
+                            Email = "obras@prefeitura.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Rua das Construções",
+                            Nome = "Sec. Obras",
+                            NomeRazaoSocial = "Prefeitura Municipal",
+                            Numero = "300",
+                            Situacao = 0,
+                            Telefone = "31987654321"
+                        });
                 });
 
             modelBuilder.Entity("api.Models.TipoDespesaModel", b =>
@@ -343,10 +739,8 @@ namespace api.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("idunidademedida");
 
-                    b.Property<string>("SolicitaUC")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                    b.Property<int>("SolicitaUC")
+                        .HasColumnType("integer")
                         .HasColumnName("solicitauc");
 
                     b.Property<int?>("UnidadeMedidaModelId")
@@ -359,6 +753,22 @@ namespace api.Migrations
                     b.HasIndex("UnidadeMedidaModelId");
 
                     b.ToTable("tipodespesa");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Água",
+                            IdUnidadeMedida = 2,
+                            SolicitaUC = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Energia",
+                            IdUnidadeMedida = 6,
+                            SolicitaUC = 0
+                        });
                 });
 
             modelBuilder.Entity("api.Models.TipoInstituicaoModel", b =>
@@ -372,39 +782,40 @@ namespace api.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("descricao");
 
                     b.HasKey("Id");
 
                     b.ToTable("tipoinstituicao");
-                });
 
-            modelBuilder.Entity("api.Models.TipoUsuarioModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("tipousuarioid");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("descricao");
-
-                    b.Property<string>("PermiteLogin")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("permitelogin");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tipousuario");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Universidade"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Faculdade"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "Escola Técnica"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descricao = "Escola"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descricao = "ESF"
+                        });
                 });
 
             modelBuilder.Entity("api.Models.UnidadeConsumidoraModel", b =>
@@ -416,8 +827,10 @@ namespace api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CodigoUC")
-                        .HasColumnType("integer")
+                    b.Property<string>("CodigoUC")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("unidadeconsumidora");
 
                     b.Property<int?>("FornecedorModelId")
@@ -445,6 +858,22 @@ namespace api.Migrations
                     b.HasIndex("InstituicaoModelId");
 
                     b.ToTable("unidadeconsumidora");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodigoUC = "00001",
+                            IdFornecedor = 1,
+                            IdInstituicao = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CodigoUC = "00002",
+                            IdFornecedor = 2,
+                            IdInstituicao = 2
+                        });
                 });
 
             modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
@@ -458,19 +887,57 @@ namespace api.Migrations
 
                     b.Property<string>("Abreviatura")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
                         .HasColumnName("abreviatura");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("descrição");
 
                     b.HasKey("Id");
 
                     b.ToTable("unidademedida");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Abreviatura = "kg",
+                            Descricao = "Quilograma"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Abreviatura = "L",
+                            Descricao = "Litro"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Abreviatura = "m",
+                            Descricao = "Metro"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Abreviatura = "cm",
+                            Descricao = "Centímetro"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Abreviatura = "mm",
+                            Descricao = "Milímetro"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Abreviatura = "kW",
+                            Descricao = "Kilowatt"
+                        });
                 });
 
             modelBuilder.Entity("api.Models.UsuarioModel", b =>
@@ -484,94 +951,214 @@ namespace api.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("bairro");
 
-                    b.Property<int>("CEP")
-                        .HasColumnType("integer")
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
                         .HasColumnName("cep");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
+                        .HasColumnName("cpf");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
                         .HasColumnName("cidade");
-
-                    b.Property<string>("CpfCnpj")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("cpfcnpj");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("email");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
                         .HasColumnName("estado");
-
-                    b.Property<int>("IdTipoUsuario")
-                        .HasColumnType("integer")
-                        .HasColumnName("tipousuarioid");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("logradouro");
 
                     b.Property<string>("Matricula")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("matricula");
 
-                    b.Property<string>("NomeRazaoSocial")
+                    b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("nomerazaosocial");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nome");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("integer")
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)")
                         .HasColumnName("numero");
 
-                    b.Property<int>("RgLe")
-                        .HasColumnType("integer")
-                        .HasColumnName("rgle");
-
-                    b.Property<string>("Rua")
+                    b.Property<string>("RG")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("rua");
+                        .HasMaxLength(12)
+                        .HasColumnType("character varying(12)")
+                        .HasColumnName("rg");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)")
                         .HasColumnName("senha");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("integer")
-                        .HasColumnName("situacao");
+                        .HasColumnName("situcao");
 
-                    b.Property<int?>("TipoUsuarioModelId")
-                        .HasColumnType("integer");
+                    b.Property<int>("TipoUsuario")
+                        .HasColumnType("integer")
+                        .HasColumnName("tipousuario");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdTipoUsuario");
-
-                    b.HasIndex("TipoUsuarioModelId");
-
                     b.ToTable("usuario");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bairro = "Centro",
+                            CEP = "12345678",
+                            CPF = "12345678901",
+                            Cidade = "Jales",
+                            Email = "joao.silva@gmail.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Rua A",
+                            Matricula = "20240001",
+                            Nome = "João Silva",
+                            Numero = "10",
+                            RG = "123456789",
+                            Senha = "senha123",
+                            Situacao = 1,
+                            TipoUsuario = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bairro = "Centro",
+                            CEP = "87654321",
+                            CPF = "98765432100",
+                            Cidade = "Jales",
+                            Email = "maria.souza@example.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Avenida B",
+                            Matricula = "20240002",
+                            Nome = "Maria Souza",
+                            Numero = "20",
+                            RG = "987654321",
+                            Senha = "senha456",
+                            Situacao = 0,
+                            TipoUsuario = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Bairro = "Nova York",
+                            CEP = "87654330",
+                            CPF = "98785432100",
+                            Cidade = "Jales",
+                            Email = "rafael.andrade@gmail.com",
+                            Estado = "São Paulo",
+                            Logradouro = "Avenida C",
+                            Matricula = "20240003",
+                            Nome = "Rafael Andrade",
+                            Numero = "30",
+                            RG = "787654321",
+                            Senha = "senha789",
+                            Situacao = 1,
+                            TipoUsuario = 2
+                        });
+                });
+
+            modelBuilder.Entity("api.Models.DespesaModel", b =>
+                {
+                    b.HasOne("api.Models.FornecedorModel", null)
+                        .WithMany("Despesa")
+                        .HasForeignKey("FornecedorModelId");
+
+                    b.HasOne("api.Models.FornecedorModel", "Fornecedor")
+                        .WithMany()
+                        .HasForeignKey("IdFornecedor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.InstituicaoModel", "Instituicao")
+                        .WithMany()
+                        .HasForeignKey("IdInstituicao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.OrcamentoModel", "Orcamento")
+                        .WithMany()
+                        .HasForeignKey("IdOrcamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.TipoDespesaModel", "TipoDespesa")
+                        .WithMany()
+                        .HasForeignKey("IdTipoDespesa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.UnidadeConsumidoraModel", "UnidadeConsumidora")
+                        .WithMany()
+                        .HasForeignKey("IdUnidadeConsumidora")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.UsuarioModel", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.InstituicaoModel", null)
+                        .WithMany("Despesa")
+                        .HasForeignKey("InstituicaoModelId");
+
+                    b.HasOne("api.Models.OrcamentoModel", null)
+                        .WithMany("Despesa")
+                        .HasForeignKey("OrcamentoModelId");
+
+                    b.HasOne("api.Models.TipoDespesaModel", null)
+                        .WithMany("Despesa")
+                        .HasForeignKey("TipoDespesaModelId");
+
+                    b.HasOne("api.Models.UsuarioModel", null)
+                        .WithMany("Despesa")
+                        .HasForeignKey("UsuarioModelId");
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Instituicao");
+
+                    b.Navigation("Orcamento");
+
+                    b.Navigation("TipoDespesa");
+
+                    b.Navigation("UnidadeConsumidora");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("api.Models.InstituicaoModel", b =>
@@ -582,7 +1169,7 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Models.TipoInstituicaoModel", "tipoInstituicao")
+                    b.HasOne("api.Models.TipoInstituicaoModel", "TipoInstituicao")
                         .WithMany()
                         .HasForeignKey("IdTipoInstituicao")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -598,7 +1185,7 @@ namespace api.Migrations
 
                     b.Navigation("Secretaria");
 
-                    b.Navigation("tipoInstituicao");
+                    b.Navigation("TipoInstituicao");
                 });
 
             modelBuilder.Entity("api.Models.OrcamentoModel", b =>
@@ -670,31 +1257,25 @@ namespace api.Migrations
                     b.Navigation("Instituicao");
                 });
 
-            modelBuilder.Entity("api.Models.UsuarioModel", b =>
-                {
-                    b.HasOne("api.Models.TipoUsuarioModel", "TipoUsuario")
-                        .WithMany()
-                        .HasForeignKey("IdTipoUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.TipoUsuarioModel", null)
-                        .WithMany("Usuario")
-                        .HasForeignKey("TipoUsuarioModelId");
-
-                    b.Navigation("TipoUsuario");
-                });
-
             modelBuilder.Entity("api.Models.FornecedorModel", b =>
                 {
+                    b.Navigation("Despesa");
+
                     b.Navigation("UnidadeConsumidora");
                 });
 
             modelBuilder.Entity("api.Models.InstituicaoModel", b =>
                 {
+                    b.Navigation("Despesa");
+
                     b.Navigation("Orcamento");
 
                     b.Navigation("UnidadeConsumidora");
+                });
+
+            modelBuilder.Entity("api.Models.OrcamentoModel", b =>
+                {
+                    b.Navigation("Despesa");
                 });
 
             modelBuilder.Entity("api.Models.SecretariaModel", b =>
@@ -704,6 +1285,8 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.TipoDespesaModel", b =>
                 {
+                    b.Navigation("Despesa");
+
                     b.Navigation("Orcamento");
                 });
 
@@ -712,14 +1295,14 @@ namespace api.Migrations
                     b.Navigation("InstituicaoLista");
                 });
 
-            modelBuilder.Entity("api.Models.TipoUsuarioModel", b =>
-                {
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("api.Models.UnidadeMedidaModel", b =>
                 {
                     b.Navigation("TipoDespesa");
+                });
+
+            modelBuilder.Entity("api.Models.UsuarioModel", b =>
+                {
+                    b.Navigation("Despesa");
                 });
 #pragma warning restore 612, 618
         }
