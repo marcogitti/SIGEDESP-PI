@@ -9,46 +9,50 @@ namespace api.DTO.Entities
     {
         public int? Id { get; set; }
 
-        [Required(ErrorMessage = "O CPF ou o CNPJ do Usuario é requerida!")]
+        [Required(ErrorMessage = "O CPF do Usuario é requerido!")]
+        [MinLength(11)]
+        [MaxLength(11)]
+        public string CPF { get; set; }
+
+        [Required(ErrorMessage = "O Nome é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
-        public string CpfCnpj { get; set; }
+        public string Nome { get; set; }
 
-        [Required(ErrorMessage = "O Nome Razão Social é requerido!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string NomeRazaoSocial { get; set; }
-
-        public int RgLe {  get; set; }
+        [Required(ErrorMessage = "O RG é requerido!")]
+        [MinLength(7)]
+        [MaxLength(12)]
+        public string RG {  get; set; }
 
         [Required(ErrorMessage = "O Logradouro é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
         public string Logradouro { get; set; }
 
-        public int Numero { get; set; }
+        [Required(ErrorMessage = "O Número é requerido!")]
+        [MinLength(1)]
+        [MaxLength(15)]
+        public string Numero { get; set; }
 
         [Required(ErrorMessage = "A Cidade é requerida!")]
         [MinLength(1)]
-        [MaxLength(100)]
+        [MaxLength(25)]
         public string Cidade { get; set; }
 
         [Required(ErrorMessage = "O Estado é requerido!")]
         [MinLength(1)]
-        [MaxLength(100)]
+        [MaxLength(25)]
         public string Estado { get; set; }
 
-        public int CEP { get; set; }
+        [Required(ErrorMessage = "O CEP é requerido!")]
+        [MinLength(8)]
+        [MaxLength(8)]
+        public string CEP { get; set; }
 
         [Required(ErrorMessage = "O Bairro é requerido!")]
         [MinLength(1)]
         [MaxLength(100)]
         public string Bairro { get; set; }
-
-        [Required(ErrorMessage = "A Rua é requerida!")]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public string Rua { get; set; }
 
         [Required(ErrorMessage = "O Email é requerido!")]
         [MinLength(1)]
@@ -57,22 +61,19 @@ namespace api.DTO.Entities
 
         [Required(ErrorMessage = "A Senha é requerida!")]
         [MinLength(1)]
-        [MaxLength(100)]
+        [MaxLength(15)]
         public string Senha { get; set; }
 
         [Required(ErrorMessage = "A Situação do Usuário é requerida!")]
-        public SituacaoEnum Situacao { get; set; }
+        public EnumSituacaoModel Situacao { get; set; }
+
+
+        [Required(ErrorMessage = "O Tipo do Usuário é requerido!")]
+        public TipoUsuarioEnum TipoUsuario { get; set; }
 
         [Required(ErrorMessage = "A Matrícula é requerida!")]
         [MinLength(1)]
         [MaxLength(100)]
         public string Matricula { get; set; }
-
-        /*Código para colocar atributos da classes que dão chave estrangeira no cadastro*/
-        [JsonIgnore]
-        public TipoUsuarioModel? TipoUsuario { get; set; }
-
-        [Required(ErrorMessage = "O ID de Tipo Usuário é requerido!")]
-        public int IdTipoUsuario { get; set; }
     }
 }

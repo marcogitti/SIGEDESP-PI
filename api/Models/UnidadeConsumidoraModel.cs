@@ -14,7 +14,7 @@ public class UnidadeConsumidoraModel
     public int Id { get; set; }
 
     [Column("unidadeconsumidora")]
-    public int CodigoUC { get; set; }
+    public string CodigoUC { get; set; }
 
     /*Código para receber chave estrangeira de fornecedor*/
     [JsonIgnore]

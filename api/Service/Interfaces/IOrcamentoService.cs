@@ -6,8 +6,8 @@ namespace api.Service.Interfaces
     {
         Task<IEnumerable<OrcamentoDTO>> BuscarTodosOrcamento();
         Task<OrcamentoDTO> BuscarPorId(int id);
-        Task Adicionar(OrcamentoDTO OrcamentoDTO);
-        Task Atualizar(OrcamentoDTO OrcamentoDTO);
+        Task Adicionar(OrcamentoAdicionarAtualizarDTO orcamentoDTO);
+        Task Atualizar(OrcamentoAdicionarAtualizarDTO orcamentoDTO);
         Task Apagar(int id);
     }
 }

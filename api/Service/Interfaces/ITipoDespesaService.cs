@@ -6,8 +6,8 @@ namespace api.Service.Interfaces
     {
         Task<IEnumerable<TipoDespesaDTO>> BuscarTodosTipoDespesa();
         Task<TipoDespesaDTO> BuscarPorId(int id);
-        Task Adicionar(TipoDespesaDTO TipoDespesaDTO);
-        Task Atualizar(TipoDespesaDTO TipoDespesaDTO);
+        Task Adicionar(TipoDespesaAdicionarAtualizarDTO tipodespesaDTO);
+        Task Atualizar(TipoDespesaAdicionarAtualizarDTO tipodespesaDTO);
         Task Apagar(int id);
     }
 }

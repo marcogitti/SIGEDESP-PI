@@ -9,9 +9,37 @@ namespace api.Data.Map
         public void Configure(EntityTypeBuilder<TipoDespesaModel> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x  => x.Descricao).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.SolicitaUC).IsRequired().HasMaxLength(50);
-            builder.HasOne(x => x.UnidadeMedida).WithMany().HasForeignKey(x => x.IdUnidadeMedida);
+
+            builder.Property(x => x.Descricao)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(x => x.SolicitaUC)
+                .IsRequired();
+
+            // Definindo a chave estrangeira para UnidadeMedida
+            builder.HasOne(d => d.UnidadeMedida)
+                 .WithMany()
+                 .HasForeignKey(d => d.IdUnidadeMedida)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Inserções de teste
+            builder.HasData(
+                new TipoDespesaModel
+                {
+                    Id = 1,
+                    Descricao = "Água",
+                    SolicitaUC = Models.Enum.EnumSolicitaUCModel.sim,
+                    IdUnidadeMedida = 2 // Assumindo que 1 é a ID de uma unidade de medida existente
+                },
+                new TipoDespesaModel
+                {
+                    Id = 2,
+                    Descricao = "Energia",
+                    SolicitaUC = Models.Enum.EnumSolicitaUCModel.nao,
+                    IdUnidadeMedida = 6 // Assumindo que 2 é a ID de outra unidade de medida existente
+                }
+            );
         }
     }
 }
