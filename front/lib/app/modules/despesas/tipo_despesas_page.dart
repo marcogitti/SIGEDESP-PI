@@ -125,7 +125,7 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
                         DataColumn(label: Text('id')),
                         DataColumn(label: Text('Descrição')),
                         DataColumn(label: Text('Unidade de Medida')),
-                        DataColumn(label: Text('Solicita UC')), 
+                        DataColumn(label: Text('Solicita UC')),
                         DataColumn(label: Text('Ação')),
                       ],
                       rows: tp
@@ -138,57 +138,58 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
                                 Text(e?.idUnidadeMedida.toString() ?? ''),
                               ),
                               DataCell(
-                                Text(e?.solicitaUC ?? ''), 
+                                Text(e?.solicitaUC ?? ''),
                               ),
                               DataCell(Row(
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Color(0xFF0044FF),
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Color(0xFF0044FF),
+                                    ),
+                                    onPressed: () async {
+                                      await modalCadastrar(e);
+                                    },
                                   ),
-                                  onPressed: () async {
-                                    await modalCadastrar(e);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Color(0xFFF44336),
-                                  ),
-                                  onPressed: () async {
-                                    await showDialog<bool>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title:
-                                              const Text('Confirmar exclusão'),
-                                          content: const Text(
-                                              'Tem certeza que deseja excluir este item?'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text('Cancelar'),
-                                              onPressed: () {
-                                                Modular.to.pop(false);
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: const Text('Confirmar'),
-                                              onPressed: () async {
-                                                Modular.to.pop();
-                                                await service.deleteData(e!.id);
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFF44336),
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog<bool>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Confirmar exclusão'),
+                                            content: const Text(
+                                                'Tem certeza que deseja excluir este item?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cancelar'),
+                                                onPressed: () {
+                                                  Modular.to.pop(false);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: const Text('Confirmar'),
+                                                onPressed: () async {
+                                                  Modular.to.pop();
+                                                  await service
+                                                      .deleteData(e!.id);
 
-                                                setState(() {});
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
-                            )),
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              )),
                             ]);
                           })
                           .toList()
@@ -273,7 +274,7 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
               onPressed: () async {
                 tipoDespesa = tipoDespesa?.copyWith(
                   descricao: tipoDespesaDescricaoEditCtrl.text,
-                  idUnidadeMedida: selectedUnidadeMedida?.id,
+                  unidadeMedida: tipoDespesa?.unidadeMedida,
                   solicitaUC: solicitaUcEnum,
                 );
                 if (isEdit) {

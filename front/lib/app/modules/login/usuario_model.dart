@@ -11,13 +11,13 @@ class UsuarioModel {
   final String? cpf;
   final String? cep;
   final String? logradouro;
-  final int numero;
+  final int? numero;
   final String? bairro;
   final String? senha;
   final String? cidade;
   final String? estado;
   final String? matricula;
-  final SituacaoEnum situacao;
+  final SituacaoEnum? situacao;
   final TipoUsuarioEnum? tipoUsuarioEnum;
 
   UsuarioModel({
@@ -89,7 +89,7 @@ class UsuarioModel {
       'cidade': cidade,
       'estado': estado,
       'matricula': matricula,
-      'situacao': situacao.index,
+      'situacao': situacao?.index,
       'tipoUsuarioEnum': tipoUsuarioEnum!.index,
     };
   }

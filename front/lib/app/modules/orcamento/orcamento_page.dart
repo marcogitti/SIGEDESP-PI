@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_drop_down_comp.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
-import 'package:front/app/modules/Instituicao/instituicao_service.dart';
+import 'package:front/app/modules/instituicao/instituicao_service.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/instituicao/instituicao_model.dart';
@@ -291,8 +291,8 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
               onPressed: () async {
                 orcamento = orcamento?.copyWith(
                   anoOrcamento: int.tryParse(orcamentoAnoEditCtrl.text),
-                  idTipoDespesa: selectedTipoDespesa?.id,
-                  idInstituicao: selectedInstituicao?.id,
+                  tipoDespesa: orcamento?.tipoDespesa,
+                  instituicao: orcamento?.instituicao,
                 );
                 if (isEdit) {
                   final resp = await service.editData(

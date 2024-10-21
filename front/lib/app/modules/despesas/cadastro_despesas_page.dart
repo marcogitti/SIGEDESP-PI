@@ -1,24 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_drop_down_comp.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
-import 'package:front/app/modules/Instituicao/instituicao_model.dart';
-import 'package:front/app/modules/Instituicao/instituicao_service.dart';
+
 import 'package:front/app/modules/despesas/despesas_model.dart';
 import 'package:front/app/modules/despesas/despesas_service.dart';
-import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
-import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
-import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
-import 'package:front/app/modules/fornecedor/fornecedor_service.dart';
-import 'package:front/app/modules/login/usuario_model.dart';
-import 'package:front/app/modules/login/usuario_service.dart';
-import 'package:front/app/modules/orcamento/orcamento_model.dart';
-import 'package:front/app/modules/orcamento/orcamento_service.dart';
-import 'package:front/app/modules/unidade/unidade_consumidora_model.dart';
-import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
 import 'package:front/app/util/situacao_enum.dart';
+
 import 'package:front/app/util/status_de_despesa_enum.dart';
 
 class CadastroDeDespesas extends StatefulWidget {
@@ -200,7 +188,8 @@ class _CadastroDeDespesasState extends State<CadastroDeDespesas> {
                 final despesa = DespesaModel(
                   numeroDocumento: _numeroDocumentoController.text,
                   situacao: SituacaoEnum.fromInt(
-                      int.tryParse(_situacaoController.text) ?? 0),
+                    int.tryParse(_situacaoController.text) ?? 0,
+                  ),
                   numeroControle: _numeroControleController.text,
                   anoMesConsumo: _anoMesConsumoController.text,
                   quantidadeConsumida:
@@ -221,19 +210,7 @@ class _CadastroDeDespesasState extends State<CadastroDeDespesas> {
                   trimestreEmissao:
                       int.tryParse(_trimestreEmissaoController.text) ?? 0,
                   mesEmissao: int.tryParse(_mesEmissaoController.text) ?? 0,
-                  idUsuario: int.tryParse(_idUsuarioController.text) ?? 0,
-                  idFornecedor: int.tryParse(_idFornecedorController.text) ?? 0,
-                  idUnidadeConsumidora:
-                      int.tryParse(_idUnidadeConsumidoraController.text) ?? 0,
-                  idInstituicao:
-                      int.tryParse(_idInstituicaoController.text) ?? 0,
-                  idOrcamento: int.tryParse(_idOrcamentoController.text) ?? 0,
-                  statusDespesa: StatusEnum.fromInt(
-                      int.tryParse(_statusDespesaController.text) ?? 0),
-                  idTipoDespesa:
-                      int.tryParse(_idTipoDespesaController.text) ?? 0,
                 );
-
                 // Aqui você pode adicionar a lógica de salvamento conforme sua necessidade
                 setState(() {
                   despesasList.add(despesa);
@@ -303,11 +280,11 @@ class _CadastroDeDespesasState extends State<CadastroDeDespesas> {
           .map((e) {
             return DataRow(cells: [
               DataCell(Text(e.id?.toString() ?? '')),
-              DataCell(Text(e.idTipoDespesa?.toString() ?? '')),
+              DataCell(Text(e.tipoDespesa?.toString() ?? '')),
               DataCell(Text(e.numeroDocumento?.toString() ?? '')),
               DataCell(Text(e.numeroControle?.toString() ?? '')),
-              DataCell(Text(e.idInstituicao?.toString() ?? '')),
-              DataCell(Text(e.idFornecedor?.toString() ?? '')),
+              DataCell(Text(e.instituicao?.toString() ?? '')),
+              DataCell(Text(e.fornecedor?.toString() ?? '')),
               DataCell(Text(e.statusDespesa?.toString() ?? '')),
               DataCell(Text(e.situacao?.toString() ?? '')),
               DataCell(Row(
@@ -370,12 +347,6 @@ class _CadastroDeDespesasState extends State<CadastroDeDespesas> {
     final isEdit = despesas?.id != null;
     despesas ??= DespesaModel();
 
-    int? selectedUsuarioId;
-    int? selectedFornecedorId;
-    int? selectedUnidadeConsumidoraId;
-    int? selectedInstituicaoId;
-    int? selectedOrcamentoId;
-    int? selectedTipoDespesaId;
     StatusEnum? selectedStatusDespesa = despesas.statusDespesa; // Inicialização
     SituacaoEnum situacao =
         despesas.situacao ?? SituacaoEnum.values.first; // Inicialização
@@ -585,14 +556,14 @@ class _CadastroDeDespesasState extends State<CadastroDeDespesas> {
                   trimestreEmissao:
                       int.tryParse(trimestreEmissaoController.text),
                   mesEmissao: int.tryParse(mesEmissaoController.text),
-                  idUsuario: selectedUsuarioId,
-                  idFornecedor: selectedFornecedorId,
-                  idUnidadeConsumidora: selectedUnidadeConsumidoraId,
-                  idInstituicao: selectedInstituicaoId,
-                  idOrcamento: selectedOrcamentoId,
-                  idTipoDespesa: selectedTipoDespesaId,
-                  statusDespesa: selectedStatusDespesa,
-                  situacao: situacao, // Atualizado
+                  usuario: despesas.usuario,
+                  fornecedor: despesas.fornecedor,
+                  unidadeConsumidora: despesas.unidadeConsumidora,
+                  instituicao: despesas.instituicao,
+                  orcamento: despesas.orcamento,
+                  tipoDespesa: despesas.tipoDespesa,
+                  statusDespesa: despesas.statusDespesa,
+                  situacao: situacao,
                 );
 
                 final resp = isEdit
