@@ -2,8 +2,8 @@
 {
     public enum EnumStatusDespesaModel : int
     {
-        Apagar = 0,
-        Pago = 1,
-        Pendente = 2
+        apagar = 0,
+        pago = 1,
+        pendente = 2
     }
 }

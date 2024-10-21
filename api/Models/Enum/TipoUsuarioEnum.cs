@@ -2,8 +2,8 @@
 {
     public enum TipoUsuarioEnum : int
     {
-        Administrador = 0,
-        Funcionario = 1,
-        Visitante = 2
+        administrador = 0,
+        funcionario = 1,
+        visitante = 2
     }
 }

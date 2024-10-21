@@ -1,4 +1,6 @@
 ﻿using api.DTO.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace api.Service.Interfaces
 {
@@ -6,8 +8,8 @@ namespace api.Service.Interfaces
     {
         Task<IEnumerable<DespesaDTO>> BuscarTodosDespesa();
         Task<DespesaDTO> BuscarPorId(int id);
-        Task Adicionar(DespesaDTO DespesaDTO);
-        Task Atualizar(DespesaDTO DespesaDTO);
+        Task Adicionar(DespesaAdicionarAtualizarDTO despesaDTO); // Alterado para DespesaAdicionarAtualizarDTO
+        Task Atualizar(DespesaAdicionarAtualizarDTO despesaDTO); // Alterado para DespesaAdicionarAtualizarDTO
         Task Apagar(int id);
     }
 }

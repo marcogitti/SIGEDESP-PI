@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace api.Models
 {
+    [Table("despesa")]
     public class DespesaModel
     {
         [Key]
@@ -47,54 +48,53 @@ namespace api.Models
         [Column("mesemissao")]
         public int MesEmissao { get; set; }
 
-        [Column("situacao")]
-        public SituacaoEnum Situacao { get; set; }
+
+        /*Código para receber enum de Situação*/
+        [Column("situcao")]
+        [EnumDataType(typeof(EnumSituacaoModel))]
+        public EnumSituacaoModel Situacao { get; set; }
 
         /*Código para receber chave estrangeira de Fornecedor*/
-        [JsonIgnore]
         public FornecedorModel? Fornecedor { get; set; }
 
         [Column("fornecedorid")]
         [ForeignKey("fornecedorid")]
         public int IdFornecedor { get; set; }
 
-
-        [JsonIgnore]
+        /*Código para receber chave estrangeira de Unidade Consumidora*/
         public UnidadeConsumidoraModel? UnidadeConsumidora { get; set; }
 
         [Column("unidadeconsumidoraid")]
         [ForeignKey("unidadeconsumidoraid")]
         public int IdUnidadeConsumidora { get; set; }
 
-
-        [JsonIgnore]
+        /*Código para receber chave estrangeira de Instituição*/
         public InstituicaoModel? Instituicao { get; set; }
 
         [Column("instituicaoid")]
         [ForeignKey("instituicaoid")]
         public int IdInstituicao { get; set; }
 
-
-        [JsonIgnore]
+        /*Código para receber chave estrangeira de Orçamento*/
         public OrcamentoModel? Orcamento { get; set; }
 
         [Column("orcamentoid")]
         [ForeignKey("orcamentoid")]
         public int IdOrcamento { get; set; }
 
-
-        [JsonIgnore]
+        /*Código para receber chave estrangeira de Tipo Despesa*/
         public TipoDespesaModel? TipoDespesa { get; set; }
 
         [Column("tipodespesaid")]
         [ForeignKey("tipodespesaid")]
         public int IdTipoDespesa { get; set; }
 
+        /*Código para receber enum de Status Despesa*/
         [Column("statusdespesa")]
         [EnumDataType(typeof(EnumStatusDespesaModel))]
         public EnumStatusDespesaModel StatusDespesa { get; set; }
 
-        [JsonIgnore]
+        /*Código para receber chave estrangeira de Usuário*/
         public UsuarioModel? Usuario { get; set; }
 
         [Column("usuarioid")]
