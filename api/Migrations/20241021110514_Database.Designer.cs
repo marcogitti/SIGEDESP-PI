@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20241015113845_Database")]
+    [Migration("20241021110514_Database")]
     partial class Database
     {
         /// <inheritdoc />
@@ -88,7 +88,8 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("anomesconsumo");
 
-                    b.Property<DateOnly>("DataPagamento")
+                    b.Property<DateOnly?>("DataPagamento")
+                        .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("datapagamento");
 

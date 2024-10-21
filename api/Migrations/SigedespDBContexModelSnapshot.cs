@@ -85,7 +85,8 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("anomesconsumo");
 
-                    b.Property<DateOnly>("DataPagamento")
+                    b.Property<DateOnly?>("DataPagamento")
+                        .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("datapagamento");
 
