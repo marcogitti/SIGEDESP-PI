@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:front/app/modules/unidade/unidade_de_medida_model.dart';
 import 'package:front/app/util/solicita_uc_enum.dart';
 
 class TipoDespesasModel {
   final int? id;
   final String? descricao;
   final SolicitaUcEnum? solicitaUC;
-  final UnidadeMedida? unidadeMedida;
+  final UnidadeDeMedidaModel? unidadeMedida;
 
   TipoDespesasModel({
     this.id,
@@ -19,13 +20,13 @@ class TipoDespesasModel {
     int? id,
     String? descricao,
     SolicitaUcEnum? solicitaUC,
-    int? idUnidadeMedida,
+    UnidadeDeMedidaModel? unidadeMedida,
   }) {
     return TipoDespesasModel(
       id: id ?? this.id,
       descricao: descricao ?? this.descricao,
       solicitaUC: solicitaUC ?? this.solicitaUC,
-      unidadeMedida: idUnidadeMedida ?? this.unidadeMedida,
+      unidadeMedida: unidadeMedida ?? this.unidadeMedida,
     );
   }
 
@@ -34,7 +35,7 @@ class TipoDespesasModel {
       'id': id,
       'descricao': descricao,
       'solicitaUC': solicitaUC?.numero,
-      'idUnidadeMedida': unidadeMedida,
+      'idUnidadeMedida': unidadeMedida?.id,
     };
   }
 
@@ -45,8 +46,9 @@ class TipoDespesasModel {
       solicitaUC: map['solicitaUC'] != null
           ? SolicitaUcEnum.fromInt(map['solicitaUC'] as int)
           : null,
-      unidadeMedida:
-          map['idUnidadeMedida'] != null ? map['idUnidadeMedida'] as int : null,
+      unidadeMedida: map['idUnidadeMedida'] != null
+          ? UnidadeDeMedidaModel(id: map['idUnidadeMedida'] as int)
+          : null,
     );
   }
 

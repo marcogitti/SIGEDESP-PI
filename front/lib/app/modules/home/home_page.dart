@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ScaffoldComp(
+    return const ScaffoldComp(
       body: ResponsiveCards(),
     );
   }
 }
 
 class ResponsiveCards extends StatelessWidget {
+  const ResponsiveCards({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Column(

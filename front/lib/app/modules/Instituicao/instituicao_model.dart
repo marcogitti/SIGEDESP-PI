@@ -1,24 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
+import 'package:front/app/modules/secretaria/secretaria_model.dart';
 import 'package:front/app/util/situacao_enum.dart';
 
 class InstituicaoModel {
-  final int? id;
-  final String? nome;
-  final String? nomeRazaoSocial;
-  final String? email;
-  final String? cnpj;
-  final int? cep;
-  final String? logradouro;
-  final int? numero;
-  final String? bairro;
-  final String? cidade;
-  final String? estado;
-  final String? telefone;
-  final SituacaoEnum? situacao;
-  final int? idTipoInstituicao;
-  final int? idSecretaria;
+  int? id;
+  String? nome;
+  String? nomeRazaoSocial;
+  String? email;
+  String? cnpj;
+  int? cep;
+  String? logradouro;
+  int? numero;
+  String? bairro;
+  String? cidade;
+  String? estado;
+  String? telefone;
+  SituacaoEnum? situacao;
+  TipoInstituicaoModel? tipoInstituicao;
+  SecretariaModel? secretaria;
 
   InstituicaoModel({
     this.id,
@@ -34,8 +35,8 @@ class InstituicaoModel {
     this.estado,
     this.telefone,
     this.situacao,
-    this.idTipoInstituicao,
-    this.idSecretaria,
+    this.tipoInstituicao,
+    this.secretaria,
   });
 
   InstituicaoModel copyWith({
@@ -52,8 +53,8 @@ class InstituicaoModel {
     String? estado,
     String? telefone,
     SituacaoEnum? situacao,
-    int? idTipoInstituicao,
-    int? idSecretaria,
+    TipoInstituicaoModel? tipoInstituicao,
+    SecretariaModel? secretaria,
   }) {
     return InstituicaoModel(
       id: id ?? this.id,
@@ -69,8 +70,8 @@ class InstituicaoModel {
       estado: estado ?? this.estado,
       telefone: telefone ?? this.telefone,
       situacao: situacao ?? this.situacao,
-      idTipoInstituicao: idTipoInstituicao ?? this.idTipoInstituicao,
-      idSecretaria: idSecretaria ?? this.idSecretaria,
+      tipoInstituicao: tipoInstituicao ?? this.tipoInstituicao,
+      secretaria: secretaria ?? this.secretaria,
     );
   }
 
@@ -89,8 +90,8 @@ class InstituicaoModel {
       'estado': estado,
       'telefone': telefone,
       'situacao': situacao?.index,
-      'idTipoInstituicao': idTipoInstituicao,
-      'idSecretaria': idSecretaria,
+      'tipoInstituicao': tipoInstituicao?.toMap(),
+      'secretaria': secretaria?.toMap(),
     };
   }
 
@@ -110,13 +111,17 @@ class InstituicaoModel {
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      telefone: map['telefone'],
-      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
-      idTipoInstituicao: map['idTipoInstituicao'] != null
-          ? map['idTipoInstituicao'] as int
+      telefone: map['telefone'] as String?,
+      situacao: map['situacao'] != null
+          ? SituacaoEnum.fromInt(map['situacao'] as int)
           : null,
-      idSecretaria:
-          map['idSecretaria'] != null ? map['idSecretaria'] as int : null,
+      tipoInstituicao: map['tipoInstituicao'] != null
+          ? TipoInstituicaoModel.fromMap(
+              map['tipoInstituicao'] as Map<String, dynamic>)
+          : null,
+      secretaria: map['secretaria'] != null
+          ? SecretariaModel.fromMap(map['secretaria'] as Map<String, dynamic>)
+          : null,
     );
   }
 

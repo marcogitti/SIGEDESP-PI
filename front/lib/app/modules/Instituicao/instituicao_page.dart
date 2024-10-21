@@ -432,8 +432,8 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                   numero: int.tryParse(instituicaoNumeroEditCtrl.text),
                   situacao: situacaoEnum,
                   telefone: instituicaoTelefoneEditCtrl.text,
-                  idSecretaria: selectedSecretaria?.id,
-                  idTipoInstituicao: selectedTipoInstituicao?.id,
+                  secretaria: instituicao?.secretaria,
+                  tipoInstituicao: instituicao?.tipoInstituicao,
                 );
                 if (isEdit) {
                   final resp = await service.editData(

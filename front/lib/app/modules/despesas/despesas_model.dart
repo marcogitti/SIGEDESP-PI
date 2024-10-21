@@ -1,5 +1,11 @@
 import 'dart:convert';
 
+import 'package:front/app/modules/instituicao/instituicao_model.dart';
+import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
+import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
+import 'package:front/app/modules/login/usuario_model.dart';
+import 'package:front/app/modules/orcamento/orcamento_model.dart';
+import 'package:front/app/modules/unidade/unidade_consumidora_model.dart';
 import 'package:front/app/util/situacao_enum.dart';
 import 'package:front/app/util/status_de_despesa_enum.dart';
 
@@ -18,13 +24,13 @@ class DespesaModel {
   final int? semestreEmissao;
   final int? trimestreEmissao;
   final int? mesEmissao;
-  final int? idUsuario;
-  final int? idFornecedor;
-  final int? idUnidadeConsumidora;
-  final int? idInstituicao;
-  final int? idOrcamento;
+  final UsuarioModel? usuario;
+  final FornecedorModel? fornecedor;
+  final UnidadeConsumidoraModel? unidadeConsumidora;
+  final InstituicaoModel? instituicao;
+  final OrcamentoModel? orcamento;
   final StatusEnum? statusDespesa;
-  final int? idTipoDespesa;
+  final TipoDespesasModel? tipoDespesa;
 
   DespesaModel({
     this.id,
@@ -41,13 +47,13 @@ class DespesaModel {
     this.semestreEmissao,
     this.trimestreEmissao,
     this.mesEmissao,
-    this.idUsuario,
-    this.idFornecedor,
-    this.idUnidadeConsumidora,
-    this.idInstituicao,
-    this.idOrcamento,
+    this.usuario,
+    this.fornecedor,
+    this.unidadeConsumidora,
+    this.instituicao,
+    this.orcamento,
     this.statusDespesa,
-    this.idTipoDespesa,
+    this.tipoDespesa,
   });
 
   DespesaModel copyWith({
@@ -65,13 +71,13 @@ class DespesaModel {
     int? semestreEmissao,
     int? trimestreEmissao,
     int? mesEmissao,
-    int? idUsuario,
-    int? idFornecedor,
-    int? idUnidadeConsumidora,
-    int? idInstituicao,
-    int? idOrcamento,
+    UsuarioModel? usuario,
+    FornecedorModel? fornecedor,
+    UnidadeConsumidoraModel? unidadeConsumidora,
+    InstituicaoModel? idInstituicao,
+    OrcamentoModel? orcamento,
     StatusEnum? statusDespesa,
-    int? idTipoDespesa,
+    TipoDespesasModel? tipoDespesa, InstituicaoModel? instituicao,
   }) {
     return DespesaModel(
       id: id ?? this.id,
@@ -88,13 +94,13 @@ class DespesaModel {
       semestreEmissao: semestreEmissao ?? this.semestreEmissao,
       trimestreEmissao: trimestreEmissao ?? this.trimestreEmissao,
       mesEmissao: mesEmissao ?? this.mesEmissao,
-      idUsuario: idUsuario ?? this.idUsuario,
-      idFornecedor: idFornecedor ?? this.idFornecedor,
-      idUnidadeConsumidora: idUnidadeConsumidora ?? this.idUnidadeConsumidora,
-      idInstituicao: idInstituicao ?? this.idInstituicao,
-      idOrcamento: idOrcamento ?? this.idOrcamento,
+      usuario: usuario ?? this.usuario,
+      fornecedor: fornecedor ?? this.fornecedor,
+      unidadeConsumidora: unidadeConsumidora ?? this.unidadeConsumidora,
+      instituicao: idInstituicao ?? this.instituicao,
+      orcamento: orcamento ?? this.orcamento,
       statusDespesa: statusDespesa ?? this.statusDespesa,
-      idTipoDespesa: idTipoDespesa ?? this.idTipoDespesa,
+      tipoDespesa: tipoDespesa ?? this.tipoDespesa,
     );
   }
 
@@ -102,7 +108,7 @@ class DespesaModel {
     return {
       'id': id,
       'numeroDocumento': numeroDocumento,
-      'situacao': situacao,
+      'situacao': situacao?.index,
       'numeroControle': numeroControle,
       'anoMesConsumo': anoMesConsumo,
       'quantidadeConsumida': quantidadeConsumida,
@@ -114,13 +120,13 @@ class DespesaModel {
       'semestreEmissao': semestreEmissao,
       'trimestreEmissao': trimestreEmissao,
       'mesEmissao': mesEmissao,
-      'idUsuario': idUsuario,
-      'idFornecedor': idFornecedor,
-      'idUnidadeConsumidora': idUnidadeConsumidora,
-      'idInstituicao': idInstituicao,
-      'idOrcamento': idOrcamento,
-      'statusDespesa': statusDespesa,
-      'idTipoDespesa': idTipoDespesa,
+      'usuario': usuario?.toMap(),
+      'fornecedor': fornecedor?.toMap(),
+      'unidadeConsumidora': unidadeConsumidora?.toMap(),
+      'idInstituicao': instituicao?.toMap(),
+      'orcamento': orcamento?.toMap(),
+      'statusDespesa': statusDespesa?.index,
+      'tipoDespesa': tipoDespesa?.toMap(),
     };
   }
 
@@ -128,8 +134,7 @@ class DespesaModel {
     return DespesaModel(
       id: map['id'] as int?,
       numeroDocumento: map['numeroDocumento'] as String?,
-      situacao: SituacaoEnum.fromInt(
-          map['situacao'] as int), // Converte de índice para enum
+      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
       numeroControle: map['numeroControle'] as String?,
       anoMesConsumo: map['anoMesConsumo'] as String?,
       quantidadeConsumida: (map['quantidadeConsumida'] as num?)?.toDouble(),
@@ -145,13 +150,28 @@ class DespesaModel {
       semestreEmissao: map['semestreEmissao'] as int?,
       trimestreEmissao: map['trimestreEmissao'] as int?,
       mesEmissao: map['mesEmissao'] as int?,
-      idUsuario: map['idUsuario'] as int?,
-      idFornecedor: map['idFornecedor'] as int?,
-      idUnidadeConsumidora: map['idUnidadeConsumidora'] as int?,
-      idInstituicao: map['idInstituicao'] as int?,
-      idOrcamento: map['idOrcamento'] as int?,
+      usuario: map['usuario'] != null
+          ? UsuarioModel.fromMap(map['usuario'] as Map<String, dynamic>)
+          : null,
+      fornecedor: map['fornecedor'] != null
+          ? FornecedorModel.fromMap(map['fornecedor'] as Map<String, dynamic>)
+          : null,
+      unidadeConsumidora: map['unidadeConsumidora'] != null
+          ? UnidadeConsumidoraModel.fromMap(
+              map['unidadeConsumidora'] as Map<String, dynamic>)
+          : null,
+      instituicao: map['idInstituicao'] != null
+          ? InstituicaoModel.fromMap(
+              map['idInstituicao'] as Map<String, dynamic>)
+          : null,
+      orcamento: map['orcamento'] != null
+          ? OrcamentoModel.fromMap(map['orcamento'] as Map<String, dynamic>)
+          : null,
       statusDespesa: StatusEnum.fromInt(map['statusDespesa'] as int),
-      idTipoDespesa: map['idTipoDespesa'] as int?,
+      tipoDespesa: map['tipoDespesa'] != null
+          ? TipoDespesasModel.fromMap(
+              map['tipoDespesa'] as Map<String, dynamic>)
+          : null,
     );
   }
 
