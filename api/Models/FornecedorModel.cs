@@ -19,11 +19,13 @@ public class FornecedorModel
     [Column("nomefantasia")]
     public string NomeFantasia { get; set; }
 
-    [Column("situacao")]
-    public SituacaoEnum Situacao { get; set; }
+    /*Código para receber enum de Situação*/
+    [Column("situcao")]
+    [EnumDataType(typeof(EnumSituacaoModel))]
+    public EnumSituacaoModel Situacao { get; set; }
 
     [Column("cnpj")]
-    public string Cnpj { get; set; }
+    public string CNPJ { get; set; }
 
     [Column("nome")]
     public string Nome { get; set; }
@@ -38,7 +40,7 @@ public class FornecedorModel
     public string Bairro { get; set; }
 
     [Column("cep")]
-    public string Cep { get; set; }
+    public string CEP { get; set; }
 
     [Column("telefone")]
     public string Telefone { get; set; }
@@ -55,4 +57,8 @@ public class FornecedorModel
     /*Código para criar coleção de UnidadeConsumidora*/
     [JsonIgnore]
     public ICollection<UnidadeConsumidoraModel>? UnidadeConsumidora { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

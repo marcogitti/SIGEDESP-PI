@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using api.Models.Enum;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,10 +19,9 @@ public class TipoDespesaModel
     [Column("descricao")]
     public string Descricao { get; set; }
 
-    /*
     [Column("solicitauc")]
-    public string SolicitaUC { get; set; }
-    */
+    [EnumDataType(typeof(EnumSolicitaUCModel))]
+    public EnumSolicitaUCModel SolicitaUC { get; set; }
 
     /*Código para receber chave estrangeira de unidadeMedida*/
     public virtual UnidadeMedidaModel? UnidadeMedida { get; set; }
@@ -33,4 +33,8 @@ public class TipoDespesaModel
     /*Código para criar coleção de Orçamento*/
     [JsonIgnore]
     public ICollection<OrcamentoModel>? Orcamento { get; set; }
+
+    /*Código para criar coleção de Despesa*/
+    [JsonIgnore]
+    public ICollection<DespesaModel>? Despesa { get; set; }
 }

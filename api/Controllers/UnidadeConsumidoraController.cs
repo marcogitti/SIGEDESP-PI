@@ -1,60 +1,140 @@
-﻿using api.DTO.Entities;
+﻿using api.Data;
+using api.DTO.Entities;
 using api.Models;
-using api.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace api.Controllers
+[ApiController]
+[Route("api/unidade/consumidora")]
+public class UnidadeConsumidoraController : ControllerBase
 {
-    [Route("api/unidade/consumidora")]
-    [ApiController]
-    public class UnidadeConsumidoraController : ControllerBase
+    private readonly SigedespDBContex _context;
+
+    public UnidadeConsumidoraController(SigedespDBContex context)
     {
-        private readonly IUnidadeConsumidoraService _unidadeConsumidoraService;
+        _context = context;
+    }
 
-        public UnidadeConsumidoraController(IUnidadeConsumidoraService unidadeConsumidoraService)
+    // Método para buscar todas as unidades consumidoras
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<object>>> BuscarTodosUnidadeConsumidora()
+    {
+        var unidadesConsumidoras = await _context.UnidadeConsumidora
+            .Select(d => new
+            {
+                Id = d.Id,
+                CodigoUC = d.CodigoUC,
+                Fornecedor = new
+                {
+                    Id = d.Fornecedor.Id,
+                    NomeFantasia = d.Fornecedor.NomeFantasia
+                },
+                Instituicao = new
+                {
+                    Id = d.Instituicao.Id,
+                    Nome = d.Instituicao.Nome
+                },
+            })
+            .ToListAsync();
+
+        return Ok(unidadesConsumidoras);
+    }
+
+    // Método para buscar unidade consumidora por ID
+    [HttpGet("{id}")]
+    public async Task<ActionResult<object>> BuscarPorId(int id)
+    {
+        var unidadesConsumidoras = await _context.UnidadeConsumidora
+            .Where(d => d.Id == id)
+            .Select(d => new
+            {
+                Id = d.Id,
+                CodigoUC = d.CodigoUC,
+                Fornecedor = new
+                {
+                    Id = d.Fornecedor.Id,
+                    NomeFantasia = d.Fornecedor.NomeFantasia
+                },
+                Instituicao = new
+                {
+                    Id = d.Instituicao.Id,
+                    Nome = d.Instituicao.Nome
+                },
+            })
+            .FirstOrDefaultAsync();
+
+        if (unidadesConsumidoras == null)
+            return NotFound("Unidade Consumidora não encontrada");
+
+        return Ok(unidadesConsumidoras);
+    }
+
+    // Método para adicionar nova unidade consumidora
+    [HttpPost]
+    public async Task<ActionResult> Cadastrar([FromBody] UnidadeConsumidoraAdicionarAtualizarDTO unidadeConsumidoraDto)
+    {
+        if (unidadeConsumidoraDto == null)
+            return BadRequest("Dados inválidos");
+
+        var unidadeConsumidora = new UnidadeConsumidoraModel
         {
-            _unidadeConsumidoraService = unidadeConsumidoraService;
-        }
+            CodigoUC = unidadeConsumidoraDto.CodigoUC,
+            IdFornecedor = unidadeConsumidoraDto.IdFornecedor,
+            IdInstituicao = unidadeConsumidoraDto.IdInstituicao
+        };
 
-        [HttpGet]
-        public async Task<ActionResult<List<UnidadeConsumidoraDTO>>> BuscarTodosUnidadeConsumidora()
+        _context.UnidadeConsumidora.Add(unidadeConsumidora);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(BuscarPorId), new { id = unidadeConsumidora.Id }, unidadeConsumidora);
+    }
+
+    // Método para atualizar unidade consumidora existente
+    [HttpPut()]
+    public async Task<ActionResult> Atualizar([FromBody] UnidadeConsumidoraAdicionarAtualizarDTO unidadeconsumidoraAtualizada)
+    {
+        if (unidadeconsumidoraAtualizada == null || unidadeconsumidoraAtualizada.Id != unidadeconsumidoraAtualizada.Id)
+            return BadRequest("Dados inválidos");
+
+        var unidadeconsumidoraExistente = await _context.UnidadeConsumidora.FindAsync(unidadeconsumidoraAtualizada.Id);
+
+        if (unidadeconsumidoraExistente == null)
+            return NotFound("Unidade Consumidora não encontrada");
+
+        _context.Entry(unidadeconsumidoraExistente).CurrentValues.SetValues(unidadeconsumidoraAtualizada);
+        await _context.SaveChangesAsync();
+
+        return Ok(unidadeconsumidoraAtualizada);
+    }
+
+    // Método para deletar unidade consumidora
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<object>> Apagar(int id)
+    {
+        var unidadeConsumidora = await _context.UnidadeConsumidora.FindAsync(id);
+
+        if (unidadeConsumidora == null)
+            return NotFound("Unidade Consumidora não encontrada");
+
+        _context.UnidadeConsumidora.Remove(unidadeConsumidora);
+        await _context.SaveChangesAsync();
+
+        var unidadeconsumidoraRemovida = new UnidadeConsumidoraDTO
         {
-            var unidadeConsumidoras = await _unidadeConsumidoraService.BuscarTodosUnidadeConsumidora();
-            return Ok(unidadeConsumidoras);
-        }
+            Id = unidadeConsumidora.Id,
+            CodigoUC = unidadeConsumidora.CodigoUC,
+            Fornecedor = new FornecedorDTO
+            {
+                Id = unidadeConsumidora.Fornecedor.Id,
+                NomeFantasia = unidadeConsumidora.Fornecedor.NomeFantasia
+            },
+            Instituicao = new InstituicaoDTO
+            {
+                Id = unidadeConsumidora.Instituicao.Id,
+                Nome = unidadeConsumidora.Instituicao.Nome
+            },
+        };
 
-        [HttpGet("{id}", Name = "GetUnidadeConsumidora")]
-        public async Task<ActionResult<UnidadeConsumidoraModel>> BuscarPorId(int id)
-        {
-            var unidadeConsumidora = await _unidadeConsumidoraService.BuscarPorId(id);
-            if (unidadeConsumidora == null) return NotFound("Unidade Consumidora não encontrada");
-            return Ok(unidadeConsumidora);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Cadastrar([FromBody] UnidadeConsumidoraDTO unidadeConsumidoraDTO)
-        {
-            if (unidadeConsumidoraDTO is null) return BadRequest("dado inválido");
-            await _unidadeConsumidoraService.Adicionar(unidadeConsumidoraDTO);
-            return new CreatedAtRouteResult("GetUnidadeConsumidora", new { id = unidadeConsumidoraDTO.Id }, unidadeConsumidoraDTO);
-        }
-
-        [HttpPut()]
-        public async Task<ActionResult<UnidadeConsumidoraModel>> Atualizar([FromBody] UnidadeConsumidoraDTO unidadeConsumidoraDTO)
-        {
-            if (unidadeConsumidoraDTO is null) return BadRequest("dado inválido");
-            await _unidadeConsumidoraService.Atualizar(unidadeConsumidoraDTO);
-            return Ok(unidadeConsumidoraDTO);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<UnidadeConsumidoraModel>> Apagar(int id)
-        {
-            var unidadeConsumidoraDTO = await _unidadeConsumidoraService.BuscarPorId(id);
-            if (unidadeConsumidoraDTO == null) return BadRequest("Unidade Consumidora não encontrada");
-            await _unidadeConsumidoraService.Apagar(id);
-            return Ok(unidadeConsumidoraDTO);
-        }
-
+        return Ok(unidadeconsumidoraRemovida);
     }
 }
