@@ -10,9 +10,9 @@ class InstituicaoModel {
   String? nomeRazaoSocial;
   String? email;
   String? cnpj;
-  int? cep;
+  String? cep;
   String? logradouro;
-  int? numero;
+  String? numero;
   String? bairro;
   String? cidade;
   String? estado;
@@ -45,16 +45,14 @@ class InstituicaoModel {
     String? nomeRazaoSocial,
     String? email,
     String? cnpj,
-    int? cep,
+    String? cep,
     String? logradouro,
-    int? numero,
+    String? numero,
     String? bairro,
     String? cidade,
     String? estado,
     String? telefone,
     SituacaoEnum? situacao,
-    TipoInstituicaoModel? tipoInstituicao,
-    SecretariaModel? secretaria,
   }) {
     return InstituicaoModel(
       id: id ?? this.id,
@@ -70,8 +68,8 @@ class InstituicaoModel {
       estado: estado ?? this.estado,
       telefone: telefone ?? this.telefone,
       situacao: situacao ?? this.situacao,
-      tipoInstituicao: tipoInstituicao ?? this.tipoInstituicao,
-      secretaria: secretaria ?? this.secretaria,
+      tipoInstituicao: tipoInstituicao ?? tipoInstituicao,
+      secretaria: secretaria ?? secretaria,
     );
   }
 
@@ -104,14 +102,14 @@ class InstituicaoModel {
           : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
-      cep: map['cep'] != null ? map['cep'] as int : null,
+      cep: map['cep'] != null ? map['cep'] as String : null,
       logradouro:
           map['logradouro'] != null ? map['logradouro'] as String : null,
-      numero: map['numero'] as int,
+      numero: map['numero'] != null ? map['numero'] as String : null,
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      telefone: map['telefone'] as String?,
+      telefone: map['telefone'] != null ? map['telefone'] as String : null,
       situacao: map['situacao'] != null
           ? SituacaoEnum.fromInt(map['situacao'] as int)
           : null,

@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
@@ -41,7 +40,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
               padding:
                   EdgeInsets.only(bottom: 30), // Ajuste conforme necessário
               child: Text(
-                "Cadastro de Unidade de Medida",
+                "Unidade de Medida",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -53,7 +52,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
               children: [
                 TextField(
                   decoration: const InputDecoration(
-                    hintText: 'Buscar Unidade de Medida',
+                    hintText: 'Buscar',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -66,7 +65,7 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                       onPressed: () async {
                         await modalCadastrar();
                       },
-                      child: const Text('Cadastrar Unidade de Medida'),
+                      child: const Text('Cadastrar'),
                     ),
                     const SizedBox(width: 15),
                     const Text("Mostrar: "),
@@ -111,9 +110,9 @@ class _UnidadeDeMedidaPageState extends State<UnidadeDeMedidaPage> {
                 final List<UnidadeDeMedidaModel?> tp =
                     (snapshot.data ?? []).cast<UnidadeDeMedidaModel?>();
 
-                return SingleChildScrollView(
-                  dragStartBehavior: DragStartBehavior.start,
-                  scrollDirection: Axis.horizontal,
+                return SizedBox(
+                  height: 500,
+                  width: double.infinity,
                   child: DataTable(
                     border: TableBorder.all(),
                     columns: const [

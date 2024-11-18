@@ -7,7 +7,7 @@ enum SolicitaUcEnum {
 
   const SolicitaUcEnum({required this.numero, required this.nome});
 
-  factory SolicitaUcEnum.fromInt(int value) {
+  static SolicitaUcEnum fromInt(int value) {
     return SolicitaUcEnum.values.firstWhere(
       (element) => element.numero == value,
     );

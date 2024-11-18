@@ -6,13 +6,12 @@ import 'package:front/app/util/situacao_enum.dart';
 class FornecedorModel {
   final int? id;
   final String? nome;
-  final String? nomeRazaoSocial;
   final String? email;
   final String? cnpj;
-  final int? cep;
+  final String? cep;
   final String? logradouro;
   final String? nomeFantasia;
-  final int? numero;
+  final String? numero;
   final String? bairro;
   final String? cidade;
   final String? estado;
@@ -22,7 +21,6 @@ class FornecedorModel {
   FornecedorModel({
     this.id,
     this.nome,
-    this.nomeRazaoSocial,
     this.email,
     this.cnpj,
     this.telefone,
@@ -40,11 +38,10 @@ class FornecedorModel {
     return <String, dynamic>{
       'id': id,
       'nome': nome,
-      'nomeRazaoSocial': nomeRazaoSocial,
       'email': email,
       'cnpj': cnpj,
       'cep': cep,
-      'descricao': nomeFantasia,
+      'nomeFantasia': nomeFantasia,
       'logradouro': logradouro,
       'numero': numero,
       'bairro': bairro,
@@ -58,21 +55,18 @@ class FornecedorModel {
     return FornecedorModel(
       id: map['id'] != null ? map['id'] as int : null,
       nome: map['nome'] != null ? map['nome'] as String : null,
-      nomeRazaoSocial: map['nomeRazaoSocial'] != null
-          ? map['nomeRazaoSocial'] as String
-          : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
-      cep: map['cep'] != null ? map['cep'] as int : null,
+      cep: map['cep'] != null ? map['cep'] as String : null,
       nomeFantasia:
-          map['descricao'] != null ? map['descricao'] as String : null,
+          map['nomeFantasia'] != null ? map['nomeFantasia'] as String : null,
       logradouro:
           map['logradouro'] != null ? map['logradouro'] as String : null,
-      numero: map['numero'] as int,
+      numero: map['numero'] != null ? map['numero'] as String : null,
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
+      situacao: SituacaoEnum.fromInt(map['situacao'] ?? 0),
     );
   }
 
@@ -86,13 +80,14 @@ class FornecedorModel {
     String? nome,
     String? email,
     String? cnpj,
-    int? cep,
+    String? cep,
     String? logradouro,
-    int? numero,
+    String? numero,
     String? telefone,
     String? bairro,
     String? cidade,
     String? estado,
+    String? nomeFantasia,
     SituacaoEnum? situacao,
   }) {
     return FornecedorModel(

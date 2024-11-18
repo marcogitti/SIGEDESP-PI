@@ -147,19 +147,21 @@ class ScaffoldComp extends StatelessWidget {
                                         'Despesa',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/despesas');
+                                      },
                                     ),
                                   ],
                                 ),
                                 ExpansionTile(
                                   leading: const Icon(
-                                    Icons.person,
+                                    Icons.attach_money,
                                     color: Colors.white,
                                   ),
                                   title: const Row(
                                     children: [
                                       Text(
-                                        "Usuario",
+                                        "Orçamento",
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -169,17 +171,71 @@ class ScaffoldComp extends StatelessWidget {
                                   children: <Widget>[
                                     ListTile(
                                       title: const Text(
-                                        'Usuario',
+                                        'Orçamento',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/orcamento');
+                                      },
                                     ),
+                                  ],
+                                ),
+                                // ExpansionTile(
+                                //   leading: const Icon(
+                                //     Icons.person,
+                                //     color: Colors.white,
+                                //   ),
+                                //   title: const Row(
+                                //     children: [
+                                //       Text(
+                                //         "Usuario",
+                                //         style: TextStyle(
+                                //           color: Colors.white,
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                //   children: <Widget>[
+                                //     ListTile(
+                                //       title: const Text(
+                                //         'Usuario',
+                                //         style: TextStyle(color: Colors.white),
+                                //       ),
+                                //       onTap: () {},
+                                //     ),
+                                //     ListTile(
+                                //       title: const Text(
+                                //         'Tipo Usuario',
+                                //         style: TextStyle(color: Colors.white),
+                                //       ),
+                                //       onTap: () {},
+                                //     ),
+                                //   ],
+                                // ),
+                                ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.domain,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Row(
+                                    children: [
+                                      Text(
+                                        "Secretaria",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  children: <Widget>[
                                     ListTile(
                                       title: const Text(
-                                        'Tipo Usuario',
+                                        'Secretaria',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/secretariaPage');
+                                      },
                                     ),
                                   ],
                                 ),
@@ -220,20 +276,13 @@ class ScaffoldComp extends StatelessWidget {
                                             .navigate('/tipoInstituicaoPage');
                                       },
                                     ),
-                                    ListTile(
-                                      title: const Text(
-                                        'Secretaria',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onTap: () {
-                                        Modular.to.navigate('/secretariaPage');
-                                      },
-                                    ),
                                   ],
                                 ),
+
                                 ExpansionTile(
                                   leading: const Icon(
-                                    Icons.request_quote_outlined,
+                                    Icons.onetwothree,
+                                    size: 30,
                                     color: Colors.white,
                                   ),
                                   title: const Row(
@@ -268,15 +317,16 @@ class ScaffoldComp extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+
                                 ExpansionTile(
                                   leading: const Icon(
-                                    Icons.request_quote_outlined,
+                                    Icons.diversity_3_outlined,
                                     color: Colors.white,
                                   ),
                                   title: const Row(
                                     children: [
                                       Text(
-                                        "Orçamento",
+                                        "Fornecedor",
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -286,10 +336,12 @@ class ScaffoldComp extends StatelessWidget {
                                   children: <Widget>[
                                     ListTile(
                                       title: const Text(
-                                        'Orçamento',
+                                        'Fornecedor',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        Modular.to.navigate('/fornecedorPage');
+                                      },
                                     ),
                                   ],
                                 ),
@@ -308,30 +360,58 @@ class ScaffoldComp extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const ListTile(
-                              leading: Icon(
+                            ListTile(
+                              leading: const Icon(
                                 Icons.data_thresholding_outlined,
                                 color: Colors.white,
                               ),
-                              title: Text(
+                              title: const Text(
                                 "Dashboard",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
+                              onTap: () {
+                                Modular.to.navigate('/dasboardPage');
+                              },
                             ),
                             const Divider(),
-                            const ListTile(
-                              leading: Icon(
+                            ExpansionTile(
+                              leading: const Icon(
                                 Icons.person,
+                                size: 30,
                                 color: Colors.white,
                               ),
-                              title: Text(
-                                "Perfil",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                              title: const Row(
+                                children: [
+                                  Text(
+                                    "Usuário",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
+                              children: <Widget>[
+                                ListTile(
+                                  title: const Text(
+                                    'Perfil',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onTap: () {
+                                    Modular.to.navigate('/loginPage');
+                                  },
+                                ),
+                                ListTile(
+                                  title: const Text(
+                                    'Cadastro de Usuario',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onTap: () {
+                                    Modular.to.navigate('/usuarioPage');
+                                  },
+                                ),
+                              ],
                             ),
                             const Divider(),
                           ],

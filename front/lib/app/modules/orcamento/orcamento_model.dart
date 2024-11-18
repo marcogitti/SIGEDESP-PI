@@ -5,11 +5,11 @@ import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
 
 class OrcamentoModel {
-  final int? id;
-  final int? anoOrcamento;
-  final double? valorOrcamento;
-  final TipoDespesasModel? tipoDespesa;
-  final InstituicaoModel? instituicao;
+  int? id;
+  int? anoOrcamento;
+  double? valorOrcamento;
+  TipoDespesasModel? tipoDespesa;
+  InstituicaoModel? instituicao;
 
   OrcamentoModel({
     this.id,
@@ -34,9 +34,7 @@ class OrcamentoModel {
       id: map['id'] != null ? map['id'] as int : null,
       anoOrcamento:
           map['anoOrcamento'] != null ? map['anoOrcamento'] as int : null,
-      valorOrcamento: map['valorOrcamento'] != null
-          ? map['valorOrcamento'] as double
-          : null,
+      valorOrcamento: map['valorOrcamento']?.toDouble(),
       tipoDespesa: map['tipoDespesa'] != null
           ? TipoDespesasModel.fromMap(
               map['tipoDespesa'] as Map<String, dynamic>)

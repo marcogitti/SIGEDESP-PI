@@ -5,17 +5,17 @@ import 'package:front/app/util/tipo_usuario_enum.dart';
 
 class UsuarioModel {
   final int? id;
-  final String? nome;
-  final String? email;
-  final String? rg;
   final String? cpf;
-  final String? cep;
+  final String? nome;
+  final String? rg;
   final String? logradouro;
-  final int? numero;
-  final String? bairro;
-  final String? senha;
+  final String? numero;
   final String? cidade;
   final String? estado;
+  final String? cep;
+  final String? email;
+  final String? senha;
+  final String? bairro;
   final String? matricula;
   final SituacaoEnum? situacao;
   final TipoUsuarioEnum? tipoUsuarioEnum;
@@ -46,7 +46,7 @@ class UsuarioModel {
     String? cpf,
     String? cep,
     String? logradouro,
-    int? numero,
+    String? numero,
     String? bairro,
     String? senha,
     String? cidade,
@@ -96,21 +96,22 @@ class UsuarioModel {
 
   factory UsuarioModel.fromMap(Map<String, dynamic> map) {
     return UsuarioModel(
-      id: map['id'] as int?,
-      nome: map['nome'] as String?,
-      email: map['email'] as String?,
-      rg: map['rg'] as String?,
-      cpf: map['cpf'] as String?,
-      cep: map['cep'] as String?,
-      logradouro: map['logradouro'] as String?,
-      numero: map['numero'] as int,
-      bairro: map['bairro'] as String?,
-      senha: map['senha'] as String?,
-      cidade: map['cidade'] as String?,
-      estado: map['estado'] as String?,
-      matricula: map['matricula'] as String?,
-      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
-      tipoUsuarioEnum: TipoUsuarioEnum.fromInt(map['tipoUsuarioEnum'] as int),
+      id: map['id'] ?? 0,
+      nome: map['nome'] != null ? map['nome'] as String : null,
+      email: map['email'] != null ? map['email'] as String : null,
+      rg: map['rg'] != null ? map['rg'] as String : null,
+      cpf: map['cpf'] != null ? map['cpf'] as String : null,
+      cep: map['cep'] != null ? map['cep'] as String : null,
+      logradouro:
+          map['logradouro'] != null ? map['logradouro'] as String : null,
+      numero: map['numero'] != null ? map['numero'] as String : null,
+      bairro: map['bairro'] != null ? map['bairro'] as String : null,
+      senha: map['senha'] != null ? map['senha'] as String : null,
+      cidade: map['cidade'] != null ? map['cidade'] as String : null,
+      estado: map['estado'] != null ? map['estado'] as String : null,
+      matricula: map['matricula'] != null ? map['matricula'] as String : null,
+      situacao: SituacaoEnum.fromInt(map['situacao'] ?? 0),
+      tipoUsuarioEnum: TipoUsuarioEnum.fromInt(map['tipoUsuarioEnum'] ?? 0),
     );
   }
 

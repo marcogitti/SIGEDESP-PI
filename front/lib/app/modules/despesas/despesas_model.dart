@@ -10,27 +10,27 @@ import 'package:front/app/util/situacao_enum.dart';
 import 'package:front/app/util/status_de_despesa_enum.dart';
 
 class DespesaModel {
-  final int? id;
-  final String? numeroDocumento;
-  final SituacaoEnum? situacao;
-  final String? numeroControle;
-  final String? anoMesConsumo;
-  final double? quantidadeConsumida;
-  final double? valorPrevisto;
-  final double? valorPago;
-  final DateTime? dataVencimento;
-  final DateTime? dataPagamento;
-  final int? anoEmissao;
-  final int? semestreEmissao;
-  final int? trimestreEmissao;
-  final int? mesEmissao;
-  final UsuarioModel? usuario;
-  final FornecedorModel? fornecedor;
-  final UnidadeConsumidoraModel? unidadeConsumidora;
-  final InstituicaoModel? instituicao;
-  final OrcamentoModel? orcamento;
-  final StatusEnum? statusDespesa;
-  final TipoDespesasModel? tipoDespesa;
+  int? id;
+  String? numeroDocumento;
+  SituacaoEnum? situacao;
+  String? numeroControle;
+  String? anoMesConsumo;
+  double? quantidadeConsumida;
+  double? valorPrevisto;
+  double? valorPago;
+  DateTime? dataVencimento;
+  DateTime? dataPagamento;
+  int? anoEmissao;
+  int? semestreEmissao;
+  int? trimestreEmissao;
+  int? mesEmissao;
+  UsuarioModel? usuario;
+  FornecedorModel? fornecedor;
+  UnidadeConsumidoraModel? unidadeConsumidora;
+  InstituicaoModel? instituicao;
+  OrcamentoModel? orcamento;
+  StatusEnum? statusDespesa;
+  TipoDespesasModel? tipoDespesa;
 
   DespesaModel({
     this.id,
@@ -77,7 +77,8 @@ class DespesaModel {
     InstituicaoModel? idInstituicao,
     OrcamentoModel? orcamento,
     StatusEnum? statusDespesa,
-    TipoDespesasModel? tipoDespesa, InstituicaoModel? instituicao,
+    TipoDespesasModel? tipoDespesa,
+    InstituicaoModel? instituicao,
   }) {
     return DespesaModel(
       id: id ?? this.id,
@@ -132,11 +133,16 @@ class DespesaModel {
 
   factory DespesaModel.fromMap(Map<String, dynamic> map) {
     return DespesaModel(
-      id: map['id'] as int?,
-      numeroDocumento: map['numeroDocumento'] as String?,
-      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
-      numeroControle: map['numeroControle'] as String?,
-      anoMesConsumo: map['anoMesConsumo'] as String?,
+      id: map['id'] ?? 0,
+      numeroDocumento: map['numeroDocumento'] != null
+          ? map['numeroDocumento'] as String
+          : null,
+      situacao: SituacaoEnum.fromInt(map['situacao'] ?? 0),
+      numeroControle: map['numeroControle'] != null
+          ? map['numeroControle'] as String
+          : null,
+      anoMesConsumo:
+          map['anoMesConsumo'] != null ? map['anoMesConsumo'] as String : null,
       quantidadeConsumida: (map['quantidadeConsumida'] as num?)?.toDouble(),
       valorPrevisto: (map['valorPrevisto'] as num?)?.toDouble(),
       valorPago: (map['valorPago'] as num?)?.toDouble(),
@@ -146,10 +152,10 @@ class DespesaModel {
       dataPagamento: map['dataPagamento'] != null
           ? DateTime.parse(map['dataPagamento'])
           : null,
-      anoEmissao: map['anoEmissao'] as int?,
-      semestreEmissao: map['semestreEmissao'] as int?,
-      trimestreEmissao: map['trimestreEmissao'] as int?,
-      mesEmissao: map['mesEmissao'] as int?,
+      anoEmissao: map['anoEmissao'] ?? 0,
+      semestreEmissao: map['semestreEmissao'] ?? 0,
+      trimestreEmissao: map['trimestreEmissao'] ?? 0,
+      mesEmissao: map['mesEmissao'] ?? 0,
       usuario: map['usuario'] != null
           ? UsuarioModel.fromMap(map['usuario'] as Map<String, dynamic>)
           : null,
@@ -167,7 +173,7 @@ class DespesaModel {
       orcamento: map['orcamento'] != null
           ? OrcamentoModel.fromMap(map['orcamento'] as Map<String, dynamic>)
           : null,
-      statusDespesa: StatusEnum.fromInt(map['statusDespesa'] as int),
+      statusDespesa: StatusEnum.fromInt(map['statusDespesa'] ?? 0),
       tipoDespesa: map['tipoDespesa'] != null
           ? TipoDespesasModel.fromMap(
               map['tipoDespesa'] as Map<String, dynamic>)

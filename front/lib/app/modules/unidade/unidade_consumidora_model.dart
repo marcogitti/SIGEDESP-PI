@@ -6,7 +6,7 @@ import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
 
 class UnidadeConsumidoraModel {
   int? id;
-  int? codigoUC;
+  String? codigoUC;
   FornecedorModel? fornecedor;
   InstituicaoModel? instituicao;
 
@@ -19,7 +19,7 @@ class UnidadeConsumidoraModel {
 
   UnidadeConsumidoraModel copyWith({
     int? id,
-    int? codigoUC,
+    String? codigoUC,
     FornecedorModel? fornecedor,
     InstituicaoModel? instituicao,
   }) {
@@ -43,7 +43,7 @@ class UnidadeConsumidoraModel {
   factory UnidadeConsumidoraModel.fromMap(Map<String, dynamic> map) {
     return UnidadeConsumidoraModel(
       id: map['id'] != null ? map['id'] as int : null,
-      codigoUC: map['codigoUC'] != null ? map['codigoUC'] as int : null,
+      codigoUC: map['codigoUC'] != null ? map['codigoUC'] as String : null,
       fornecedor: map['fornecedor'] != null
           ? FornecedorModel.fromMap(map['fornecedor'] as Map<String, dynamic>)
           : null,

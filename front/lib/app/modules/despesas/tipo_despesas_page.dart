@@ -1,7 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// ignore: unnecessary_import
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_drop_down_comp.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
@@ -114,11 +111,12 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
                     return const Text("Erro");
                   }
 
-                  final tp = (snapshot.data ?? []).cast<TipoDespesasModel?>();
+                  List<TipoDespesasModel?> tp =
+                      (snapshot.data ?? []).cast<TipoDespesasModel?>();
 
-                  return SingleChildScrollView(
-                    dragStartBehavior: DragStartBehavior.start,
-                    scrollDirection: Axis.horizontal,
+                  return SizedBox(
+                    height: 500,
+                    width: double.infinity,
                     child: DataTable(
                       border: TableBorder.all(),
                       columns: const [
@@ -132,13 +130,16 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
                           .map((e) {
                             return DataRow(cells: [
                               DataCell(
-                                Text(e?.descricao.toString() ?? ''),
+                                Text(e?.id.toString() ?? ''),
                               ),
                               DataCell(
-                                Text(e?.idUnidadeMedida.toString() ?? ''),
+                                Text(e?.descricao ?? ''),
                               ),
                               DataCell(
-                                Text(e?.solicitaUC ?? ''),
+                                Text(e?.unidadeMedida?.descricao ?? ''),
+                              ),
+                              DataCell(
+                                Text(e?.solicitaUC?.nome ?? ''),
                               ),
                               DataCell(Row(
                                 children: [
@@ -177,7 +178,7 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
                                                 onPressed: () async {
                                                   Modular.to.pop();
                                                   await service
-                                                      .deleteData(e!.id);
+                                                      .deleteData(e!.id!);
 
                                                   setState(() {});
                                                 },
@@ -208,13 +209,10 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
   Future<void> modalCadastrar([TipoDespesasModel? tipoDespesa]) async {
     bool isEdit = tipoDespesa?.id != null;
     if (!isEdit) {
-      tipoDespesa = TipoDespesasModel();
+      tipoDespesa = TipoDespesasModel(
+        solicitaUC: SolicitaUcEnum.sim,
+      );
     }
-    UnidadeDeMedidaModel? selectedUnidadeMedida;
-    SolicitaUcEnum solicitaUcEnum = SolicitaUcEnum.values.firstWhere(
-      (e) => e.toString() == 'SolicitaUcEnum.${tipoDespesa?.solicitaUC}',
-      orElse: () => SolicitaUcEnum.sim,
-    );
 
     TextEditingController tipoDespesaDescricaoEditCtrl =
         TextEditingController(text: tipoDespesa?.descricao ?? '');
@@ -225,43 +223,41 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
         return AlertDialog(
           scrollable: true,
           title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Tipo Despesa'),
-          content: StatefulBuilder(builder: (context, mSetState) {
-            return SizedBox(
-              width: 500,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: tipoDespesaDescricaoEditCtrl,
-                    decoration: const InputDecoration(
-                      labelText: 'Descrição',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Campo obrigatório';
-                      }
-                      return null;
-                    },
+          content: SizedBox(
+            width: 500,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: tipoDespesaDescricaoEditCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Descrição',
                   ),
-                  MyDropDownComp(
-                    initValue: solicitaUcEnum,
-                    itens: SolicitaUcEnum.values,
-                    onChanged: (value) {
-                      solicitaUcEnum = value!;
-                    },
-                    labelText: 'Solicita UC',
-                  ),
-                  MyDropDownGetComp<UnidadeDeMedidaModel,
-                      UnidadeMedidaServiceImpl>(
-                    labelText: 'Unidade de Medida',
-                    initValue: selectedUnidadeMedida,
-                    onChanged: (value) {
-                      selectedUnidadeMedida = value;
-                    },
-                  ),
-                ],
-              ),
-            );
-          }),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                MyDropDownComp(
+                  labelText: 'Solicita UC',
+                  initValue: tipoDespesa?.solicitaUC,
+                  itens: SolicitaUcEnum.values,
+                  onChanged: (value) {
+                    tipoDespesa?.solicitaUC = value!;
+                  },
+                ),
+                MyDropDownGetComp<UnidadeDeMedidaModel,
+                    UnidadeMedidaServiceImpl>(
+                  labelText: 'Unidade de Medida',
+                  initValue: tipoDespesa?.unidadeMedida,
+                  onChanged: (value) {
+                    tipoDespesa?.unidadeMedida = value;
+                  },
+                ),
+              ],
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancelar'),
@@ -274,8 +270,6 @@ class _TipoDeDespesasPageState extends State<TipoDeDespesasPage> {
               onPressed: () async {
                 tipoDespesa = tipoDespesa?.copyWith(
                   descricao: tipoDespesaDescricaoEditCtrl.text,
-                  unidadeMedida: tipoDespesa?.unidadeMedida,
-                  solicitaUC: solicitaUcEnum,
                 );
                 if (isEdit) {
                   final resp = await service.editData(tipoDespesa!);

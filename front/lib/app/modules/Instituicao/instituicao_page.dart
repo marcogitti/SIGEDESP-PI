@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -46,7 +45,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
             const Padding(
               padding: EdgeInsets.only(bottom: 30),
               child: Text(
-                "Cadastro de Instituição",
+                "Instituição",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -58,7 +57,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
               children: [
                 TextField(
                   decoration: const InputDecoration(
-                    hintText: 'Buscar Instituição',
+                    hintText: 'Buscar',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -71,7 +70,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                       onPressed: () async {
                         await modalCadastrar();
                       },
-                      child: const Text('Cadastrar Nova Instituição'),
+                      child: const Text('Cadastrar'),
                     ),
                     const SizedBox(width: 10),
                     const Text("Mostrar: "),
@@ -115,37 +114,43 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     return const Text("Erro");
                   }
 
-                  final tp = (snapshot.data ?? []).cast<InstituicaoModel?>();
-                  return SingleChildScrollView(
-                    dragStartBehavior: DragStartBehavior.start,
-                    scrollDirection: Axis.horizontal,
+                  List<InstituicaoModel> tp =
+                      (snapshot.data ?? []).cast<InstituicaoModel>();
+                  return SizedBox(
+                    height: 500,
+                    width: double.infinity,
                     child: DataTable(
                       border: TableBorder.all(),
                       columns: const [
+                        DataColumn(label: Text('Id')),
                         DataColumn(label: Text('Nome')),
                         DataColumn(label: Text('CNPJ')),
                         DataColumn(label: Text('Situação')),
                         DataColumn(label: Text('Secretaria')),
-                        DataColumn(label: Text('Tipo Instituição')),
+                        DataColumn(label: Text('Tipo\nInstituição')),
                         DataColumn(label: Text('Ação')),
                       ],
                       rows: tp
                           .map((e) {
                             return DataRow(cells: [
                               DataCell(
-                                Text(e?.nome.toString() ?? ''),
+                                Text(e.id.toString()),
                               ),
                               DataCell(
-                                Text(e?.cnpj.toString() ?? ''),
+                                Text(e.nome.toString() ),
                               ),
                               DataCell(
-                                Text(e?.situacao.toString() ?? ''),
+                                Text(e.cnpj.toString()),
                               ),
                               DataCell(
-                                Text(e?.idSecretaria.toString() ?? ''),
+                                Text(e.situacao?.nome ?? ''),
                               ),
                               DataCell(
-                                Text(e?.idTipoInstituicao.toString() ?? ''),
+                                Text(e.secretaria?.nome.toString() ?? ''),
+                              ),
+                              DataCell(
+                                Text(e.tipoInstituicao?.descricao.toString() ??
+                                    ''),
                               ),
                               DataCell(Row(
                                 children: [
@@ -220,13 +225,14 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
       instituicao = InstituicaoModel();
     }
     SituacaoEnum situacaoEnum = instituicao?.situacao ?? SituacaoEnum.ativo;
-    SecretariaModel? selectedSecretaria;
-    TipoInstituicaoModel? selectedTipoInstituicao;
+    // SecretariaModel? selectedSecretaria = instituicao?.secretaria;
+    // TipoInstituicaoModel? selectedTipoInstituicao =
+    //     instituicao?.tipoInstituicao;
 
     TextEditingController instituicaoBairroEditCtrl =
         TextEditingController(text: instituicao?.bairro ?? '');
-    TextEditingController instituicaoCepEditCtrl = TextEditingController(
-        text: instituicao?.cep != null ? instituicao?.cep.toString() : '');
+    TextEditingController instituicaoCepEditCtrl =
+        TextEditingController(text: instituicao?.cep ?? '');
     TextEditingController instituicaoCidadeEditCtrl =
         TextEditingController(text: instituicao?.cidade ?? '');
     TextEditingController instituicaoCnpjEditCtrl =
@@ -237,9 +243,8 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
         TextEditingController(text: instituicao?.estado ?? '');
     TextEditingController instituicaoLogradouroEditCtrl =
         TextEditingController(text: instituicao?.logradouro ?? '');
-    TextEditingController instituicaoNumeroEditCtrl = TextEditingController(
-        text:
-            instituicao?.numero != null ? instituicao?.numero.toString() : '');
+    TextEditingController instituicaoNumeroEditCtrl =
+        TextEditingController(text: instituicao?.numero ?? '');
     TextEditingController instituicaoNRSocialEditCtrl =
         TextEditingController(text: instituicao?.nomeRazaoSocial ?? '');
     TextEditingController instituicaoNomeEditCtrl =
@@ -298,6 +303,18 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     controller: instituicaoEmailEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Email',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: instituicaoTelefoneEditCtrl,
+                    decoration: const InputDecoration(
+                      labelText: 'Telefone',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -392,17 +409,17 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                   ),
                   MyDropDownGetComp<SecretariaModel, SecretariaServiceImpl>(
                     labelText: 'Secretaria',
-                    initValue: selectedSecretaria,
+                    initValue: instituicao?.secretaria,
                     onChanged: (value) {
-                      selectedSecretaria = value;
+                      instituicao?.secretaria = value;
                     },
                   ),
                   MyDropDownGetComp<TipoInstituicaoModel,
                       TipoInstituicaoServiceImpl>(
                     labelText: 'Tipo instituicao',
-                    initValue: selectedTipoInstituicao,
+                    initValue: instituicao?.tipoInstituicao,
                     onChanged: (value) {
-                      selectedTipoInstituicao = value;
+                      instituicao?.tipoInstituicao = value;
                     },
                   ),
                 ],
@@ -421,7 +438,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
               onPressed: () async {
                 instituicao = instituicao?.copyWith(
                   bairro: instituicaoBairroEditCtrl.text,
-                  cep: int.tryParse(instituicaoCepEditCtrl.text),
+                  cep: instituicaoCepEditCtrl.text,
                   cidade: instituicaoCidadeEditCtrl.text,
                   cnpj: instituicaoCnpjEditCtrl.text,
                   email: instituicaoEmailEditCtrl.text,
@@ -429,11 +446,9 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                   logradouro: instituicaoLogradouroEditCtrl.text,
                   nome: instituicaoNomeEditCtrl.text,
                   nomeRazaoSocial: instituicaoNRSocialEditCtrl.text,
-                  numero: int.tryParse(instituicaoNumeroEditCtrl.text),
+                  numero: instituicaoNumeroEditCtrl.text,
                   situacao: situacaoEnum,
                   telefone: instituicaoTelefoneEditCtrl.text,
-                  secretaria: instituicao?.secretaria,
-                  tipoInstituicao: instituicao?.tipoInstituicao,
                 );
                 if (isEdit) {
                   final resp = await service.editData(
@@ -449,8 +464,6 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) {
-                    //snack bar
-                    // ignore: avoid_print
                     print('erro$failure');
                   });
                 }
@@ -470,5 +483,6 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
     instituicaoNomeEditCtrl.dispose();
     instituicaoNRSocialEditCtrl.dispose();
     instituicaoNumeroEditCtrl.dispose();
+    instituicaoTelefoneEditCtrl.dispose();
   }
 }

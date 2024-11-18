@@ -44,7 +44,7 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                 const Padding(
                   padding: EdgeInsets.only(bottom: 50),
                   child: Text(
-                    "Cadastro de Orçamento",
+                    "Orçamento",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                   children: [
                     TextField(
                       decoration: const InputDecoration(
-                        hintText: 'Buscar Orçamento',
+                        hintText: 'Buscar',
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(),
                       ),
@@ -69,7 +69,7 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                           onPressed: () async {
                             await modalCadastrar();
                           },
-                          child: const Text('Cadastrar Novo Orçamento'),
+                          child: const Text('Cadastrar'),
                         ),
                         const SizedBox(width: 15),
                         const Text("Mostrar: "),
@@ -96,7 +96,7 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                     future: service.getAll().getOrNull(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.none) {
-                        return const Text("sem internet");
+                        return const Text("Sem internet");
                       }
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -113,7 +113,8 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                         return const Text("Erro");
                       }
 
-                      final tp = (snapshot.data ?? []).cast<OrcamentoModel?>();
+                      List<OrcamentoModel?> tp =
+                          (snapshot.data ?? []).cast<OrcamentoModel?>();
 
                       return SizedBox(
                         height: 500,
@@ -121,79 +122,81 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                         child: DataTable(
                           border: TableBorder.all(),
                           columns: const [
+                            DataColumn(label: Text('Id')),
                             DataColumn(label: Text('Ano Orçamento')),
                             DataColumn(label: Text('Valor Orçamento')),
                             DataColumn(label: Text('Tipo de Despesa')),
                             DataColumn(label: Text('Instituição')),
+                            DataColumn(label: Text('Ações')),
                           ],
                           rows: tp
                               .map((e) {
-                                return DataRow(cells: [
-                                  DataCell(
-                                    Text(e?.anoOrcamento.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.valorOrcamento.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.idTipoDespesa.toString() ?? ''),
-                                  ),
-                                  DataCell(
-                                    Text(e?.idInstituicao.toString() ?? ''),
-                                  ),
-                                  DataCell(Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: Color(0xFF0044FF),
+                                return DataRow(
+                                  cells: [
+                                    DataCell(Text(e?.id?.toString() ?? '')),
+                                    DataCell(
+                                        Text(e?.anoOrcamento.toString() ?? '')),
+                                    DataCell(Text(
+                                        e?.valorOrcamento.toString() ?? '')),
+                                    DataCell(
+                                        Text(e?.tipoDespesa?.descricao ?? '')),
+                                    DataCell(Text(e?.instituicao?.nome ?? '')),
+                                    DataCell(Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Color(0xFF0044FF),
+                                          ),
+                                          onPressed: () async {
+                                            await modalCadastrar(e);
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          await modalCadastrar(e);
-                                        },
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Color(0xFFF44336),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Color(0xFFF44336),
+                                          ),
+                                          onPressed: () async {
+                                            await showDialog<bool>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: const Text(
+                                                      'Confirmar exclusão'),
+                                                  content: const Text(
+                                                      'Tem certeza que deseja excluir este item?'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text(
+                                                          'Cancelar'),
+                                                      onPressed: () {
+                                                        Modular.to.pop(false);
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: const Text(
+                                                          'Confirmar'),
+                                                      onPressed: () async {
+                                                        Modular.to.pop();
+                                                        if (e?.id != null) {
+                                                          await service
+                                                              .deleteData(
+                                                                  e!.id!);
+                                                          setState(() {});
+                                                        }
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          await showDialog<bool>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text(
-                                                    'Confirmar exclusão'),
-                                                content: const Text(
-                                                    'Tem certeza que deseja excluir este item?'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    child:
-                                                        const Text('Cancelar'),
-                                                    onPressed: () {
-                                                      Modular.to.pop(false);
-                                                    },
-                                                  ),
-                                                  TextButton(
-                                                    child:
-                                                        const Text('Confirmar'),
-                                                    onPressed: () async {
-                                                      Modular.to.pop();
-                                                      await service
-                                                          .deleteData(e!.id);
-
-                                                      setState(() {});
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  )),
-                                ]);
+                                      ],
+                                    )),
+                                  ],
+                                );
                               })
                               .toList()
                               .cast<DataRow>(),
@@ -211,8 +214,6 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
     if (!isEdit) {
       orcamento = OrcamentoModel();
     }
-    TipoDespesasModel? selectedTipoDespesa;
-    InstituicaoModel? selectedInstituicao;
 
     TextEditingController orcamentoAnoEditCtrl = TextEditingController(
         text: orcamento?.anoOrcamento != null
@@ -264,16 +265,16 @@ class _OrcamentoPageState extends State<OrcamentoPage> {
                 ),
                 MyDropDownGetComp<InstituicaoModel, InstituicaoServiceImpl>(
                   labelText: 'Instituição',
-                  initValue: selectedInstituicao,
+                  initValue: orcamento?.instituicao,
                   onChanged: (value) {
-                    selectedInstituicao = value;
+                    orcamento?.instituicao = value;
                   },
                 ),
                 MyDropDownGetComp<TipoDespesasModel, TipoDespesasServiceImpl>(
-                  labelText: 'Fornecedor',
-                  initValue: selectedTipoDespesa,
+                  labelText: 'Tipo De Despesa',
+                  initValue: orcamento?.tipoDespesa,
                   onChanged: (value) {
-                    selectedTipoDespesa = value;
+                    orcamento?.tipoDespesa = value;
                   },
                 )
               ],

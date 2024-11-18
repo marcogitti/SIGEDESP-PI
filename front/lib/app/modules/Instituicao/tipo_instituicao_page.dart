@@ -39,7 +39,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
             const Padding(
               padding: EdgeInsets.only(bottom: 50),
               child: Text(
-                "Cadastro de Tipo Instituição",
+                "Tipo Instituição",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
               children: [
                 TextField(
                   decoration: const InputDecoration(
-                    hintText: 'Buscar Tipo Instituição',
+                    hintText: 'Buscar',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -64,7 +64,7 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                       onPressed: () async {
                         await modalCadastrar();
                       },
-                      child: const Text('Cadastrar Tipo Instituição'),
+                      child: const Text('Cadastrar'),
                     ),
                     const SizedBox(width: 15),
                     const Text("Mostrar: "),
@@ -111,12 +111,13 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                   final tp =
                       (snapshot.data ?? []).cast<TipoInstituicaoModel?>();
 
-                  return SingleChildScrollView(
-                    dragStartBehavior: DragStartBehavior.start,
-                    scrollDirection: Axis.horizontal,
+                  return SizedBox(
+                    height: 500,
+                    width: double.infinity,
                     child: DataTable(
                       border: TableBorder.all(),
                       columns: const [
+                        DataColumn(label: Text('Id')),
                         DataColumn(label: Text('Nome')),
                         DataColumn(label: Text('Ações')),
                       ],
@@ -124,6 +125,9 @@ class _TipoInstituicaoState extends State<TipoInstituicao> {
                           .map((e) {
                             return DataRow(
                               cells: [
+                                DataCell(
+                                  Text(e?.id.toString() ?? ''),
+                                ),
                                 DataCell(
                                   Text(e?.descricao.toString() ?? ''),
                                 ),

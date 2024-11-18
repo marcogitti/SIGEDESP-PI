@@ -16,27 +16,28 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void initState() {
     Modular.setObservers([BotToastNavigatorObserver()]);
-    Modular.get<ThemeApp>().theme.addListener(() {
-      setState(() {});
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Accessible App',
-      debugShowCheckedModeBanner: false,
-      theme: createTheme(),
-      routeInformationParser: Modular.routeInformationParser,
-      routerDelegate: Modular.routerDelegate,
-      builder: BotToastInit(),
-    );
+    return ValueListenableBuilder(
+        valueListenable: Modular.get<ThemeApp>().theme,
+        builder: (_, tipo, __) {
+          return MaterialApp.router(
+            title: 'Accessible App',
+            debugShowCheckedModeBanner: false,
+            theme: createTheme(tipo),
+            routeInformationParser: Modular.routeInformationParser,
+            routerDelegate: Modular.routerDelegate,
+            builder: BotToastInit(),
+          );
+        });
   }
 }
 
-ThemeData createTheme() {
-  switch (Modular.get<ThemeApp>().theme.value) {
+ThemeData createTheme(TipoThemeApp tipo) {
+  switch (tipo) {
     case TipoThemeApp.light:
       return ThemeData(
         brightness: Brightness.light,

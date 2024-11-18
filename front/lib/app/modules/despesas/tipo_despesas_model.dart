@@ -1,13 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:front/app/modules/unidade/unidade_de_medida_model.dart';
 import 'package:front/app/util/solicita_uc_enum.dart';
 
 class TipoDespesasModel {
-  final int? id;
-  final String? descricao;
-  final SolicitaUcEnum? solicitaUC;
-  final UnidadeDeMedidaModel? unidadeMedida;
+  int? id;
+  String? descricao;
+  SolicitaUcEnum? solicitaUC;
+  UnidadeDeMedidaModel? unidadeMedida;
 
   TipoDespesasModel({
     this.id,
@@ -34,8 +35,8 @@ class TipoDespesasModel {
     return <String, dynamic>{
       'id': id,
       'descricao': descricao,
-      'solicitaUC': solicitaUC?.numero,
-      'idUnidadeMedida': unidadeMedida?.id,
+      'solicitaUC': solicitaUC?.index,
+      'unidadeMedida': unidadeMedida?.toMap(),
     };
   }
 
@@ -43,11 +44,10 @@ class TipoDespesasModel {
     return TipoDespesasModel(
       id: map['id'] != null ? map['id'] as int : null,
       descricao: map['descricao'] != null ? map['descricao'] as String : null,
-      solicitaUC: map['solicitaUC'] != null
-          ? SolicitaUcEnum.fromInt(map['solicitaUC'] as int)
-          : null,
-      unidadeMedida: map['idUnidadeMedida'] != null
-          ? UnidadeDeMedidaModel(id: map['idUnidadeMedida'] as int)
+      solicitaUC: SolicitaUcEnum.fromInt(map['solicitaUC'] ?? 0),
+      unidadeMedida: map['unidadeMedida'] != null
+          ? UnidadeDeMedidaModel.fromMap(
+              map['unidadeMedida'] as Map<String, dynamic>)
           : null,
     );
   }
