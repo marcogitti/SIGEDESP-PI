@@ -4,7 +4,7 @@ namespace api.DTO.Entities
 {
     public class UnidadeConsumidoraParametroDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string CodigoUC { get; set; }
 
         public FornecedorParametros Fornecedor { get; set; }

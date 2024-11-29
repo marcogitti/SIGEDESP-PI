@@ -7,7 +7,7 @@ namespace api.DTO.Entities
 {
     public class UsuarioDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "O CPF do Usuario é requerido!")]
         [MinLength(11)]
@@ -60,7 +60,7 @@ namespace api.DTO.Entities
         public string Email { get; set; }
 
         [Required(ErrorMessage = "A Senha é requerida!")]
-        [MinLength(1)]
+        [MinLength(6)]
         [MaxLength(15)]
         public string Senha { get; set; }
 

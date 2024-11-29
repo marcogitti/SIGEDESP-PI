@@ -6,7 +6,7 @@ namespace api.DTO.Entities
 {
     public class FornecedorDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "O Nome Fantasia do Fornecedor é requerida!")]
         [MinLength(1)]

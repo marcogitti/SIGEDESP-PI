@@ -4,7 +4,7 @@ namespace api.DTO.Entities
 {
     public class TipoDespesaParametroDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Descricao { get; set; }
         public EnumSolicitaUCModel SolicitaUC { get; set; }
 

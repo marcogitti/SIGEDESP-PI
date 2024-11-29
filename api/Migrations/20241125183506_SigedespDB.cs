@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class Database : Migration
+    public partial class SigedespDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -123,7 +123,7 @@ namespace api.Migrations
                     estado = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
                     cep = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    senha = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: false),
+                    senha = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     bairro = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     situcao = table.Column<int>(type: "integer", nullable: false),
                     matricula = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
@@ -437,9 +437,9 @@ namespace api.Migrations
                 columns: new[] { "usuarioid", "bairro", "cep", "cpf", "cidade", "email", "estado", "logradouro", "matricula", "nome", "numero", "rg", "senha", "situcao", "tipousuario" },
                 values: new object[,]
                 {
-                    { 1, "Centro", "12345678", "12345678901", "Jales", "joao.silva@gmail.com", "São Paulo", "Rua A", "20240001", "João Silva", "10", "123456789", "senha123", 1, 0 },
-                    { 2, "Centro", "87654321", "98765432100", "Jales", "maria.souza@example.com", "São Paulo", "Avenida B", "20240002", "Maria Souza", "20", "987654321", "senha456", 0, 1 },
-                    { 3, "Nova York", "87654330", "98785432100", "Jales", "rafael.andrade@gmail.com", "São Paulo", "Avenida C", "20240003", "Rafael Andrade", "30", "787654321", "senha789", 1, 2 }
+                    { 1, "Centro", "12345678", "12345678901", "Jales", "joao.silva@gmail.com", "São Paulo", "Rua A", "20240001", "João Silva", "10", "123456789", "55a5e9e78207b4df8699d60886fa070079463547b095d1a05bc719bb4e6cd251", 1, 0 },
+                    { 2, "Centro", "87654321", "98765432100", "Jales", "maria.souza@example.com", "São Paulo", "Avenida B", "20240002", "Maria Souza", "20", "987654321", "6b08d780140e292a4af8ba3f2333fc1357091442d7e807c6cad92e8dcd0240b7", 0, 1 },
+                    { 3, "Nova York", "87654330", "98785432100", "Jales", "rafael.andrade@gmail.com", "São Paulo", "Avenida C", "20240003", "Rafael Andrade", "30", "787654321", "b578dc5fcbfabbc7e96400601d0858c951f04929faef033bbbc117ab935c6ae9", 1, 2 }
                 });
 
             migrationBuilder.InsertData(

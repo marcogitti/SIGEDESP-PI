@@ -7,7 +7,7 @@ namespace api.DTO.Entities
 {
     public class OrcamentoDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int AnoOrcamento { get; set; }
         public double ValorOrcamento { get; set; }
 

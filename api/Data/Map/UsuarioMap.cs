@@ -19,7 +19,7 @@ namespace api.Data.Map
             builder.Property(x => x.Estado).IsRequired().HasMaxLength(25);
             builder.Property(x => x.CEP).IsRequired().HasMaxLength(8);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Senha).IsRequired().HasMaxLength(15);
+            builder.Property(x => x.Senha).IsRequired().HasMaxLength(64);
             builder.Property(x => x.Situacao).IsRequired();
             builder.Property(x => x.Matricula).IsRequired().HasMaxLength(100);
             builder.Property(x => x.TipoUsuario).IsRequired();
@@ -39,7 +39,7 @@ namespace api.Data.Map
                     Estado = "São Paulo",
                     CEP = "12345678",
                     Email = "joao.silva@gmail.com",
-                    Senha = "senha123",
+                    Senha = "55a5e9e78207b4df8699d60886fa070079463547b095d1a05bc719bb4e6cd251",
                     Situacao = Models.Enum.EnumSituacaoModel.ativo,
                     Matricula = "20240001",
                     TipoUsuario = Models.Enum.TipoUsuarioEnum.administrador
@@ -57,7 +57,7 @@ namespace api.Data.Map
                     Estado = "São Paulo",
                     CEP = "87654321",
                     Email = "maria.souza@example.com",
-                    Senha = "senha456",
+                    Senha = "6b08d780140e292a4af8ba3f2333fc1357091442d7e807c6cad92e8dcd0240b7",
                     Situacao = Models.Enum.EnumSituacaoModel.inativo,
                     Matricula = "20240002",
                     TipoUsuario = Models.Enum.TipoUsuarioEnum.funcionario
@@ -75,7 +75,7 @@ namespace api.Data.Map
                     Estado = "São Paulo",
                     CEP = "87654330",
                     Email = "rafael.andrade@gmail.com",
-                    Senha = "senha789",
+                    Senha = "b578dc5fcbfabbc7e96400601d0858c951f04929faef033bbbc117ab935c6ae9",
                     Situacao = Models.Enum.EnumSituacaoModel.ativo,
                     Matricula = "20240003",
                     TipoUsuario = Models.Enum.TipoUsuarioEnum.visitante
