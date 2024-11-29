@@ -8,7 +8,7 @@ namespace api.DTO.Entities
 {
     public class UnidadeConsumidoraDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string CodigoUC { get; set; }
 
         // Subobjetos simplificados

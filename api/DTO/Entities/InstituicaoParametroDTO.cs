@@ -4,7 +4,7 @@ namespace api.DTO.Entities
 {
     public class InstituicaoParametroDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string CNPJ { get; set; }
         public string Nome { get; set; }
         public string Logradouro { get; set; }

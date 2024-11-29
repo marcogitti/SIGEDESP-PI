@@ -4,7 +4,7 @@ namespace api.DTO.Entities
 {
     public class DespesaParametroDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string NumeroDocumento { get; set; }
         public string NumeroControle { get; set; }
         public string AnoMesConsumo { get; set; }
