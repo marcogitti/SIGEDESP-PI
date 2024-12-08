@@ -13,7 +13,7 @@ dependencies:
   dson_adapter: ^1.2.0+2
   flutter_modular: ^6.0.0
   http: ^0.13.3
-  fl_chart: ^0.40.0
+  fl_chart: ^0.69.2
   overlay_support: ^2.0.0
   bot_toast: ^4.0.0
   collection: ^1.18.0

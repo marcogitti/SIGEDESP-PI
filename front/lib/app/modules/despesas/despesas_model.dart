@@ -1,24 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
 import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
+import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/modules/login/usuario_model.dart';
 import 'package:front/app/modules/orcamento/orcamento_model.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_model.dart';
+import 'package:front/app/util/format_util.dart';
 import 'package:front/app/util/situacao_enum.dart';
 import 'package:front/app/util/status_de_despesa_enum.dart';
 
 class DespesaModel {
   int? id;
   String? numeroDocumento;
-  SituacaoEnum? situacao;
   String? numeroControle;
   String? anoMesConsumo;
   double? quantidadeConsumida;
+  DateTime? dataVencimento;
   double? valorPrevisto;
   double? valorPago;
-  DateTime? dataVencimento;
   DateTime? dataPagamento;
   int? anoEmissao;
   int? semestreEmissao;
@@ -31,6 +32,7 @@ class DespesaModel {
   OrcamentoModel? orcamento;
   StatusEnum? statusDespesa;
   TipoDespesasModel? tipoDespesa;
+  SituacaoEnum? situacao;
 
   DespesaModel({
     this.id,
@@ -106,17 +108,16 @@ class DespesaModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'numeroDocumento': numeroDocumento,
-      'situacao': situacao?.index,
       'numeroControle': numeroControle,
       'anoMesConsumo': anoMesConsumo,
       'quantidadeConsumida': quantidadeConsumida,
+      'dataVencimento': dataVencimento?.toYMD,
       'valorPrevisto': valorPrevisto,
       'valorPago': valorPago,
-      'dataVencimento': dataVencimento?.toIso8601String(),
-      'dataPagamento': dataPagamento?.toIso8601String(),
+      'dataPagamento': dataPagamento?.toYMD,
       'anoEmissao': anoEmissao,
       'semestreEmissao': semestreEmissao,
       'trimestreEmissao': trimestreEmissao,
@@ -124,38 +125,41 @@ class DespesaModel {
       'usuario': usuario?.toMap(),
       'fornecedor': fornecedor?.toMap(),
       'unidadeConsumidora': unidadeConsumidora?.toMap(),
-      'idInstituicao': instituicao?.toMap(),
+      'instituicao': instituicao?.toMap(),
       'orcamento': orcamento?.toMap(),
       'statusDespesa': statusDespesa?.index,
       'tipoDespesa': tipoDespesa?.toMap(),
+      'situacao': situacao?.index,
     };
   }
 
   factory DespesaModel.fromMap(Map<String, dynamic> map) {
     return DespesaModel(
-      id: map['id'] ?? 0,
-      numeroDocumento: map['numeroDocumento'] != null
-          ? map['numeroDocumento'] as String
+      id: map['id'] != null ? map['id'] as int : null,
+      numeroDocumento:
+          map['numeroDocumento'] != null ? map['numeroDocumento'] : null,
+      numeroControle:
+          map['numeroControle'] != null ? map['numeroControle'] : null,
+      anoMesConsumo: map['anoMesConsumo'] != null ? map['anoMesConsumo'] : null,
+      quantidadeConsumida: map['quantidadeConsumida'] != null
+          ? map['quantidadeConsumida'].toDouble()
           : null,
-      situacao: SituacaoEnum.fromInt(map['situacao'] ?? 0),
-      numeroControle: map['numeroControle'] != null
-          ? map['numeroControle'] as String
-          : null,
-      anoMesConsumo:
-          map['anoMesConsumo'] != null ? map['anoMesConsumo'] as String : null,
-      quantidadeConsumida: (map['quantidadeConsumida'] as num?)?.toDouble(),
-      valorPrevisto: (map['valorPrevisto'] as num?)?.toDouble(),
-      valorPago: (map['valorPago'] as num?)?.toDouble(),
       dataVencimento: map['dataVencimento'] != null
           ? DateTime.parse(map['dataVencimento'])
           : null,
+      valorPrevisto:
+          map['valorPrevisto'] != null ? map['valorPrevisto'].toDouble() : null,
+      valorPago: map['valorPago'] != null ? map['valorPago'].toDouble() : null,
       dataPagamento: map['dataPagamento'] != null
           ? DateTime.parse(map['dataPagamento'])
           : null,
-      anoEmissao: map['anoEmissao'] ?? 0,
-      semestreEmissao: map['semestreEmissao'] ?? 0,
-      trimestreEmissao: map['trimestreEmissao'] ?? 0,
-      mesEmissao: map['mesEmissao'] ?? 0,
+      anoEmissao: map['anoEmissao'] != null ? map['anoEmissao'] as int : null,
+      semestreEmissao:
+          map['semestreEmissao'] != null ? map['semestreEmissao'] as int : null,
+      trimestreEmissao: map['trimestreEmissao'] != null
+          ? map['trimestreEmissao'] as int
+          : null,
+      mesEmissao: map['mesEmissao'] != null ? map['mesEmissao'] as int : null,
       usuario: map['usuario'] != null
           ? UsuarioModel.fromMap(map['usuario'] as Map<String, dynamic>)
           : null,
@@ -166,17 +170,21 @@ class DespesaModel {
           ? UnidadeConsumidoraModel.fromMap(
               map['unidadeConsumidora'] as Map<String, dynamic>)
           : null,
-      instituicao: map['idInstituicao'] != null
-          ? InstituicaoModel.fromMap(
-              map['idInstituicao'] as Map<String, dynamic>)
+      instituicao: map['instituicao'] != null
+          ? InstituicaoModel.fromMap(map['instituicao'] as Map<String, dynamic>)
           : null,
       orcamento: map['orcamento'] != null
           ? OrcamentoModel.fromMap(map['orcamento'] as Map<String, dynamic>)
           : null,
-      statusDespesa: StatusEnum.fromInt(map['statusDespesa'] ?? 0),
+      statusDespesa: map['statusDespesa'] != null
+          ? StatusEnum.fromInt(map['statusDespesa'])
+          : null,
       tipoDespesa: map['tipoDespesa'] != null
           ? TipoDespesasModel.fromMap(
               map['tipoDespesa'] as Map<String, dynamic>)
+          : null,
+      situacao: map['situacao'] != null
+          ? SituacaoEnum.fromInt(map['situacao'])
           : null,
     );
   }

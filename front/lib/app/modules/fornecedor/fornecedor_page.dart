@@ -397,7 +397,7 @@ class _FornecedorPageState extends State<FornecedorPage> {
                     onChanged: (value) {
                       situacaoEnum = value!;
                     },
-                    labelText: 'fornecedor',
+                    labelText: 'Situação',
                   ),
                 ],
               ),

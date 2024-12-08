@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:front/app/components/my_drop_down_comp.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
+import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
+import 'package:front/app/modules/despesas/tipo_despesas_service.dart';
 import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
+import 'package:front/app/modules/fornecedor/fornecedor_service.dart';
 import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/modules/instituicao/instituicao_service.dart';
 import 'package:front/app/modules/despesas/despesas_model.dart';
@@ -10,10 +13,14 @@ import 'package:front/app/modules/despesas/despesas_service.dart';
 import 'package:front/app/modules/login/usuario_model.dart';
 import 'package:front/app/modules/login/usuario_service.dart';
 import 'package:front/app/modules/orcamento/orcamento_model.dart';
+import 'package:front/app/modules/orcamento/orcamento_service.dart';
 import 'package:front/app/modules/unidade/unidade_consumidora_model.dart';
+import 'package:front/app/modules/unidade/unidade_consumidora_sevice.dart';
+import 'package:front/app/util/format_util.dart';
 import 'package:front/app/util/situacao_enum.dart';
 import 'package:front/app/util/status_de_despesa_enum.dart';
 import 'package:result_dart/result_dart.dart';
+import 'package:intl/intl.dart';
 
 class DesespesasPage extends StatefulWidget {
   const DesespesasPage({super.key});
@@ -25,6 +32,7 @@ class DesespesasPage extends StatefulWidget {
 class _DespesasState extends State<DesespesasPage> {
   late TextEditingController _controller;
   final service = Modular.get<DespesasServiceImpl>();
+  final DateFormat formatter = DateFormat('dd/MM/yyyy');
 
   @override
   void initState() {
@@ -161,10 +169,12 @@ class _DespesasState extends State<DesespesasPage> {
                                 Text(e.statusDespesa!.nome.toString()),
                               ),
                               DataCell(
-                                Text(e.dataPagamento.toString()),
+                                Text(formatter
+                                    .format(e.dataPagamento ?? DateTime.now())),
                               ),
                               DataCell(
-                                Text(e.dataVencimento.toString()),
+                                Text(formatter.format(
+                                    e.dataVencimento ?? DateTime.now())),
                               ),
                               DataCell(
                                 Text(e.fornecedor?.nomeFantasia.toString() ??
@@ -244,11 +254,8 @@ class _DespesasState extends State<DesespesasPage> {
     if (!isEdit) {
       despesa = DespesaModel();
     }
-    SituacaoEnum situacaoEnum = despesa?.situacao ?? SituacaoEnum.ativo;
+    SituacaoEnum? situacaoEnum = despesa?.situacao ?? SituacaoEnum.ativo;
     StatusEnum? statusEnum = despesa?.statusDespesa ?? StatusEnum.apagar;
-    // SecretariaModel? selectedSecretaria = despesa?.secretaria;
-    // TipoInstituicaoModel? selectedTipoInstituicao =
-    //     despesa?.tipoInstituicao;
 
     TextEditingController numeroDocumentoController =
         TextEditingController(text: despesa?.numeroDocumento ?? '');
@@ -263,9 +270,13 @@ class _DespesasState extends State<DesespesasPage> {
     TextEditingController valorPagoController =
         TextEditingController(text: despesa?.valorPago?.toString() ?? '');
     TextEditingController dataVencimentoController = TextEditingController(
-        text: despesa?.dataVencimento?.toIso8601String() ?? '');
+        text: despesa?.dataVencimento != null
+            ? formatter.format(despesa!.dataVencimento!)
+            : '');
     TextEditingController dataPagamentoController = TextEditingController(
-        text: despesa?.dataPagamento?.toIso8601String() ?? '');
+        text: despesa?.dataPagamento != null
+            ? formatter.format(despesa!.dataPagamento!)
+            : '');
     TextEditingController anoEmissaoController =
         TextEditingController(text: despesa?.anoEmissao?.toString() ?? '');
     TextEditingController semestreEmissaoController =
@@ -280,24 +291,12 @@ class _DespesasState extends State<DesespesasPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           scrollable: true,
-          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Instituição'),
+          title: Text('${isEdit ? 'Editar' : 'Cadastro de'} Despesa'),
           content: StatefulBuilder(builder: (context, mSetState) {
             return SizedBox(
               width: 500,
               child: Column(
                 children: [
-                  TextFormField(
-                    controller: numeroDocumentoController,
-                    decoration: const InputDecoration(
-                      labelText: 'Nome',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Campo obrigatório';
-                      }
-                      return null;
-                    },
-                  ),
                   TextFormField(
                     controller: mesEmissaoController,
                     decoration: const InputDecoration(
@@ -351,17 +350,27 @@ class _DespesasState extends State<DesespesasPage> {
                     decoration: const InputDecoration(
                       labelText: 'Data de Pagamento',
                     ),
+                    onTap: () async {
+                      var newDate = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now(),
+                      );
+                      dataPagamentoController.text = newDate.toDMY;
+                    },
                   ),
                   TextFormField(
                     controller: dataVencimentoController,
                     decoration: const InputDecoration(
                       labelText: 'Data de Vencimento',
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Campo obrigatório';
-                      }
-                      return null;
+                    onTap: () async {
+                      var newDate = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now(),
+                      );
+                      dataVencimentoController.text = newDate.toDMY;
                     },
                   ),
                   TextFormField(
@@ -405,11 +414,13 @@ class _DespesasState extends State<DesespesasPage> {
                     decoration: const InputDecoration(
                       labelText: 'Ano Mes Consumo',
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Campo obrigatório';
-                      }
-                      return null;
+                    onTap: () async {
+                      var newDate = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now(),
+                      );
+                      anoMesConsumoController.text = newDate.toYYM;
                     },
                   ),
                   TextFormField(
@@ -443,7 +454,7 @@ class _DespesasState extends State<DesespesasPage> {
                       despesa?.usuario = value;
                     },
                   ),
-                  MyDropDownGetComp<FornecedorModel, UsuarioServiceImpl>(
+                  MyDropDownGetComp<FornecedorModel, FornecedorServiceImpl>(
                     labelText: 'Fornecerdor',
                     initValue: despesa?.fornecedor,
                     onChanged: (value) {
@@ -451,39 +462,39 @@ class _DespesasState extends State<DesespesasPage> {
                     },
                   ),
                   MyDropDownGetComp<UnidadeConsumidoraModel,
-                      InstituicaoServiceImpl>(
+                      UnidadeConsumidoraServiceImpl>(
                     labelText: 'Unidade Consumidora',
-                    initValue: despesa!.unidadeConsumidora,
+                    initValue: despesa?.unidadeConsumidora,
                     onChanged: (value) {
                       despesa?.unidadeConsumidora = value;
                     },
                   ),
                   MyDropDownGetComp<InstituicaoModel, InstituicaoServiceImpl>(
                     labelText: 'Instituição',
-                    initValue: despesa!.instituicao,
+                    initValue: despesa?.instituicao,
                     onChanged: (value) {
                       despesa?.instituicao = value;
                     },
                   ),
-                  MyDropDownGetComp<OrcamentoModel, InstituicaoServiceImpl>(
+                  MyDropDownGetComp<OrcamentoModel, OrcamentoServiceImpl>(
                     labelText: 'Orçamento',
-                    initValue: despesa!.orcamento,
+                    initValue: despesa?.orcamento,
                     onChanged: (value) {
                       despesa?.orcamento = value;
                     },
                   ),
-                  MyDropDownGetComp<InstituicaoModel, InstituicaoServiceImpl>(
+                  MyDropDownGetComp<TipoDespesasModel, TipoDespesasServiceImpl>(
                     labelText: 'Tipo despesa',
-                    initValue: despesa!.instituicao,
+                    initValue: despesa?.tipoDespesa,
                     onChanged: (value) {
-                      despesa?.instituicao = value;
+                      despesa?.tipoDespesa = value;
                     },
                   ),
                   MyDropDownComp(
-                    initValue: StatusEnum.values,
+                    initValue: StatusEnum.apagar,
                     itens: StatusEnum.values,
                     onChanged: (value) {
-                      statusEnum = value! as StatusEnum?;
+                      statusEnum = value;
                     },
                     labelText: 'Status',
                   ),
@@ -491,7 +502,7 @@ class _DespesasState extends State<DesespesasPage> {
                     initValue: situacaoEnum,
                     itens: SituacaoEnum.values,
                     onChanged: (value) {
-                      situacaoEnum = value!;
+                      situacaoEnum = value;
                     },
                     labelText: 'Situação',
                   ),

@@ -13,6 +13,7 @@ import 'package:front/app/modules/despesas/despesas_service.dart';
 import 'package:front/app/modules/home/home_page.dart';
 import 'package:front/app/modules/login/login_page.dart';
 import 'package:front/app/modules/login/tipo_usuario_service.dart';
+import 'package:front/app/modules/login/usuario_login_service.dart';
 import 'package:front/app/modules/login/usuario_service.dart';
 import 'package:front/app/modules/orcamento/orcamento_page.dart';
 import 'package:front/app/modules/orcamento/orcamento_service.dart';
@@ -37,6 +38,7 @@ class AppModule extends Module {
     i.addLazySingleton(InstituicaoServiceImpl.new);
     i.addLazySingleton(TipoUsuarioServiceImpl.new);
     i.addLazySingleton(UsuarioServiceImpl.new);
+    i.addLazySingleton(UsuarioLoginServiceImpl.new);
     i.addLazySingleton(UnidadeMedidaServiceImpl.new);
     i.addLazySingleton(UnidadeConsumidoraServiceImpl.new);
     i.addLazySingleton(FornecedorServiceImpl.new);

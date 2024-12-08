@@ -35,17 +35,17 @@ class ScaffoldComp extends StatelessWidget {
             ),
           ),
           const Icon(Icons.account_circle, color: Colors.white),
-          const Flexible(
-            child: Text(
-              'Nome do Usuário',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
+          // const Flexible(
+          //   child: Text(
+          //     'Nome do Usuário',
+          //     style: TextStyle(
+          //       fontSize: 14,
+          //       fontWeight: FontWeight.bold,
+          //       color: Colors.white,
+          //       overflow: TextOverflow.ellipsis,
+          //     ),
+          //   ),
+          // ),
           PopupMenuButton(
             itemBuilder: (context) {
               return TipoThemeApp.values
@@ -91,20 +91,19 @@ class ScaffoldComp extends StatelessWidget {
                           runSpacing: 8,
                           spacing: 8,
                           children: [
-                            ListTile(
-                              leading: const Icon(
-                                Icons.home,
-                                color: Colors.white,
-                              ),
-                              title: const Text(
-                                "Tela Inicial",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onTap: () => Modular.to.navigate("/"),
-                            ),
-                            const Divider(),
+                            // ListTile(
+                            //   leading: const Icon(
+                            //     Icons.home,
+                            //     color: Colors.white,
+                            //   ),
+                            //   title: const Text(
+                            //     "Tela Inicial",
+                            //     style: TextStyle(
+                            //       color: Colors.white,
+                            //     ),
+                            //   ),
+                            //   onTap: () => Modular.to.navigate("/"),
+                            // ),
                             ExpansionTile(
                               leading: const Icon(
                                 Icons.edit,
@@ -372,7 +371,7 @@ class ScaffoldComp extends StatelessWidget {
                                 ),
                               ),
                               onTap: () {
-                                Modular.to.navigate('/dasboardPage');
+                                Modular.to.navigate("/");
                               },
                             ),
                             const Divider(),
@@ -395,20 +394,11 @@ class ScaffoldComp extends StatelessWidget {
                               children: <Widget>[
                                 ListTile(
                                   title: const Text(
-                                    'Perfil',
+                                    'Sair',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   onTap: () {
                                     Modular.to.navigate('/loginPage');
-                                  },
-                                ),
-                                ListTile(
-                                  title: const Text(
-                                    'Cadastro de Usuario',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onTap: () {
-                                    Modular.to.navigate('/usuarioPage');
                                   },
                                 ),
                               ],

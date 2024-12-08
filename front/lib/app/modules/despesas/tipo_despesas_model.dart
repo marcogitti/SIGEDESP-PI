@@ -56,4 +56,17 @@ class TipoDespesasModel {
 
   factory TipoDespesasModel.fromJson(String source) =>
       TipoDespesasModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool operator ==(covariant TipoDespesasModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+    ;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }

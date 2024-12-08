@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:front/app/modules/instituicao/instituicao_model.dart';
 import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
+import 'package:front/app/modules/instituicao/instituicao_model.dart';
 
 class OrcamentoModel {
   int? id;
@@ -65,5 +65,17 @@ class OrcamentoModel {
       tipoDespesa: tipoDespesa ?? this.tipoDespesa,
       instituicao: instituicao ?? this.instituicao,
     );
+  }
+
+  @override
+  bool operator ==(covariant OrcamentoModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
   }
 }

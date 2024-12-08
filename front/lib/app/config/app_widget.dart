@@ -16,6 +16,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void initState() {
     Modular.setObservers([BotToastNavigatorObserver()]);
+    Modular.setInitialRoute('/');
     super.initState();
   }
 

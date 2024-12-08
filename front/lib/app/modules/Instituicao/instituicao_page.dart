@@ -137,7 +137,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                                 Text(e.id.toString()),
                               ),
                               DataCell(
-                                Text(e.nome.toString() ),
+                                Text(e.nome.toString()),
                               ),
                               DataCell(
                                 Text(e.cnpj.toString()),
@@ -405,7 +405,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                     onChanged: (value) {
                       situacaoEnum = value!;
                     },
-                    labelText: 'Secretaria',
+                    labelText: 'Situalçao',
                   ),
                   MyDropDownGetComp<SecretariaModel, SecretariaServiceImpl>(
                     labelText: 'Secretaria',

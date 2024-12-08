@@ -138,7 +138,8 @@ class _UnidadeConsumidoraPageState extends State<UnidadeConsumidoraPage> {
                                 Text(e?.codigoUC.toString() ?? ''),
                               ),
                               DataCell(
-                                Text(e?.fornecedor.toString() ?? ''),
+                                Text(e.fornecedor?.nomeFantasia.toString() ??
+                                    ''),
                               ),
                               DataCell(
                                 Text(e?.instituicao?.id.toString() ?? ''),

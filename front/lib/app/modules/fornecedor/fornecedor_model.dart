@@ -106,4 +106,16 @@ class FornecedorModel {
       situacao: situacao ?? this.situacao,
     );
   }
+
+  @override
+  bool operator ==(covariant FornecedorModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }

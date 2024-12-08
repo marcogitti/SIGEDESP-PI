@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:front/app/modules/instituicao/tipo_instituicao_model.dart';
@@ -128,4 +129,16 @@ class InstituicaoModel {
   factory InstituicaoModel.fromJson(String source) => InstituicaoModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
       );
+
+  @override
+  bool operator ==(covariant InstituicaoModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }

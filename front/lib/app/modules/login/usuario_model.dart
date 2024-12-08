@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:front/app/util/situacao_enum.dart';
 import 'package:front/app/util/tipo_usuario_enum.dart';
 
@@ -13,8 +14,8 @@ class UsuarioModel {
   final String? cidade;
   final String? estado;
   final String? cep;
-  final String? email;
-  final String? senha;
+  String? email;
+  String? senha;
   final String? bairro;
   final String? matricula;
   final SituacaoEnum? situacao;
@@ -28,12 +29,12 @@ class UsuarioModel {
     this.cpf,
     this.cep,
     this.logradouro,
-    required this.numero,
+    this.numero,
     this.bairro,
     this.cidade,
     this.estado,
     this.matricula,
-    required this.situacao,
+    this.situacao,
     this.tipoUsuarioEnum,
     this.senha,
   });
@@ -94,6 +95,13 @@ class UsuarioModel {
     };
   }
 
+  Map<String, dynamic> toMapLogin() {
+    return {
+      'email': email,
+      'senha': senha,
+    };
+  }
+
   factory UsuarioModel.fromMap(Map<String, dynamic> map) {
     return UsuarioModel(
       id: map['id'] ?? 0,
@@ -117,6 +125,21 @@ class UsuarioModel {
 
   static String toJson(UsuarioModel value) => json.encode(value.toMap());
 
+  static String toJsonLogin(UsuarioModel value) =>
+      json.encode(value.toMapLogin());
+
   factory UsuarioModel.fromJson(String source) =>
       UsuarioModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool operator ==(covariant UsuarioModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }
