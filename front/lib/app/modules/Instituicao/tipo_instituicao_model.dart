@@ -22,7 +22,7 @@ class TipoInstituicaoModel {
   factory TipoInstituicaoModel.fromMap(Map<String, dynamic> map) {
     return TipoInstituicaoModel(
       id: map['id'] != null ? map['id'] as int : null,
-      descricao: map['descricao'] as String,
+      descricao: map['descricao'] as String?,
     );
   }
 

@@ -4,7 +4,7 @@ import 'package:front/app/service/service.dart';
 class FornecedorServiceImpl extends IService<FornecedorModel> {
   FornecedorServiceImpl()
       : super(
-          path: 'instituicao',
+          path: 'fornecedor',
           fromMap: FornecedorModel.fromMap,
           toJson: FornecedorModel.toJson,
         );

@@ -9,10 +9,10 @@ class SecretariaModel {
   final String? nomeRazaoSocial;
   final String? email;
   final String? cnpj;
-  final int? cep;
+  final String? cep;
   final String? logradouro;
   final String? descricao;
-  final int? numero;
+  final String? numero;
   final String? bairro;
   final String? cidade;
   final String? estado;
@@ -64,16 +64,16 @@ class SecretariaModel {
           : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
-      cep: map['cep'] != null ? map['cep'] as int : null,
-      descricao: map['descricao'] != null ? map['descricao'] as String : null,
+      cep: map['cep'] != null ? map['descricao'] as String : null,
+      descricao: map['descricao'] != null ? map['cep'] as String : null,
       logradouro:
           map['logradouro'] != null ? map['logradouro'] as String : null,
-      numero: map['numero'] as int,
+      numero: (map['numero']),
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      telefone: map['telefone'],
-      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
+      telefone: map['telefone'] != null ? map['telefone'] as String : null,
+      situacao: SituacaoEnum.fromInt(map['situacao'] ?? 0),
     );
   }
 
@@ -88,10 +88,10 @@ class SecretariaModel {
     String? nomeRazaoSocial,
     String? email,
     String? cnpj,
-    int? cep,
+    String? cep,
     String? descricao,
     String? logradouro,
-    int? numero,
+    String? numero,
     String? telefone,
     String? bairro,
     String? cidade,

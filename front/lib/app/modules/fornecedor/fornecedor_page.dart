@@ -5,7 +5,6 @@ import 'package:front/app/components/my_drop_down_comp.dart';
 import 'package:front/app/components/my_scaffold_comp.dart';
 import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
 import 'package:front/app/modules/fornecedor/fornecedor_service.dart';
-import 'package:front/app/modules/secretaria/secretaria_model.dart';
 import 'package:front/app/util/situacao_enum.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -41,7 +40,7 @@ class _FornecedorPageState extends State<FornecedorPage> {
           const Padding(
             padding: EdgeInsets.only(bottom: 50),
             child: Text(
-              "Cadastro de Fornecedor",
+              "Fornecedor",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -53,7 +52,7 @@ class _FornecedorPageState extends State<FornecedorPage> {
             children: [
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Buscar Fornecedor',
+                  hintText: 'Buscar',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
                 ),
@@ -66,7 +65,7 @@ class _FornecedorPageState extends State<FornecedorPage> {
                     onPressed: () async {
                       await modalCadastrar();
                     },
-                    child: const Text('Cadastrar Nova Fornecedor'),
+                    child: const Text('Cadastrar'),
                   ),
                   const SizedBox(width: 15),
                   const Text("Mostrar: "),
@@ -110,24 +109,23 @@ class _FornecedorPageState extends State<FornecedorPage> {
                   return const Text("Erro");
                 }
 
-                final tp = (snapshot.data ?? []).cast<SecretariaModel?>();
+                final tp = (snapshot.data ?? []).cast<FornecedorModel?>();
 
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                return SizedBox(
+                  height: 500,
+                  width: double.infinity,
                   child: DataTable(
                     border: TableBorder.all(),
                     columns: const [
-                      DataColumn(label: Text('Nome')),
-                      DataColumn(label: Text('Nome Razão Social')),
+                      DataColumn(
+                          label: Text(
+                        'Id',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(label: Text('Nome Fantasia')),
                       DataColumn(label: Text('CNPJ')),
-                      DataColumn(label: Text('Email')),
-                      DataColumn(label: Text('Telefone')),
                       DataColumn(label: Text('CEP')),
-                      DataColumn(label: Text('Numero')),
                       DataColumn(label: Text('Logradouro')),
-                      DataColumn(label: Text('Bairro')),
-                      DataColumn(label: Text('Cidade')),
-                      DataColumn(label: Text('Estado')),
                       DataColumn(label: Text('Situação')),
                       DataColumn(label: Text('Ação')),
                     ],
@@ -135,37 +133,19 @@ class _FornecedorPageState extends State<FornecedorPage> {
                         .map((e) {
                           return DataRow(cells: [
                             DataCell(
-                              Text(e?.nome.toString() ?? ''),
+                              Text(e?.id.toString() ?? ''),
                             ),
                             DataCell(
-                              Text(e?.nomeRazaoSocial.toString() ?? ''),
+                              Text(e?.nomeFantasia.toString() ?? ''),
                             ),
                             DataCell(
                               Text(e?.cnpj.toString() ?? ''),
                             ),
                             DataCell(
-                              Text(e?.email.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.telefone.toString() ?? ''),
-                            ),
-                            DataCell(
                               Text(e?.cep.toString() ?? ''),
                             ),
                             DataCell(
-                              Text(e?.numero.toString() ?? ''),
-                            ),
-                            DataCell(
                               Text(e?.logradouro.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.bairro.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.cidade.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.estado.toString() ?? ''),
                             ),
                             DataCell(
                               Text(e?.situacao.toString() ?? ''),
@@ -242,8 +222,8 @@ class _FornecedorPageState extends State<FornecedorPage> {
 
     TextEditingController fornecedorBairroEditCtrl =
         TextEditingController(text: fornecedor?.bairro ?? '');
-    TextEditingController fornecedorCepEditCtrl = TextEditingController(
-        text: fornecedor?.cep != null ? fornecedor?.cep.toString() : '');
+    TextEditingController fornecedorCepEditCtrl =
+        TextEditingController(text: fornecedor?.cep ?? '');
     TextEditingController fornecedorCidadeEditCtrl =
         TextEditingController(text: fornecedor?.cidade ?? '');
     TextEditingController fornecedorCnpjEditCtrl =
@@ -254,16 +234,14 @@ class _FornecedorPageState extends State<FornecedorPage> {
         TextEditingController(text: fornecedor?.estado ?? '');
     TextEditingController fornecedorLogradouroEditCtrl =
         TextEditingController(text: fornecedor?.logradouro ?? '');
-    TextEditingController fornecedorNumeroEditCtrl = TextEditingController(
-        text: fornecedor?.numero != null ? fornecedor?.numero.toString() : '');
+    TextEditingController fornecedorNumeroEditCtrl =
+        TextEditingController(text: fornecedor?.numero ?? '');
     TextEditingController fornecedorTelefoneEditCtrl =
         TextEditingController(text: fornecedor?.telefone ?? '');
-    TextEditingController fornecedorNRSocialEditCtrl =
-        TextEditingController(text: fornecedor?.nomeRazaoSocial ?? '');
-    TextEditingController fornecedorNomeEditCtrl =
-        TextEditingController(text: fornecedor?.nomeRazaoSocial ?? '');
     TextEditingController fornecedorNomeFantasiaEditCtrl =
         TextEditingController(text: fornecedor?.nomeFantasia ?? '');
+    TextEditingController fornecedorNomeEditCtrl =
+        TextEditingController(text: fornecedor?.nome ?? '');
 
     await showDialog(
       context: context,
@@ -289,9 +267,9 @@ class _FornecedorPageState extends State<FornecedorPage> {
                     },
                   ),
                   TextFormField(
-                    controller: fornecedorNRSocialEditCtrl,
+                    controller: fornecedorNomeFantasiaEditCtrl,
                     decoration: const InputDecoration(
-                      labelText: 'Nome Razão Social',
+                      labelText: 'Nome Fantasia',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -316,18 +294,6 @@ class _FornecedorPageState extends State<FornecedorPage> {
                     controller: fornecedorEmailEditCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Campo obrigatório';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller:fornecedorNomeFantasiaEditCtrl,
-                    decoration: const InputDecoration(
-                      labelText: 'Nome Fantasia',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -431,7 +397,7 @@ class _FornecedorPageState extends State<FornecedorPage> {
                     onChanged: (value) {
                       situacaoEnum = value!;
                     },
-                    labelText: 'fornecedor',
+                    labelText: 'Situação',
                   ),
                 ],
               ),
@@ -449,7 +415,7 @@ class _FornecedorPageState extends State<FornecedorPage> {
               onPressed: () async {
                 fornecedor = fornecedor?.copyWith(
                   bairro: fornecedorBairroEditCtrl.text,
-                  cep: int.tryParse(fornecedorCepEditCtrl.text),
+                  cep: fornecedorCepEditCtrl.text,
                   cidade: fornecedorCidadeEditCtrl.text,
                   cnpj: fornecedorCnpjEditCtrl.text,
                   email: fornecedorEmailEditCtrl.text,
@@ -457,9 +423,8 @@ class _FornecedorPageState extends State<FornecedorPage> {
                   logradouro: fornecedorLogradouroEditCtrl.text,
                   nome: fornecedorNomeEditCtrl.text,
                   telefone: fornecedorTelefoneEditCtrl.text,
-                  nomeRazaoSocial: fornecedorNRSocialEditCtrl.text,
-                  numero: int.tryParse(fornecedorNumeroEditCtrl.text),
-                  descricao: fornecedorNomeFantasiaEditCtrl.text,
+                  numero: fornecedorNumeroEditCtrl.text,
+                  nomeFantasia: fornecedorNomeFantasiaEditCtrl.text,
                   situacao: situacaoEnum,
                 );
                 if (isEdit) {
@@ -494,7 +459,6 @@ class _FornecedorPageState extends State<FornecedorPage> {
     fornecedorEstadoEditCtrl.dispose();
     fornecedorLogradouroEditCtrl.dispose();
     fornecedorNomeEditCtrl.dispose();
-    fornecedorNRSocialEditCtrl.dispose();
     fornecedorNumeroEditCtrl.dispose();
     fornecedorNomeFantasiaEditCtrl.dispose();
     fornecedorTelefoneEditCtrl.dispose();
