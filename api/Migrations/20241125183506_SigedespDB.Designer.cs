@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(SigedespDBContex))]
-    [Migration("20241015113845_Database")]
-    partial class Database
+    [Migration("20241125183506_SigedespDB")]
+    partial class SigedespDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,8 @@ namespace api.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("anomesconsumo");
 
-                    b.Property<DateOnly>("DataPagamento")
+                    b.Property<DateOnly?>("DataPagamento")
+                        .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("datapagamento");
 
@@ -1020,8 +1021,8 @@ namespace api.Migrations
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("character varying(15)")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
                         .HasColumnName("senha");
 
                     b.Property<int>("Situacao")
@@ -1051,7 +1052,7 @@ namespace api.Migrations
                             Nome = "João Silva",
                             Numero = "10",
                             RG = "123456789",
-                            Senha = "senha123",
+                            Senha = "55a5e9e78207b4df8699d60886fa070079463547b095d1a05bc719bb4e6cd251",
                             Situacao = 1,
                             TipoUsuario = 0
                         },
@@ -1069,7 +1070,7 @@ namespace api.Migrations
                             Nome = "Maria Souza",
                             Numero = "20",
                             RG = "987654321",
-                            Senha = "senha456",
+                            Senha = "6b08d780140e292a4af8ba3f2333fc1357091442d7e807c6cad92e8dcd0240b7",
                             Situacao = 0,
                             TipoUsuario = 1
                         },
@@ -1087,7 +1088,7 @@ namespace api.Migrations
                             Nome = "Rafael Andrade",
                             Numero = "30",
                             RG = "787654321",
-                            Senha = "senha789",
+                            Senha = "b578dc5fcbfabbc7e96400601d0858c951f04929faef033bbbc117ab935c6ae9",
                             Situacao = 1,
                             TipoUsuario = 2
                         });

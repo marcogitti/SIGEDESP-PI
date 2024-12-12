@@ -40,7 +40,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
           const Padding(
             padding: EdgeInsets.only(bottom: 50),
             child: Text(
-              "Cadastro de Secretaria",
+              "Secretaria",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
             children: [
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Buscar Secretaria',
+                  hintText: 'Buscar',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
                 ),
@@ -65,7 +65,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
                     onPressed: () async {
                       await modalCadastrar();
                     },
-                    child: const Text('Cadastrar Nova Secretaria'),
+                    child: const Text('Cadastrar'),
                   ),
                   const SizedBox(width: 15),
                   const Text("Mostrar: "),
@@ -109,24 +109,18 @@ class _SecretariaPageState extends State<SecretariaPage> {
                   return const Text("Erro");
                 }
 
-                final tp = (snapshot.data ?? []).cast<SecretariaModel?>();
+                List<SecretariaModel?> tp =
+                    (snapshot.data ?? []).cast<SecretariaModel?>();
 
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                return SizedBox(
+                  height: 500,
+                  width: double.infinity,
                   child: DataTable(
                     border: TableBorder.all(),
                     columns: const [
+                      DataColumn(label: Text('Id')),
                       DataColumn(label: Text('Nome')),
-                      DataColumn(label: Text('Nome Razão Social')),
                       DataColumn(label: Text('CNPJ')),
-                      DataColumn(label: Text('Email')),
-                      DataColumn(label: Text('Telefone')),
-                      DataColumn(label: Text('CEP')),
-                      DataColumn(label: Text('Numero')),
-                      DataColumn(label: Text('Logradouro')),
-                      DataColumn(label: Text('Bairro')),
-                      DataColumn(label: Text('Cidade')),
-                      DataColumn(label: Text('Estado')),
                       DataColumn(label: Text('Situação')),
                       DataColumn(label: Text('Ação')),
                     ],
@@ -134,40 +128,16 @@ class _SecretariaPageState extends State<SecretariaPage> {
                         .map((e) {
                           return DataRow(cells: [
                             DataCell(
-                              Text(e?.nome.toString() ?? ''),
+                              Text(e?.id.toString() ?? ''),
                             ),
                             DataCell(
-                              Text(e?.nomeRazaoSocial.toString() ?? ''),
+                              Text(e?.nome.toString() ?? ''),
                             ),
                             DataCell(
                               Text(e?.cnpj.toString() ?? ''),
                             ),
                             DataCell(
-                              Text(e?.email.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.telefone.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.cep.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.numero.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.logradouro.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.bairro.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.cidade.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.estado.toString() ?? ''),
-                            ),
-                            DataCell(
-                              Text(e?.situacao.toString() ?? ''),
+                              Text(e?.situacao?.nome ?? ''),
                             ),
                             DataCell(Row(
                               children: [
@@ -205,7 +175,8 @@ class _SecretariaPageState extends State<SecretariaPage> {
                                               child: const Text('Confirmar'),
                                               onPressed: () async {
                                                 Modular.to.pop();
-                                                await service.deleteData(e!.id);
+                                                await service
+                                                    .deleteData(e!.id!);
 
                                                 setState(() {});
                                               },
@@ -448,7 +419,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
               onPressed: () async {
                 secretaria = secretaria?.copyWith(
                   bairro: secretariaBairroEditCtrl.text,
-                  cep: int.tryParse(secretariaCepEditCtrl.text),
+                  cep: secretariaCepEditCtrl.text,
                   cidade: secretariaCidadeEditCtrl.text,
                   cnpj: secretariaCnpjEditCtrl.text,
                   email: secretariaEmailEditCtrl.text,
@@ -457,7 +428,7 @@ class _SecretariaPageState extends State<SecretariaPage> {
                   nome: secretariaNomeEditCtrl.text,
                   telefone: secretariaTelefoneEditCtrl.text,
                   nomeRazaoSocial: secretariaNRSocialEditCtrl.text,
-                  numero: int.tryParse(secretariaNumeroEditCtrl.text),
+                  numero: secretariaNumeroEditCtrl.text,
                   descricao: secretariaDecricaoEditCtrl.text,
                   situacao: situacaoEnum,
                 );
@@ -475,7 +446,6 @@ class _SecretariaPageState extends State<SecretariaPage> {
                     Navigator.of(context).pop();
                     setState(() {});
                   }, (failure) {
-                    //snack bar
                     print('erro$failure');
                   });
                 }
