@@ -17,124 +17,162 @@ public class UnidadeConsumidoraController : ControllerBase
 
     // Método para buscar todas as unidades consumidoras
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<object>>> BuscarTodosUnidadeConsumidora()
+    public async Task<ActionResult<IEnumerable<UnidadeConsumidoraParametroDTO>>> BuscarTodosDespesa()
     {
-        var unidadesConsumidoras = await _context.UnidadeConsumidora
-            .Select(d => new
+        var unidadesconsumidoras = await _context.UnidadeConsumidora
+            .Select(uc => new UnidadeConsumidoraParametroDTO
             {
-                Id = d.Id,
-                CodigoUC = d.CodigoUC,
-                Fornecedor = new
+                Id = uc.Id,
+                CodigoUC = uc.CodigoUC,
+                Fornecedor = new FornecedorParametros
                 {
-                    Id = d.Fornecedor.Id,
-                    NomeFantasia = d.Fornecedor.NomeFantasia
+                    Id = uc.Fornecedor.Id,
+                    NomeFantasia = uc.Fornecedor.NomeFantasia
                 },
-                Instituicao = new
+                Instituicao = new InstituicoesParametros
                 {
-                    Id = d.Instituicao.Id,
-                    Nome = d.Instituicao.Nome
-                },
+                    Id = uc.Instituicao.Id,
+                    Nome = uc.Instituicao.Nome
+                }
             })
             .ToListAsync();
 
-        return Ok(unidadesConsumidoras);
+        return Ok(unidadesconsumidoras);
     }
 
-    // Método para buscar unidade consumidora por ID
+    // Método para buscar unidades consumidoras por ID
     [HttpGet("{id}")]
-    public async Task<ActionResult<object>> BuscarPorId(int id)
+    public async Task<ActionResult<UnidadeConsumidoraParametroDTO>> BuscarPorId(int id)
     {
-        var unidadesConsumidoras = await _context.UnidadeConsumidora
-            .Where(d => d.Id == id)
-            .Select(d => new
+        var unidadeconsumidora = await _context.UnidadeConsumidora
+            .Where(uc => uc.Id == id)
+            .Select(uc => new UnidadeConsumidoraParametroDTO
             {
-                Id = d.Id,
-                CodigoUC = d.CodigoUC,
-                Fornecedor = new
-                {
-                    Id = d.Fornecedor.Id,
-                    NomeFantasia = d.Fornecedor.NomeFantasia
+                Id = uc.Id,
+                CodigoUC = uc.CodigoUC,
+                Fornecedor = new FornecedorParametros
+                { 
+                    Id = uc.Fornecedor.Id,
+                    NomeFantasia = uc.Fornecedor.NomeFantasia
                 },
-                Instituicao = new
+                Instituicao = new InstituicoesParametros
                 {
-                    Id = d.Instituicao.Id,
-                    Nome = d.Instituicao.Nome
-                },
+                    Id = uc.Instituicao.Id,
+                    Nome = uc.Instituicao.Nome
+                }
             })
             .FirstOrDefaultAsync();
 
-        if (unidadesConsumidoras == null)
+        if (unidadeconsumidora == null)
             return NotFound("Unidade Consumidora não encontrada");
 
-        return Ok(unidadesConsumidoras);
+        return Ok(unidadeconsumidora);
     }
 
     // Método para adicionar nova unidade consumidora
     [HttpPost]
-    public async Task<ActionResult> Cadastrar([FromBody] UnidadeConsumidoraAdicionarAtualizarDTO unidadeConsumidoraDto)
+    public async Task<ActionResult<UnidadeConsumidoraParametroDTO>> Cadastrar([FromBody] UnidadeConsumidoraParametroDTO unidadeconsumidoraDto)
     {
-        if (unidadeConsumidoraDto == null)
+        if (unidadeconsumidoraDto == null)
             return BadRequest("Dados inválidos");
 
-        var unidadeConsumidora = new UnidadeConsumidoraModel
+        var novaUnidadeConsumidora = new UnidadeConsumidoraModel
         {
-            CodigoUC = unidadeConsumidoraDto.CodigoUC,
-            IdFornecedor = unidadeConsumidoraDto.IdFornecedor,
-            IdInstituicao = unidadeConsumidoraDto.IdInstituicao
+            CodigoUC = unidadeconsumidoraDto.CodigoUC,
+            IdFornecedor = unidadeconsumidoraDto.Fornecedor.Id,
+            IdInstituicao = unidadeconsumidoraDto.Instituicao.Id,
         };
 
-        _context.UnidadeConsumidora.Add(unidadeConsumidora);
+        _context.UnidadeConsumidora.Add(novaUnidadeConsumidora);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(BuscarPorId), new { id = unidadeConsumidora.Id }, unidadeConsumidora);
+        // Carregar a unidade consumidora cadastrada com entidades relacionadas
+        var unidadeconsumidoraCadastrada = await _context.UnidadeConsumidora
+            .Include(uc => uc.Fornecedor)
+            .Include(uc => uc.Instituicao)
+            .FirstOrDefaultAsync(uc => uc.Id == novaUnidadeConsumidora.Id);
+
+        if (unidadeconsumidoraCadastrada == null)
+            return NotFound();
+
+        var unidadeconsumidoraDados = new UnidadeConsumidoraParametroDTO
+        {
+            Id = unidadeconsumidoraCadastrada.Id,
+            CodigoUC = unidadeconsumidoraCadastrada.CodigoUC,
+            Fornecedor = new FornecedorParametros
+            {
+                Id = unidadeconsumidoraCadastrada.Fornecedor.Id,
+                NomeFantasia = unidadeconsumidoraCadastrada.Fornecedor.NomeFantasia
+            },
+            Instituicao = new InstituicoesParametros
+            {
+                Id = unidadeconsumidoraCadastrada.Instituicao.Id,
+                Nome = unidadeconsumidoraCadastrada.Instituicao.Nome
+            }
+        };
+
+        return Ok(unidadeconsumidoraDados);
     }
 
-    // Método para atualizar unidade consumidora existente
-    [HttpPut()]
-    public async Task<ActionResult> Atualizar([FromBody] UnidadeConsumidoraAdicionarAtualizarDTO unidadeconsumidoraAtualizada)
+    // Método para atualizar orçamento existente
+    [HttpPut]
+    public async Task<ActionResult<UnidadeConsumidoraParametroDTO>> Atualizar([FromBody] UnidadeConsumidoraParametroDTO unidadeconsumidoraDto)
     {
-        if (unidadeconsumidoraAtualizada == null || unidadeconsumidoraAtualizada.Id != unidadeconsumidoraAtualizada.Id)
+        if (unidadeconsumidoraDto == null || unidadeconsumidoraDto.Id == 0)
             return BadRequest("Dados inválidos");
 
-        var unidadeconsumidoraExistente = await _context.UnidadeConsumidora.FindAsync(unidadeconsumidoraAtualizada.Id);
+        var unidadeconsumidoraExistente = await _context.UnidadeConsumidora.FindAsync(unidadeconsumidoraDto.Id);
 
         if (unidadeconsumidoraExistente == null)
             return NotFound("Unidade Consumidora não encontrada");
 
-        _context.Entry(unidadeconsumidoraExistente).CurrentValues.SetValues(unidadeconsumidoraAtualizada);
+        // Atualização dos atributos da unidade consumidora existente
+        unidadeconsumidoraExistente.CodigoUC = unidadeconsumidoraDto.CodigoUC;
+
+        // Atualização de subobjetos
+        unidadeconsumidoraExistente.IdFornecedor = unidadeconsumidoraDto.Fornecedor.Id;
+        unidadeconsumidoraExistente.IdInstituicao = unidadeconsumidoraDto.Instituicao.Id;
+
         await _context.SaveChangesAsync();
 
-        return Ok(unidadeconsumidoraAtualizada);
-    }
+        // Carregar a unidade consumidora cadastrada com entidades relacionadas
+        var unidadeconsumidoraAtualizada = await _context.UnidadeConsumidora
+            .Include(uc => uc.Fornecedor)
+            .Include(uc => uc.Instituicao)
+            .FirstOrDefaultAsync(uc => uc.Id == unidadeconsumidoraExistente.Id);
 
-    // Método para deletar unidade consumidora
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<object>> Apagar(int id)
-    {
-        var unidadeConsumidora = await _context.UnidadeConsumidora.FindAsync(id);
-
-        if (unidadeConsumidora == null)
-            return NotFound("Unidade Consumidora não encontrada");
-
-        _context.UnidadeConsumidora.Remove(unidadeConsumidora);
-        await _context.SaveChangesAsync();
-
-        var unidadeconsumidoraRemovida = new UnidadeConsumidoraDTO
+        // Criar DTO com os dados atualizados
+        var unidadeconsumidoraDados = new UnidadeConsumidoraParametroDTO
         {
-            Id = unidadeConsumidora.Id,
-            CodigoUC = unidadeConsumidora.CodigoUC,
-            Fornecedor = new FornecedorDTO
+            Id = unidadeconsumidoraAtualizada.Id,
+            CodigoUC = unidadeconsumidoraAtualizada.CodigoUC,
+            Fornecedor = new FornecedorParametros
             {
-                Id = unidadeConsumidora.Fornecedor.Id,
-                NomeFantasia = unidadeConsumidora.Fornecedor.NomeFantasia
+                Id = unidadeconsumidoraAtualizada.Fornecedor.Id,
+                NomeFantasia = unidadeconsumidoraAtualizada.Fornecedor.NomeFantasia
             },
-            Instituicao = new InstituicaoDTO
+            Instituicao = new InstituicoesParametros
             {
-                Id = unidadeConsumidora.Instituicao.Id,
-                Nome = unidadeConsumidora.Instituicao.Nome
-            },
+                Id = unidadeconsumidoraAtualizada.Instituicao.Id,
+                Nome = unidadeconsumidoraAtualizada.Instituicao.Nome
+            }
         };
 
-        return Ok(unidadeconsumidoraRemovida);
+        return Ok(unidadeconsumidoraDados);
+    }
+
+    // Método para excluir unidade consumidora
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Apagar(int id)
+    {
+        var unidadeconsumidora = await _context.UnidadeConsumidora.FindAsync(id);
+
+        if (unidadeconsumidora == null)
+            return NotFound("Unidade Consumidora não encontrada");
+
+        _context.UnidadeConsumidora.Remove(unidadeconsumidora);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

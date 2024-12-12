@@ -4,25 +4,23 @@ import 'dart:convert';
 import 'package:front/app/util/situacao_enum.dart';
 
 class FornecedorModel {
-    final int? id;
+  final int? id;
   final String? nome;
-  final String? nomeRazaoSocial;
   final String? email;
   final String? cnpj;
-  final int? cep;
+  final String? cep;
   final String? logradouro;
   final String? nomeFantasia;
-  final int? numero;
+  final String? numero;
   final String? bairro;
   final String? cidade;
   final String? estado;
   final String? telefone;
   final SituacaoEnum? situacao;
 
-  FornecedorModel( {
+  FornecedorModel({
     this.id,
     this.nome,
-    this.nomeRazaoSocial,
     this.email,
     this.cnpj,
     this.telefone,
@@ -33,18 +31,17 @@ class FornecedorModel {
     this.bairro,
     this.cidade,
     this.estado,
-     this.situacao,
+    this.situacao,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'nome': nome,
-      'nomeRazaoSocial': nomeRazaoSocial,
       'email': email,
       'cnpj': cnpj,
       'cep': cep,
-      'descricao': nomeFantasia,
+      'nomeFantasia': nomeFantasia,
       'logradouro': logradouro,
       'numero': numero,
       'bairro': bairro,
@@ -58,52 +55,48 @@ class FornecedorModel {
     return FornecedorModel(
       id: map['id'] != null ? map['id'] as int : null,
       nome: map['nome'] != null ? map['nome'] as String : null,
-      nomeRazaoSocial: map['nomeRazaoSocial'] != null
-          ? map['nomeRazaoSocial'] as String
-          : null,
       email: map['email'] != null ? map['email'] as String : null,
       cnpj: map['cnpj'] != null ? map['cnpj'] as String : null,
-      cep: map['cep'] != null ? map['cep'] as int : null,
-      nomeFantasia: map['descricao'] != null ? map['descricao'] as String : null,
+      cep: map['cep'] != null ? map['cep'] as String : null,
+      nomeFantasia:
+          map['nomeFantasia'] != null ? map['nomeFantasia'] as String : null,
       logradouro:
           map['logradouro'] != null ? map['logradouro'] as String : null,
-      numero: map['numero'] as int,
+      numero: map['numero'] != null ? map['numero'] as String : null,
       bairro: map['bairro'] != null ? map['bairro'] as String : null,
       cidade: map['cidade'] != null ? map['cidade'] as String : null,
       estado: map['estado'] != null ? map['estado'] as String : null,
-      situacao: SituacaoEnum.fromInt(map['situacao'] as int),
+      situacao: SituacaoEnum.fromInt(map['situacao'] ?? 0),
     );
   }
 
   static String toJson(FornecedorModel value) => json.encode(value.toMap());
 
-factory FornecedorModel.fromJson(String source) => FornecedorModel.fromMap(
+  factory FornecedorModel.fromJson(String source) => FornecedorModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
-);
-FornecedorModel copyWith({
+      );
+  FornecedorModel copyWith({
     int? id,
     String? nome,
-    String? nomeRazaoSocial,
     String? email,
     String? cnpj,
-    int? cep,
-    String? descricao,
+    String? cep,
     String? logradouro,
-    int? numero,
+    String? numero,
     String? telefone,
     String? bairro,
     String? cidade,
     String? estado,
+    String? nomeFantasia,
     SituacaoEnum? situacao,
   }) {
     return FornecedorModel(
       id: id ?? this.id,
       nome: nome ?? this.nome,
-      nomeRazaoSocial: nomeRazaoSocial ?? this.nomeRazaoSocial,
       email: email ?? this.email,
       cnpj: cnpj ?? this.cnpj,
       cep: cep ?? this.cep,
-      nomeFantasia: nomeFantasia ?? this.nomeFantasia,
+      nomeFantasia: nomeFantasia ?? nomeFantasia,
       telefone: telefone ?? this.telefone,
       logradouro: logradouro ?? this.logradouro,
       numero: numero ?? this.numero,
@@ -112,5 +105,17 @@ FornecedorModel copyWith({
       estado: estado ?? this.estado,
       situacao: situacao ?? this.situacao,
     );
+  }
+
+  @override
+  bool operator ==(covariant FornecedorModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
   }
 }

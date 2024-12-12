@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
 
 class MyDropDownGetComp<T extends Object, TC extends Object>
     extends StatefulWidget {
   final String labelText;
   final T? initValue;
   final void Function(T?)? onChanged;
+  final formatCurrency = NumberFormat.simpleCurrency();
 
-  const MyDropDownGetComp({
+  MyDropDownGetComp({
     super.key,
     this.initValue,
     this.onChanged,
@@ -39,13 +41,19 @@ class _MyDropDownCompState<T extends Object, TC extends Object>
   @override
   Widget build(BuildContext context) {
     if (isLoad) {
-      return CircularProgressIndicator();
+      return const SizedBox(
+        width: 32,
+        height: 32,
+        child: CircularProgressIndicator(),
+      );
     }
     return DropdownButtonFormField<T?>(
       borderRadius: BorderRadius.circular(10),
       elevation: 10,
       decoration: InputDecoration(
         labelText: widget.labelText,
+        contentPadding: EdgeInsets.zero,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       value: selectedValue,
       items: itens
@@ -55,6 +63,21 @@ class _MyDropDownCompState<T extends Object, TC extends Object>
               return DropdownMenuItem<T>(
                 value: value,
                 child: Text((value as dynamic).nome ?? ''),
+              );
+            }
+            if (((value as dynamic)?.toMap() as Map<String, dynamic>)
+                .containsKey('codigoUC')) {
+              return DropdownMenuItem<T>(
+                value: value,
+                child: Text((value as dynamic).codigoUC ?? ''),
+              );
+            }
+            if (((value as dynamic)?.toMap() as Map<String, dynamic>)
+                .containsKey('valorOrcamento')) {
+              return DropdownMenuItem<T>(
+                value: value,
+                child:
+                    Text((value as dynamic).valorOrcamento?.toString() ?? ''),
               );
             }
 

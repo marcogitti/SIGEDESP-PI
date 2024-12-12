@@ -1,19 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:front/app/modules/despesas/tipo_despesas_model.dart';
+import 'package:front/app/modules/instituicao/instituicao_model.dart';
+
 class OrcamentoModel {
-  final int? id;
-  final int? anoOrcamento;
-  final double? valorOrcamento;
-  final int? idTipoDespesa;
-  final int? idInstituicao;
+  int? id;
+  int? anoOrcamento;
+  double? valorOrcamento;
+  TipoDespesasModel? tipoDespesa;
+  InstituicaoModel? instituicao;
 
   OrcamentoModel({
     this.id,
     this.anoOrcamento,
     this.valorOrcamento,
-    this.idTipoDespesa,
-    this.idInstituicao,
+    this.tipoDespesa,
+    this.instituicao,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,18 +24,24 @@ class OrcamentoModel {
       'id': id,
       'anoOrcamento': anoOrcamento,
       'valorOrcamento': valorOrcamento,
-      'idTipoDespesa': idTipoDespesa,
-      'idInstituicao': idInstituicao,
+      'tipoDespesa': tipoDespesa?.toMap(),
+      'instituicao': instituicao?.toMap(),
     };
   }
 
   factory OrcamentoModel.fromMap(Map<String, dynamic> map) {
     return OrcamentoModel(
       id: map['id'] != null ? map['id'] as int : null,
-      anoOrcamento: map['descricao'] as int,
-      valorOrcamento: map['descricao'] as double,
-      idTipoDespesa: map['descricao'] as int,
-      idInstituicao: map['descricao'] as int,
+      anoOrcamento:
+          map['anoOrcamento'] != null ? map['anoOrcamento'] as int : null,
+      valorOrcamento: map['valorOrcamento']?.toDouble(),
+      tipoDespesa: map['tipoDespesa'] != null
+          ? TipoDespesasModel.fromMap(
+              map['tipoDespesa'] as Map<String, dynamic>)
+          : null,
+      instituicao: map['instituicao'] != null
+          ? InstituicaoModel.fromMap(map['instituicao'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -45,16 +54,28 @@ class OrcamentoModel {
   OrcamentoModel copyWith({
     int? id,
     int? anoOrcamento,
-    int? valorOrcamento,
-    int? idTipoDespesa,
-    int? idInstituicao,
+    double? valorOrcamento,
+    TipoDespesasModel? tipoDespesa,
+    InstituicaoModel? instituicao,
   }) {
     return OrcamentoModel(
       id: id ?? this.id,
       anoOrcamento: anoOrcamento ?? this.anoOrcamento,
-      valorOrcamento: double.maxFinite,
-      idTipoDespesa: idTipoDespesa ?? this.idTipoDespesa,
-      idInstituicao: idInstituicao ?? this.idInstituicao,
+      valorOrcamento: valorOrcamento ?? this.valorOrcamento,
+      tipoDespesa: tipoDespesa ?? this.tipoDespesa,
+      instituicao: instituicao ?? this.instituicao,
     );
+  }
+
+  @override
+  bool operator ==(covariant OrcamentoModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
   }
 }
