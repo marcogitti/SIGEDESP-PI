@@ -1,95 +1,153 @@
 using api.Data;
-using api.Repositorios;
 using api.Repositorios.Interfaces;
+using api.Repositorios;
 using api.Service.Interfaces;
 using api.Services.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using api.Authentication;
+using Microsoft.OpenApi.Models;
 
-namespace Sigedesp
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllers()
-                .AddJsonOptions(options =>
-                {
-                    // Ignora propriedades nulas
-                    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
-
-                });
-
-            // Swagger/OpenAPI configuration
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            // Busca a string de conex�o
-            var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
-                                   ?? builder.Configuration.GetConnectionString("DataBase");
-          
-            builder.Services.AddDbContext<SigedespDBContex>(options =>
-                options.UseNpgsql(connectionString));
-
-            // CORS policy
-            builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+        // Add services to the container.
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
             {
-                builder.WithOrigins("http://localhost:3000", "http://localhost:3001")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
-            }));
-
-            // AutoMapper configuration
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile()); // Certifique-se de que MappingProfile esteja correto
+                options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
             });
-            IMapper mapper = mappingConfig.CreateMapper();
-            builder.Services.AddSingleton(mapper);
 
-            // Repository and Service registrations
-            builder.Services.AddTransient<ITipoDespesaRepositorio, TipoDespesaRepositorio>();
-            builder.Services.AddTransient<ITipoDespesaService, TipoDespesaService>();
-            builder.Services.AddTransient<ITipoInstituicaoRepositorio, TipoInstituicaoRepositorio>();
-            builder.Services.AddTransient<ITipoInstituicaoService, TipoInstituicaoService>();
-            builder.Services.AddTransient<IUnidadeMedidaRepositorio, UnidadeMedidaRepositorio>();
-            builder.Services.AddTransient<IUnidadeMedidaService, UnidadeMedidaService>();
-            builder.Services.AddTransient<IUnidadeConsumidoraRepositorio, UnidadeConsumidoraRepositorio>();
-            builder.Services.AddTransient<IUnidadeConsumidoraService, UnidadeConsumidoraService>();
-            builder.Services.AddTransient<ISecretariaRepositorio, SecretariaRepositorio>();
-            builder.Services.AddTransient<ISecretariaService, SecretariaService>();
-            builder.Services.AddTransient<IFornecedorRepositorio, FornecedorRepositorio>();
-            builder.Services.AddTransient<IFornecedorService, FornecedorService>();
-            builder.Services.AddTransient<IInstituicaoRepositorio, InstituicaoRepositorio>();
-            builder.Services.AddTransient<IInstituicaoService, InstituicaoService>();
-            builder.Services.AddTransient<IOrcamentoRepositorio, OrcamentoRepositorio>();
-            builder.Services.AddTransient<IOrcamentoService, OrcamentoService>();
-            builder.Services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
-            builder.Services.AddTransient<IUsuarioService, UsuarioService>();
-            builder.Services.AddTransient<IDespesaRepositorio, DespesaRepositorio>();
-            builder.Services.AddTransient<IDespesaService, DespesaService>();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+        // Swagger/OpenAPI configuration
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                Title = "SIGEDESP API",
+                Version = "v1"
+            });
 
-            app.UseHttpsRedirection();
-            app.UseCors("MyPolicy");
-            app.UseAuthorization();
-            app.MapControllers();
-            app.UseStaticFiles();
-            app.UseRouting();
+            // Configuração do esquema de segurança para JWT
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Insira o token JWT no formato: Bearer {seu token}"
+            });
 
-            app.Run();
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+        });
+
+        // Configuração do banco de dados
+        var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
+                               ?? builder.Configuration.GetConnectionString("DataBase");
+
+        builder.Services.AddDbContext<SigedespDBContex>(options =>
+            options.UseNpgsql(connectionString));
+
+        // Configuração de CORS
+        builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+        {
+            builder.WithOrigins("http://localhost:3000", "http://localhost:3001")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials();
+        }));
+
+        // AutoMapper configuration
+        var mappingConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new MappingProfile());
+        });
+        IMapper mapper = mappingConfig.CreateMapper();
+        builder.Services.AddSingleton(mapper);
+
+        // Configuração da autenticação JWT
+        var key = Encoding.ASCII.GetBytes(builder.Configuration["JWT:Secret"]);
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false; // Habilite para produção
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
+
+        // Serviços e repositórios
+        builder.Services.AddScoped<IDespesaRepositorio, DespesaRepositorio>();
+        builder.Services.AddScoped<IDespesaService, DespesaService>();
+
+        builder.Services.AddScoped<IFornecedorRepositorio, FornecedorRepositorio>();
+        builder.Services.AddScoped<IFornecedorService, FornecedorService>();
+
+        builder.Services.AddScoped<IInstituicaoRepositorio, InstituicaoRepositorio>();
+        builder.Services.AddScoped<IInstituicaoService, InstituicaoService>();
+
+        builder.Services.AddScoped<IOrcamentoRepositorio, OrcamentoRepositorio>();
+        builder.Services.AddScoped<IOrcamentoService, OrcamentoService>();
+
+        builder.Services.AddScoped<ISecretariaRepositorio, SecretariaRepositorio>();
+        builder.Services.AddScoped<ISecretariaService, SecretariaService>();
+
+        builder.Services.AddScoped<ITipoDespesaRepositorio, TipoDespesaRepositorio>();
+        builder.Services.AddScoped<ITipoDespesaService, TipoDespesaService>();
+
+        builder.Services.AddScoped<ITipoInstituicaoRepositorio, TipoInstituicaoRepositorio>();
+        builder.Services.AddScoped<ITipoInstituicaoService, TipoInstituicaoService>();
+
+        builder.Services.AddScoped<IUnidadeConsumidoraRepositorio, UnidadeConsumidoraRepositorio>();
+        builder.Services.AddScoped<IUnidadeConsumidoraService, UnidadeConsumidoraService>();
+
+        builder.Services.AddScoped<IUnidadeMedidaRepositorio, UnidadeMedidaRepositorio>();
+        builder.Services.AddScoped<IUnidadeMedidaService, UnidadeMedidaService>();
+
+        builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+        builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+        var app = builder.Build();
+
+        // Configuração do pipeline HTTP
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
+
+        app.UseHttpsRedirection();
+        app.UseCors("MyPolicy");
+        app.UseAuthentication(); // Adicionando autenticação
+        app.UseAuthorization();  // Adicionando autorização
+        app.MapControllers();
+
+        app.Run();
     }
 }

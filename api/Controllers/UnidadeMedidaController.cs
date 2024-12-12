@@ -39,6 +39,18 @@ namespace api.Controllers
             return new CreatedAtRouteResult("GetUnidadeMedida", new { id = unidadeMedidaDTO.Id }, unidadeMedidaDTO);
         }
 
+        [HttpPost("filtro", Name = "Filter")]
+        public async Task<ActionResult<UsuarioModel>> Filtro([FromBody] dynamic filtros)
+        {
+            var lista = await _unidadeMedidaService.BuscarTodosUnidadeMedida();
+
+            if (filtros.descricao || !String.IsNullOrEmpty(filtros.descricao)) lista = lista.Where(um => um.Descricao == filtros.descricao).ToList();
+
+            if (filtros.abreviatura || !String.IsNullOrEmpty(filtros.abreviatura)) lista = lista.Where(um => um.Abreviatura == filtros.abreviatura).ToList();
+
+            return Ok(lista);
+        }
+
         [HttpPut()]
         public async Task<ActionResult<UnidadeMedidaModel>> Atualizar([FromBody] UnidadeMedidaDTO unidadeMedidaDTO)
         {
