@@ -24,7 +24,7 @@ public class UnidadeConsumidoraModel
     [ForeignKey("fornecedorid")]
     public int IdFornecedor { get; set; }
 
-    /*Código para receber chave estrangeira de Insituicao*/
+    /*Código para receber chave estrangeira de Instituicao*/
     [JsonIgnore]
     public InstituicaoModel? Instituicao { get; set; }
 

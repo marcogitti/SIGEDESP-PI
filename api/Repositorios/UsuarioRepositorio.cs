@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Repositorios.Interfaces;
 using api.Models.Enum;
+using api.Authentication;
 
 namespace api.Repositorios
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly SigedespDBContex _dbContext;
+
         public UsuarioRepositorio(SigedespDBContex sigedespDBContex)
         {
             _dbContext = sigedespDBContex;
@@ -16,12 +18,37 @@ namespace api.Repositorios
 
         public async Task<UsuarioModel> BuscarPorId(int id)
         {
-            return await _dbContext.Usuario.FirstOrDefaultAsync(x => x.Id == id);
+            var usuario = await _dbContext.Usuario.FirstOrDefaultAsync(x => x.Id == id);
+            if (usuario != null)
+            {
+                usuario.Senha = string.Empty; // Limpa o atributo Senha
+            }
+            return usuario;
         }
 
         public async Task<List<UsuarioModel>> BuscarTodosUsuario()
         {
-            return await _dbContext.Usuario.ToListAsync();
+            var usuarios = await _dbContext.Usuario.ToListAsync();
+            foreach (var usuario in usuarios)
+            {
+                usuario.Senha = string.Empty; // Limpa o atributo Senha
+            }
+            return usuarios;
+        }
+
+        public async Task<UsuarioModel> Login(Login login)
+        {
+            var usuario = await _dbContext.Usuario
+                .Where(u => u.Email == login.Email && u.Senha == login.Senha)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (usuario != null)
+            {
+                usuario.Senha = string.Empty;
+            }
+
+            return usuario;
         }
 
         public async Task<UsuarioModel> Adicionar(UsuarioModel usuario)
@@ -61,6 +88,12 @@ namespace api.Repositorios
             _dbContext.Usuario.Remove(UsuarioPorId);
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        // Implementação do método BuscarPorEmail
+        public async Task<UsuarioModel> BuscarPorEmail(string email)
+        {
+            return await _dbContext.Usuario.FirstOrDefaultAsync(x => x.Email == email);
         }
     }
 }

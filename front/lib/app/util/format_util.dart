@@ -30,3 +30,17 @@ extension WidgetExtension on List<Widget> {
     return newList;
   }
 }
+
+extension DateFormatExtension on DateTime? {
+  String get toYMD {
+    return DateFormat('yyyy-MM-dd').format(this ?? DateTime.now());
+  }
+
+  String get toDMY {
+    return DateFormat('dd/MM/yyyy').format(this ?? DateTime.now());
+  }
+
+  String get toYYM {
+    return DateFormat('yyyy/MM').format(this ?? DateTime.now());
+  }
+}

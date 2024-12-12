@@ -8,7 +8,7 @@ namespace api.DTO.Entities
 {
     public class InstituicaoDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public EnumSituacaoModel Situacao { get; set; }
         public string CNPJ { get; set; }
         public string Nome { get; set; }
