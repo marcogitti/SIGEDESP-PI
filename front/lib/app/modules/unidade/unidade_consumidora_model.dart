@@ -1,29 +1,33 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:front/app/modules/fornecedor/fornecedor_model.dart';
+import 'package:front/app/modules/instituicao/instituicao_model.dart';
+
 class UnidadeConsumidoraModel {
-  final int? id;
-  final int? codigoUC;
-  final int? idFornecedor;
-  final int? idInstituicao;
+  int? id;
+  String? codigoUC;
+  FornecedorModel? fornecedor;
+  InstituicaoModel? instituicao;
 
   UnidadeConsumidoraModel({
     this.id,
     this.codigoUC,
-    this.idFornecedor,
-    this.idInstituicao,
+    this.fornecedor,
+    this.instituicao,
   });
 
   UnidadeConsumidoraModel copyWith({
     int? id,
-    int? codigoUC,
-    int? idFornecedor,
-    int? idInstituicao,
+    String? codigoUC,
+    FornecedorModel? fornecedor,
+    InstituicaoModel? instituicao,
   }) {
     return UnidadeConsumidoraModel(
+      id: id ?? this.id,
       codigoUC: codigoUC ?? this.codigoUC,
-      idFornecedor: idFornecedor ?? this.idFornecedor,
-      idInstituicao: idInstituicao ?? this.idInstituicao,
+      fornecedor: fornecedor ?? this.fornecedor,
+      instituicao: instituicao ?? this.instituicao,
     );
   }
 
@@ -31,19 +35,21 @@ class UnidadeConsumidoraModel {
     return <String, dynamic>{
       'id': id,
       'codigoUC': codigoUC,
-      'idFornecedor': idFornecedor,
-      'idInstituicao': idInstituicao,
+      'fornecedor': fornecedor?.toMap(),
+      'instituicao': instituicao?.toMap(),
     };
   }
 
   factory UnidadeConsumidoraModel.fromMap(Map<String, dynamic> map) {
     return UnidadeConsumidoraModel(
       id: map['id'] != null ? map['id'] as int : null,
-      codigoUC: map['codigoUC'] != null ? map['codigoUC'] as int : null,
-      idFornecedor:
-          map['idFornecedor'] != null ? map['idFornecedor'] as int : null,
-      idInstituicao:
-          map['idInstituicao'] != null ? map['idInstituicao'] as int : null,
+      codigoUC: map['codigoUC'] != null ? map['codigoUC'] as String : null,
+      fornecedor: map['fornecedor'] != null
+          ? FornecedorModel.fromMap(map['fornecedor'] as Map<String, dynamic>)
+          : null,
+      instituicao: map['instituicao'] != null
+          ? InstituicaoModel.fromMap(map['instituicao'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -52,6 +58,18 @@ class UnidadeConsumidoraModel {
 
   factory UnidadeConsumidoraModel.fromJson(String source) =>
       UnidadeConsumidoraModel.fromMap(
-        json.decode(source) as Map<String, dynamic>,
-      );
+          json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool operator ==(covariant UnidadeConsumidoraModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id;
+    ;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }
