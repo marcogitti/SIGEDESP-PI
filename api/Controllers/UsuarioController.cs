@@ -1,7 +1,9 @@
-﻿using api.DTO.Entities;
+﻿using api.Authentication;
+using api.DTO.Entities;
 using api.Models;
 using api.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace api.Controllers
 {
@@ -37,6 +39,43 @@ namespace api.Controllers
             if (usuarioDTO is null) return BadRequest("dado inválido");
             await _usuarioService.Adicionar(usuarioDTO);
             return new CreatedAtRouteResult("GetUsuario", new { id = usuarioDTO.Id }, usuarioDTO);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] Login login)
+        {
+            if (login is null) return BadRequest("dado inválido");
+
+            var usuarioDTO = await _usuarioService.Login(login);
+            if (usuarioDTO is not null)
+            {
+                var token = new TokenAcess();
+                return Ok(token.GenerateToken(usuarioDTO.Email));
+            }
+
+            return Unauthorized("email ou senha incorretos");
+        }
+
+        [HttpPost("validation")]
+        public async Task<ActionResult> Validate([FromBody] TokenAcess tokenAcess)
+        {
+            if (tokenAcess is null) return BadRequest("dado inválido");
+
+            if (tokenAcess.IsTokenExpired(tokenAcess.Token))
+            {
+                return Unauthorized("token expirado");
+            }
+
+            var email = tokenAcess.GetEmailFromToken(tokenAcess.Token);
+            if (!string.IsNullOrEmpty(email))
+            {
+                var user = await _usuarioService.BuscarPorEmail(email);
+
+                if (user is not null) return Ok(true);
+                else return Unauthorized(false);
+            }
+
+            return Unauthorized(false);
         }
 
         [HttpPut()]

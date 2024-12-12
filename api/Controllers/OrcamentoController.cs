@@ -15,25 +15,25 @@ public class OrcamentoController : ControllerBase
         _context = context;
     }
 
-    // Método para buscar todas os orçamentos
+    // Método para buscar todos os orçamentos
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<object>>> BuscarTodosOrcamento()
+    public async Task<ActionResult<IEnumerable<OrcamentoParametroDTO>>> BuscarTodosDespesa()
     {
         var orcamentos = await _context.Orcamento
-            .Select(d => new
+            .Select(o => new OrcamentoParametroDTO
             {
-                Id = d.Id,
-                AnoOrcamento = d.AnoOrcamento,
-                ValorOrcamento = d.ValorOrcamento,
-                Instituicao = new
+                Id = o.Id,
+                AnoOrcamento = o.AnoOrcamento,
+                ValorOrcamento = o.ValorOrcamento,
+                Instituicao = new InstituicoesParametro
                 {
-                    Id = d.Instituicao.Id,
-                    Nome = d.Instituicao.Nome
+                    Id = o.Instituicao.Id,
+                    Nome = o.Instituicao.Nome
                 },
-                TipoDespesa = new
+                TipoDespesa = new TipoDespesaParametros
                 {
-                    Id = d.TipoDespesa.Id,
-                    Descricao = d.TipoDespesa.Descricao
+                    Id = o.TipoDespesa.Id,
+                    Descricao = o.TipoDespesa.Descricao
                 }
             })
             .ToListAsync();
@@ -43,24 +43,24 @@ public class OrcamentoController : ControllerBase
 
     // Método para buscar orçamento por ID
     [HttpGet("{id}")]
-    public async Task<ActionResult<object>> BuscarPorId(int id)
+    public async Task<ActionResult<OrcamentoParametroDTO>> BuscarPorId(int id)
     {
         var orcamento = await _context.Orcamento
-            .Where(d => d.Id == id)
-            .Select(d => new
+            .Where(o => o.Id == id)
+            .Select(o => new OrcamentoParametroDTO
             {
-                Id = d.Id,
-                AnoOrcamento = d.AnoOrcamento,
-                ValorOrcamento = d.ValorOrcamento,
-                Instituicao = new
+                Id = o.Id,
+                AnoOrcamento = o.AnoOrcamento,
+                ValorOrcamento = o.ValorOrcamento,
+                Instituicao = new InstituicoesParametro
                 {
-                    Id = d.Instituicao.Id,
-                    Nome = d.Instituicao.Nome
+                    Id = o.Instituicao.Id,
+                    Nome = o.Instituicao.Nome
                 },
-                TipoDespesa = new
+                TipoDespesa = new TipoDespesaParametros
                 {
-                    Id = d.TipoDespesa.Id,
-                    Descricao = d.TipoDespesa.Descricao
+                    Id = o.TipoDespesa.Id,
+                    Descricao = o.TipoDespesa.Descricao
                 }
             })
             .FirstOrDefaultAsync();
@@ -71,48 +71,105 @@ public class OrcamentoController : ControllerBase
         return Ok(orcamento);
     }
 
-    // Método para adicionar novo Orçamento
+    // Método para adicionar novo orçamento
     [HttpPost]
-    public async Task<ActionResult> Cadastrar([FromBody] OrcamentoAdicionarAtualizarDTO orcamentoDto)
+    public async Task<ActionResult<OrcamentoParametroDTO>> Cadastrar([FromBody] OrcamentoParametroDTO orcamentoDto)
     {
         if (orcamentoDto == null)
             return BadRequest("Dados inválidos");
 
-        var orcamento = new OrcamentoModel
+        var novoOrcamento = new OrcamentoModel
         {
             AnoOrcamento = orcamentoDto.AnoOrcamento,
             ValorOrcamento = orcamentoDto.ValorOrcamento,
-            IdInstituicao = orcamentoDto.IdInstituicao,
-            IdTipoDespesa = orcamentoDto.IdTipoDespesa
+            IdInstituicao = orcamentoDto.Instituicao.Id,
+            IdTipoDespesa = orcamentoDto.TipoDespesa.Id
         };
 
-        _context.Orcamento.Add(orcamento);
+        _context.Orcamento.Add(novoOrcamento);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(BuscarPorId), new { id = orcamento.Id }, orcamento);
+        // Carregar o orçamento cadastrado com entidades relacionadas
+        var orcamentoCadastrado = await _context.Orcamento
+            .Include(o => o.Instituicao)
+            .Include(o => o.TipoDespesa)
+            .FirstOrDefaultAsync(o => o.Id == novoOrcamento.Id);
+
+        if (orcamentoCadastrado == null)
+            return NotFound();
+
+        var orcamentoDados = new OrcamentoParametroDTO
+        {
+            Id = orcamentoCadastrado.Id,
+            AnoOrcamento = orcamentoCadastrado.AnoOrcamento,
+            ValorOrcamento = orcamentoCadastrado.ValorOrcamento,
+            Instituicao = new InstituicoesParametro
+            {
+                Id = orcamentoCadastrado.Instituicao.Id,
+                Nome = orcamentoCadastrado.Instituicao.Nome
+            },
+            TipoDespesa = new TipoDespesaParametros
+            {
+                Id = orcamentoCadastrado.TipoDespesa.Id,
+                Descricao = orcamentoCadastrado.TipoDespesa.Descricao
+            }
+        };
+
+        return Ok(orcamentoDados);
     }
 
-    // Método para atualizar Orçamento existente
-    [HttpPut()]
-    public async Task<ActionResult> Atualizar([FromBody] OrcamentoAdicionarAtualizarDTO orcamentoAtualizada)
+    // Método para atualizar orçamento existente
+    [HttpPut]
+    public async Task<ActionResult<OrcamentoParametroDTO>> Atualizar([FromBody] OrcamentoParametroDTO orcamentoDto)
     {
-        if (orcamentoAtualizada == null || orcamentoAtualizada.Id != orcamentoAtualizada.Id)
+        if (orcamentoDto == null || orcamentoDto.Id == 0)
             return BadRequest("Dados inválidos");
 
-        var orcamentoExistente = await _context.Orcamento.FindAsync(orcamentoAtualizada.Id);
+        var orcamentoExistente = await _context.Orcamento.FindAsync(orcamentoDto.Id);
 
         if (orcamentoExistente == null)
             return NotFound("Orçamento não encontrado");
 
-        _context.Entry(orcamentoExistente).CurrentValues.SetValues(orcamentoAtualizada);
+        // Atualização dos atributos do orçamento existente
+        orcamentoExistente.AnoOrcamento = orcamentoDto.AnoOrcamento;
+        orcamentoExistente.ValorOrcamento = orcamentoDto.ValorOrcamento;
+
+        // Atualização de subobjetos
+        orcamentoExistente.IdInstituicao = orcamentoDto.Instituicao.Id;
+        orcamentoExistente.IdTipoDespesa = orcamentoDto.TipoDespesa.Id;
+
         await _context.SaveChangesAsync();
 
-        return Ok(orcamentoAtualizada);
+        // Carregar o orçamento cadastrado com entidades relacionadas
+        var orcamentoAtualizado = await _context.Orcamento
+            .Include(o => o.Instituicao)
+            .Include(o => o.TipoDespesa)
+            .FirstOrDefaultAsync(o => o.Id == orcamentoExistente.Id);
+
+        // Criar DTO com os dados atualizados
+        var orcamentoDados = new OrcamentoParametroDTO
+        {
+            Id = orcamentoAtualizado.Id,
+            AnoOrcamento = orcamentoAtualizado.AnoOrcamento,
+            ValorOrcamento = orcamentoAtualizado.ValorOrcamento,
+            Instituicao = new InstituicoesParametro
+            {
+                Id = orcamentoAtualizado.Instituicao.Id,
+                Nome = orcamentoAtualizado.Instituicao.Nome
+            },
+            TipoDespesa = new TipoDespesaParametros
+            {
+                Id = orcamentoAtualizado.TipoDespesa.Id,
+                Descricao = orcamentoAtualizado.TipoDespesa.Descricao
+            }
+        };
+
+        return Ok(orcamentoDados);
     }
 
-    // Método para deletar orçamento
+    // Método para excluir orçamento
     [HttpDelete("{id}")]
-    public async Task<ActionResult<object>> Apagar(int id)
+    public async Task<IActionResult> Apagar(int id)
     {
         var orcamento = await _context.Orcamento.FindAsync(id);
 
@@ -122,22 +179,6 @@ public class OrcamentoController : ControllerBase
         _context.Orcamento.Remove(orcamento);
         await _context.SaveChangesAsync();
 
-        var orcamentoRemovida = new OrcamentoDTO
-        {
-            AnoOrcamento = orcamento.AnoOrcamento,
-            ValorOrcamento = orcamento.ValorOrcamento,
-            Instituicao = new InstituicaoDTO
-            {
-                Id = orcamento.Instituicao.Id,
-                Nome = orcamento.Instituicao.Nome
-            },
-            TipoDespesa = new TipoDespesaDTO
-            {
-                Id = orcamento.TipoDespesa.Id,
-                Descricao = orcamento.TipoDespesa.Descricao
-            }
-        };
-
-        return Ok(orcamentoRemovida);
+        return NoContent();
     }
 }

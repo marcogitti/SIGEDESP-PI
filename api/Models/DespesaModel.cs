@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using api.Models.Enum;
-using System.Text.Json.Serialization;
 
 namespace api.Models
 {
@@ -31,7 +30,7 @@ namespace api.Models
         public double ValorPrevisto { get; set; }
 
         [Column("datapagamento")]
-        public DateOnly DataPagamento { get; set; }
+        public DateOnly? DataPagamento { get; set; }
 
         [Column("valorpago")]
         public double ValorPago { get; set; }

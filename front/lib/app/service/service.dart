@@ -33,7 +33,9 @@ class IService<T extends Object> {
       await Future.delayed(const Duration(seconds: 1));
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body) as List;
+        print(decodedData);
         final dataList = decodedData.map((e) => fromMap(e)).toList().cast<T>();
+
         return dataList.toSuccess();
       } else {
         return 'Falha ao carregar dados da API'.toFailure();
@@ -52,6 +54,8 @@ class IService<T extends Object> {
         },
         body: toJson(data),
       );
+
+      print(toJson(data));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return data.toSuccess();
